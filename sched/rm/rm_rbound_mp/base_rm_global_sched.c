@@ -14,18 +14,20 @@
 //ejemplo de llamada desde TCL
 //set r [catch {eval COMMAND_NAME $algorithmSelected $numberProcessors $simulationTime $pathSavedTasks } errmsg]
 
-static int SimuladorCmd(ClientData clientData, Tcl_CmdDeleteProc* proc, int objc, Tcl_Obj* const objv[]);
 
+
+// ################################################################3
+// 2. Cambiar por la fucncion de la nueva funcion parcial
+// ################################################################3
 //llamar a la funcion parcial
 processor_t* partial_function(processor_t* list, int nproc, char *file)
 {
-	DBG(" \n start_rbound_mp");
 	//funcion parcial que se llamara en esta libreria
 	list = start_rbound_mp(nproc, file);
 	return list;
-	DBG(" \n END start_rbound_mp");
 }
 
+static int SimuladorCmd(ClientData clientData, Tcl_CmdDeleteProc* proc, int objc, Tcl_Obj* const objv[]);
 
 //USAR NOMBRE DE LA LIBRERIA MAS _Init
 // ejemplo Rmnfll_init para librmnfll
@@ -38,7 +40,7 @@ int Rmrboundmp_Init(Tcl_Interp *interp)
 		return TCL_ERROR;
     }
 	
-	DBG("\ncreating command [%s]\n",COMMAND_NAME);
+	DBG("\nCreating command [%s]\n",COMMAND_NAME);
     Tcl_CreateObjCommand(interp, COMMAND_NAME, SimuladorCmd, NULL, NULL);
     Tcl_PkgProvide(interp, COMMAND_NAME, "1.1");
 

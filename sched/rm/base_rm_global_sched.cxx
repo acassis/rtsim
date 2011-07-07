@@ -1,9 +1,8 @@
 //archivo con el codigo base comun para todas las funciones parciales
 //este archivo se incluira en cada version de rm con cada funcion parcial
 
-//nombre de la funcion que ejecutara los comandos
-//USAR NOMBRE DE LA LIBRERIA MAS Cmd, la primera letra debera ser Mayuscula
-//ejemplo RmnfllCmd para libreria librmnfll
+
+//funcion de entrada para ejecutar el planificador
 static int SimuladorCmd(ClientData clientData, Tcl_CmdDeleteProc* proc, int objc, Tcl_Obj* const objv[]) 
 {
 	int res = TCL_OK;
@@ -15,13 +14,13 @@ static int SimuladorCmd(ClientData clientData, Tcl_CmdDeleteProc* proc, int objc
 	init_logger();
 	
 //convertir la lista de parametros a cadenas de C
-	DBG("\n called with %d arguments", objc);
+	//DBG("\n called with %d arguments", objc);
 	for(t=0;t<objc;t++)
 	{
-		DBG("\n%d: %s",t, (*objv[t]).bytes);
+		//DBG("\n%d: %s",t, (*objv[t]).bytes);
 		strings[t] = (*objv[t]).bytes;
 	}
-	DBG("\n");
+	//DBG("\n");
 		
 	//USAR SIEMPRE MODO PARCIAL
 	parameters.algorithm	= RM;
@@ -38,7 +37,7 @@ static int SimuladorCmd(ClientData clientData, Tcl_CmdDeleteProc* proc, int objc
 	res = start_rm_main(parameters);
 	//res = simulator_main(objc, strings);
 
-	DBG("\n end main: %d",res);
+	DBG("\n End SimuladorCmd: %d",res);
 	return res;
 }
 
@@ -122,7 +121,7 @@ int start_rm(int mode, int no_proc, double max_time, task_set_t *t, char* outfil
 	///////////////////////////////
 #endif
 
-	DBG("\n start rm simulator");
+	//DBG("\n start rm simulator");
 
 	strcpy(basename_trace, outfile);
 	

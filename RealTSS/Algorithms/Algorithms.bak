@@ -1,0 +1,28 @@
+[ALGORITHMS_NAMES]
+EDF Global=edfglobal
+EDF Partial NF=edfnf
+EDF Partial FF=edfff
+EDF Partial BF=edfbf
+EDF Partial WF=edfwf
+
+RM Global=rmglobal
+RM Partial NF LL=rmnfll
+RM Partial BF LL=rmbfll
+RM Partial FF LL=rmffll
+RM Partial WF LL=rmwfll
+
+RM Partial FF DU UO=rmffuouo
+RM Partial FF IP=rmffip
+RM Partial GT=rmgt
+RM Partial NF IP=rmnfip
+RM Partial ST=rmst
+
+RM Partial BF IP=rmbfip
+RM Partial BF DU UO=rmbfduuo
+RM Partial MP=rmmp
+RM Partial MP BF=rmmpbf
+RM Partial MP NFR=rmmpnfr
+
+EDF Deadlines=edfdeadlines
+RM Deadlines=rmdeadlines
+FIFO=fifo

@@ -23,7 +23,7 @@ objects = $(UTILS_DIR)/task_lists.o\
 
 	
 ############################################################################################
-# 0. Copiar y configurar las rutas para un nuevo metodo
+# 1. Copiar y configurar las rutas para un nuevo metodo
 ############################################################################################
 ### Configuracion para metodo 
 # dir_rmrboundmp	=$(SCHED_DIR)/rm_rbound_mp
@@ -49,7 +49,7 @@ all: $(objects) $(rm_rbound_mp) $(rm_bf_du_uo)
 
 
 ############################################################################################
-# 1. Copiar esta funcion y remplazar por los archivos de la nueva funcion
+# 2. Copiar esta funcion y remplazar por los archivos de la nueva funcion
 ############################################################################################
 ### Crear libreria para rm rbound
 # rm_rbound_mp: $(objects)
