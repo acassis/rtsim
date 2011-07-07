@@ -27,7 +27,7 @@ objects = $(UTILS_DIR)/task_lists.o\
 ############################################################################################
 ### Configuracion para metodo 
 #carpeta donde estan los archivos
-# dir_rmrboundmp	=$(SCHED_DIR)/rm_rbound_mp					
+# dir_rmrboundmp	=$(SCHED_DIR)/rm_rbound_mp
 # #archivos C que se compilaran
 # file1_rmrboundmp=$(dir_rmrboundmp)/rbound_mp.c
 # file2_rmrboundmp=$(dir_rmrboundmp)/base_rm_global_sched.c
@@ -37,7 +37,7 @@ objects = $(UTILS_DIR)/task_lists.o\
 
 ### Configuracion para metodo rm rbound
 #carpeta donde estan los archivos
-dir_rmrboundmp	=$(SCHED_DIR)/rm_rbound_mp					
+dir_rmrboundmp	=$(SCHED_DIR)/rm_rbound_mp
 #archivos C que se compilaran
 file1_rmrboundmp=$(dir_rmrboundmp)/rbound_mp.c
 file2_rmrboundmp=$(dir_rmrboundmp)/base_rm_global_sched.c

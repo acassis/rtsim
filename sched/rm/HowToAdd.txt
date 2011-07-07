@@ -1,6 +1,6 @@
  * Agregar un nuevo metodo parcial
  
- 1. Copiar la carpeta base_nueva_funcion y renombrarla al nombre del metodo nuevo. ejemplo rm_bf_du_uo. El archivo base_rm_global_sched.c contiene las funciones que son necesarias cambiar entre cada metodo, ademas este incluye el codigo comun (base_rm_global_sched.cxx) para completar la libreria.
+ 1. Copiar la carpeta base_nueva_funcion y renombrarla al nombre del metodo nuevo. ejemplo rm_bf_du_uo. El archivo base_rm_global_sched.c contiene las funciones que son necesarias cambiar entre cada metodo, ademas este hace un include del codigo comun (base_rm_global_sched.cxx) para completar la libreria.
  
  2. Agegar los archivos c y h del nuevo metodo parcial dentro. ej. dentro de la carpeta quedarian los archivos
 	rm_bf_du_uo.c
