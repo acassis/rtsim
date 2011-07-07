@@ -382,7 +382,7 @@ proc simulate { pathSavedTasks schedSelected frameResultsBox} {
 #	global pathSavedTrace
 	set resultAlg ""
 	#usar siempre test4.txt como ejemplo
-	#set pathSavedTasks "/home/kary/simulador/RealTSS/test4.txt"
+	set pathSavedTasks "/home/kary/simulador/RealTSS/test4.txt"
 	deleteResultsBox $frameResultsBox
 	
 	#el nombre de la libreria siempre debera ser lib+nombredelplanificador
@@ -414,7 +414,7 @@ proc simulate { pathSavedTasks schedSelected frameResultsBox} {
 
         		### Ejecutar el comando de la libreria		
 				puts "Ejecutando $cmdName $schedSelected $numberProcessors $simulationTime $pathSavedTasks"
-        		set r [catch {eval simulator $schedSelected $numberProcessors $simulationTime $pathSavedTasks } errmsg]
+        		set r [catch {eval $cmdName $schedSelected $numberProcessors $simulationTime $pathSavedTasks } errmsg]
 				
 				### Cargar el log  en la interface
 				set r [catch { cargarLog [getResultsBoxFrame] } errmsg]

@@ -3,10 +3,6 @@
 //agregar el include donde se encuentra la funcion parcial
 // #include "rm_nf_ll.h"
 
-//#define USE_RESOURCES
-#define USE_TRACE_FILE
-//#define END_ON_MISS_DEADLINE
-
 //name used for command call from TCL
 //nombre del comando que se usaran dentro de TCL para llamar al codigo nativo
 #define COMMAND_NAME "simulator"
@@ -17,6 +13,7 @@
 void partial_function(processor_t* list, int nproc, char *file)
 {
 	//funcion parcial que se llamara en esta libreria
+	// ## Cambiar por la fucncion de la nueva funcion parcial
 	list = start_rm_nf_ll(nproc, file);
 }
 
@@ -79,6 +76,11 @@ int Rmnfll_Init(Tcl_Interp *interp)
 
 	return TCL_OK;
 }
+
+
+//#define USE_RESOURCES
+#define USE_TRACE_FILE
+//#define END_ON_MISS_DEADLINE
 
 //incluir el codigo comun para todos los metodos
 #include "../base_rm_global_sched.cxx"

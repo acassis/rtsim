@@ -27,16 +27,18 @@
 //set r [catch {eval COMMAND_NAME $algorithmSelected $numberProcessors $simulationTime $pathSavedTasks } errmsg]
 
 //llamar a la funcion parcial
-void partial_function(processor_t* list, int nproc, char *file)
+processor_t* partial_function(processor_t* list, int nproc, char *file)
 {
 	//funcion parcial que se llamara en esta libreria
-	list = start_rm_nf_ll(nproc, file);
+	list = start_rm_bf_du_uo(nproc, file);
+
+	return list;
 }
 
 //nombre de la funcion que ejecutara los comandos
 //USAR NOMBRE DE LA LIBRERIA MAS Cmd
 //ejemplo rmnfllCmd para libreria librmnfll
-static int RmnfllCmd(ClientData clientData, Tcl_CmdDeleteProc* proc, int objc, Tcl_Obj* const objv[]) 
+static int RmbfduuoCmd(ClientData clientData, Tcl_CmdDeleteProc* proc, int objc, Tcl_Obj* const objv[]) 
 {
 	int res = TCL_OK;
 	char* strings[255];
@@ -95,19 +97,20 @@ static int RmnfllCmd(ClientData clientData, Tcl_CmdDeleteProc* proc, int objc, T
 
 //USAR NOMBRE DE LA LIBRERIA MAS _Init
 // ejemplo Rmnfll_init para librmnfll
-int Rmnfll_Init(Tcl_Interp *interp)
+int Rmbfduuo_Init(Tcl_Interp *interp)
 {
-DBG("\nrmffll_Init TCL v[%s]", TCL_VERSION);
+	DBG("\nrmffll_Init TCL v[%s]", TCL_VERSION);
 	//ClientData data;
     if (Tcl_InitStubs(interp, TCL_VERSION, 0) == NULL) {
-DBG("\nerror ");
-	return TCL_ERROR;
+		DBG("\nerror ");
+		return TCL_ERROR;
     }
+
 	DBG("\nCreating command [%s]\n",COMMAND_NAME);
-    Tcl_CreateObjCommand(interp, COMMAND_NAME, RmnfllCmd, NULL, NULL);
+    Tcl_CreateObjCommand(interp, COMMAND_NAME, RmbfduuoCmd, NULL, NULL);
     Tcl_PkgProvide(interp, COMMAND_NAME, "1.1");
 
-return TCL_OK;
+	return TCL_OK;
 }
 
 #include "../base_rm_global_sched.cxx"

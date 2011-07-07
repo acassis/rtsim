@@ -874,7 +874,6 @@ int start_rm_main(ALGORITHM_PARAMS parameters)
 		return -1;
 	}*/
 
-	DBG("evaluating params\n");
 	mode = parameters.mode;//atoi(argv[argid+PARAM_MODE]);
 	if (mode < 0 || mode >= MODE_COUNT) {
 		LOG( "Error: invalid mode, use 0 for global or 1 for partial %d\n", mode);
@@ -900,7 +899,6 @@ int start_rm_main(ALGORITHM_PARAMS parameters)
 		return -1;
 	}
 	/////////////////////////////////////////////////////////////////////////////////////
-
 
 #ifdef USE_TRACE_FILE
 	//get basename used for trace file output
@@ -974,8 +972,9 @@ int start_rm_main(ALGORITHM_PARAMS parameters)
 		res = 0;
 		list = NULL;
 		
-		partial_function(list, 1, parameters.data);
-		
+		//DBG("calling to partial function\n");
+		list = partial_function(list, 1, parameters.data);
+		//DBG("end partial function\n");
 /* no seleccionar la funcion parcial.
 		switch(parameters.partial_func)
 		{
@@ -1035,7 +1034,7 @@ int start_rm_main(ALGORITHM_PARAMS parameters)
 		
 		if(list == NULL)
 		{
-			LOG( "Error: unknow list for function %d\n", parameters.partial_func);
+			LOG( "Error: unknow list for function %s\n", COMMAND_NAME);
 			return -1;
 		}
 		current_processor = list;
@@ -1079,6 +1078,7 @@ int start_rm_main(ALGORITHM_PARAMS parameters)
 			}
 
 			sprintf(&partialname, "%s_partial%d",basename_trace,current_processor->id);
+
 #ifdef USE_THREAD
 			args.mode		= mode;
 			args.no_proc	= 1;
@@ -1105,6 +1105,7 @@ int start_rm_main(ALGORITHM_PARAMS parameters)
 			current_processor = current_processor->next;
 		}
 	}
+	
 #ifdef USE_THREAD
 	//wait for finish threads
 	while(rm_active_threads != 0);
