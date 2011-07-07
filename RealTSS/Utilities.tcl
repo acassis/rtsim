@@ -357,6 +357,7 @@ proc leeIni { line } {
 			"language" { set config(language) $valor }
 			"algorithmsName" {set config(algorithmsName) $valor}
 			"languagesContainer" {set config(languagesContainer) $valor}
+			"libFolder" {set config(libFolder) $valor}
 			"fulllibfile" {set config(fulllibfile) $valor}
 			"fulllibcommnad" {set config(fulllibcommnad) $valor}
 		}
@@ -393,6 +394,7 @@ proc initEntorno {} {
 #		None
 ##########################################################################
 proc initConfig {} {
+	global APP_PATH
 	global array config
 	#Config
 	set config(algos) "algos" ;	#Default name for algorithm's directory
@@ -401,6 +403,7 @@ proc initConfig {} {
 	set config(language) "Languages/English.lng"
 	set config(algorithmsName) "Algorithms/Algorithms.conf"
 	set config(languagesContainer) "Languages/Languages.conf"
+	set config(libFolder) "$APP_PATH/AlgorithmsLibraries/"
 	set config(fulllibfile) libsimulator
 	set config(fulllibcommnad) simulator
 }
@@ -508,7 +511,7 @@ proc countAlgorithms {filePath} {
 #		None
 ##########################################################################
 proc loadNameAlgorithms { filePath } {
-	global AlgorithmsName
+	global AlgorithmInfo
 	global APP_PATH
 	## First we read the file by the arguments given
 	set algorithms [open "$APP_PATH/$filePath"]
@@ -517,6 +520,7 @@ proc loadNameAlgorithms { filePath } {
 	## Split into records on newlines
 	set records [split $contentAlgorithms "\n"]
 	
+	puts "Leyendo $APP_PATH/$filePath"
 	## Iterate over the records
 	foreach rec $records {
 		set readPriority 1 
@@ -527,36 +531,43 @@ proc loadNameAlgorithms { filePath } {
 			} else {
 				if {$readPriority == 1 } {
 				
-					set idRow $AlgorithmsName(IDROW)
-					set idCol $AlgorithmsName(IDCOL)
+					set idRow $AlgorithmInfo(IDROW)
+					set idCol $AlgorithmInfo(IDCOL)
 					## Split into fields on colons
 					set fields [split $rec "="]
 					## Assign fields to variables and print some out...
 					lassign $fields \
-						ALGORITHM NAME
-						
+						ALGORITHM LIBNAME
+					
+					puts "Leido $ALGORITHM $LIBNAME"
+					
 					##save algoritm name
-					set AlgorithmsName($idRow,$idCol) $ALGORITHM
-					incr AlgorithmsName(IDCOL)
+					set AlgorithmInfo($idRow,$idCol) $ALGORITHM
+					incr AlgorithmInfo(IDCOL)
 					
-					##save value
-					set idCol $AlgorithmsName(IDCOL)
-					set AlgorithmsName($idRow,$idCol) $NAME
-					incr AlgorithmsName(IDCOL)
+					##save libname
+					set idCol $AlgorithmInfo(IDCOL)
+					set AlgorithmInfo($idRow,$idCol) $LIBNAME
+					incr AlgorithmInfo(IDCOL)
 					
-					set idCol $AlgorithmsName(IDCOL)
-					incr AlgorithmsName(IDROW)
-					set AlgorithmsName(IDCOL) 0
+					# ##save command name
+					# set idCol $AlgorithmInfo(IDCOL)
+					# set AlgorithmInfo($idRow,$idCol) $CMDNAME
+					# incr AlgorithmInfo(IDCOL)
+					
+					set idCol $AlgorithmInfo(IDCOL)
+					incr AlgorithmInfo(IDROW)
+					set AlgorithmInfo(IDCOL) 0
 					incr readPriority
 				} else {
-					set idRow [expr [$AlgorithmsName(IDROW) -1 ]]
+					set idRow [expr [$AlgorithmInfo(IDROW) -1 ]]
 					
 					## Split into fields on colons
 					set fields [split $rec "="]
 					## Assign fields to variables and print some out...
 					lassign $fields \
 						PRIORITY ENABLED
-					set AlgorithmsName($idRow,3) $ENABLED
+					set AlgorithmInfo($idRow,3) $ENABLED
 					set readPriority 1
 				}
 			}

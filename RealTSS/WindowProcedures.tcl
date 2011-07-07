@@ -367,15 +367,16 @@ proc returnTasksListForSave { frameParent } {
 #	Parameters: 
 #		frameParent - Is the parameter that contains the frame
 #		pathSavedTasks - Path of the set of tasks
-#		algorithmSelected - algorithm library name to simulate
+#		schedSelected - algorithm library name to simulate
 #	Returns:
 #		None
 #	Messages:
 #		None
 ##########################################################################
-proc simulate { pathSavedTasks algorithmProcedure algorithmSelected frameResultsBox} {
+proc simulate { pathSavedTasks schedSelected frameResultsBox} {
 	
 	global APP_PATH
+	global LibFolder
 	global numberProcessors
 	global simulationTime
 #	global pathSavedTrace
@@ -384,60 +385,45 @@ proc simulate { pathSavedTasks algorithmProcedure algorithmSelected frameResults
 	#set pathSavedTasks "/home/kary/simulador/RealTSS/test4.txt"
 	deleteResultsBox $frameResultsBox
 	
-	if { $algorithmProcedure != "" } {
-		if { $algorithmSelected != ""} {
+	#el nombre de la libreria siempre debera ser lib+nombredelplanificador
+	set libName lib$schedSelected
+	set cmdName $schedSelected
+	
+	if { $libName != "" } {
+		if { $schedSelected != ""} {
 			if { $numberProcessors>0 && $simulationTime>=0 } {
-			
-			
 			# Load the extension
 			# switch $tcl_platform(platform) {
 			   # windows {
-				#  load [file join [pwd] $APP_PATH/AlgorithmsLibraries/$algorithmProcedure.so]
+				#  load [file join [pwd] $APP_PATH/AlgorithmsLibraries/$libName.so]
 			   # }
 			   # unix {
-				  # load [file join [pwd] lib+$algorithmProcedure[info sharedlibextension]]
+				  # load [file join [pwd] lib+$libName[info sharedlibextension]]
 			   # }
 			# }
-				set r [catch {load $APP_PATH/AlgorithmsLibraries/$algorithmProcedure[info sharedlibextension]} err]
-				# set r [catch {load $APP_PATH/AlgorithmsLibraries/$algorithmProcedure} err]
+			
+			### Cargar la libreria de C
+				puts "Cargando $libName ..."
+				set r [catch {load $LibFolder/$libName[info sharedlibextension]} err]
+				# set r [catch {load $APP_PATH/AlgorithmsLibraries/$libName} err]
+				
+				### Si ocurrio un error
 				if {$r} {
 					tk_messageBox -icon error -title "Error" -message $err
 				}
-				#puts "$algorithmProcedure $numberProcessors $simulationTime $pathSavedTasks"
 
-				#set r [catch { insertResultsBox [getResultsBoxFrame] $resultAlg  } errmsg]
-
-
-				puts "COMMAND_NAME $algorithmSelected $numberProcessors $simulationTime $pathSavedTasks"
-        				
-        			set r [catch {eval simulator $algorithmSelected $numberProcessors $simulationTime $pathSavedTasks } errmsg]
+        		### Ejecutar el comando de la libreria		
+				puts "Ejecutando $cmdName $schedSelected $numberProcessors $simulationTime $pathSavedTasks"
+        		set r [catch {eval simulator $schedSelected $numberProcessors $simulationTime $pathSavedTasks } errmsg]
+				
+				### Cargar el log  en la interface
 				set r [catch { cargarLog [getResultsBoxFrame] } errmsg]
 
+				### Si ocurrio un error
 				if {$r} {
 					tk_messageBox -icon error -title "Error" -message $errmsg
 				}
-				
-				
-				
-				
-				#set r [catch { exec $APP_PATH/AlgorithmsLibraries/$algorithmProcedure $algorithmSelected $numberProcessors $simulationTime $pathSavedTasks } errmsg]
-				# if {$r} {
-					# tk_messageBox -icon error -title "Show camera error" -message $errmsg
-				# }
-				# puts "Failed - $errmsg"
-				
-				
-				# if {$r} {
-					# tk_messageBox -icon error -title "Show camera error" -message $err
-				# }
-				# puts "Failed - $errmsg"
-				# puts "Este es el mero \n de todos\n$resultAlg"
-        			
 			}
-			
-			
-# #			edfSched 1 0 /home/vid/PRUEBAS_TCL/EDF/data/test1.txt
-# #			return 1
 		}
 	}
 #	return 0
@@ -475,7 +461,7 @@ proc insertResultsBox { frameParent result} {
 }
 
 proc newSetTasks {frameTasksEntrys frameResultsBox } {
-        global algorithmSelected;
+        global schedSelected;
         global pathSavedTasks
         global idEntry;
         global phaseEntry;

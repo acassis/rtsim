@@ -69,11 +69,11 @@ cargarIni
 loadAlgorithms
 
 
-global AlgorithmsName;		#This array will contains all the algorithm names indicated in the file Algorithms.conf
+global AlgorithmInfo;		#This array will contains all the algorithm INFO indicated in the file Algorithms.conf
 global pathSavedTrace;
 global languagesAvailables;	#This array will contains all the names of the Languages indicated in the file Languages.conf
 global languageSelected;	#This var will contains the name of the selected language by the user in the program
-global algorithmSelected;	#This var will conatins the name of the algorithm selected by the user
+global schedSelected;	#This var will conatins the name of the algorithm selected by the user
 global typeTestSelected;	#This var will contains the type of test selected by the user
 global pathSavedTasks
 global simulationTime
@@ -98,12 +98,15 @@ set commandsLanguage(IDROW) 0 ;		#Assign a element to array that indicate the ro
 set commandsLanguage(IDCOL) 0 ; 	#Assign a element to array that indicate the column in the array
 set languagesAvailables(IDROW) 0;	#Assign a element to array that indicate the row in the array
 set languagesAvailables(IDCOL) 0;	#Assign a element to array that indicate the column in the array
-set AlgorithmsName(IDROW) 0 ;		#Assign a element to array that indicate the row in the array
-set AlgorithmsName(IDCOL) 0 ;		#Assign a element to array that indicate the column in the array
+set AlgorithmInfo(IDROW) 0 ;		#Assign a element to array that indicate the row in the array
+set AlgorithmInfo(IDCOL) 0 ;		#Assign a element to array that indicate the column in the array
 loadLanguage $config(language)
 loadNameAlgorithms $config(algorithmsName)
 countAlgorithms $config(algorithmsName)
 loadLangaugesAvailables $config(languagesContainer)
+set LibFolder  $config(libFolder)
+
+#no usados
 set fullLibFile $config(fulllibfile)
 set fullLibCommand $config(fulllibcommnad)
 
@@ -512,7 +515,7 @@ proc makeToolsBar { frameParent args} {
 #		None
 ##########################################################################
 proc makeMenuBar { frameParent parent args} {
-	global algorithmSelected;		#This variable contains the algorithm that is selected by the user
+	global schedSelected;		#This variable contains the algorithm that is selected by the user
 	global algorithmsAvailables;
 	global typeTestSelected;
 	global pathSavedTasks
@@ -566,10 +569,12 @@ proc makeMenuBar { frameParent parent args} {
 #	$settings add command -label "[searchCommand NO_PROCESSORS_MENU]" -command {  } -underline 1 ;			#NO_PROCESSORS option
 	
 	#Run items menu
-	#$run add command -label "[searchCommand SIMULATE]" -command { simulate $pathSavedTasks [searchAlgLib $algorithmSelected] $algorithmSelected [getResultsBoxFrame] } -underline 1 ;					#Simulate option
+	#$run add command -label "[searchCommand SIMULATE]" -command { simulate $pathSavedTasks [searchAlgLib $schedSelected] $schedSelected [getResultsBoxFrame] } -underline 1 ;					#Simulate option
 	
 	#run using full library
-	$run add command -label "[searchCommand SIMULATE]" -command { simulate $pathSavedTasks $fullLibFile $algorithmSelected [getResultsBoxFrame] } -underline 1 ;					#Simulate option
+	#$run add command -label "[searchCommand SIMULATE]" -command { simulate $pathSavedTasks $fullLibFile $schedSelected [getResultsBoxFrame] } -underline 1 ;					#Simulate option
+	#run using partial library
+	$run add command -label "[searchCommand SIMULATE]" -command { simulate $pathSavedTasks $schedSelected [getResultsBoxFrame] } -underline 1 ;					#Simulate option
 	$run add command -label "[searchCommand OPEN_KIWI]" -command { loadTraceKiwi } -underline 1 ;				#Open kiwi option
 	
 	#Build items menu
@@ -590,13 +595,15 @@ proc makeMenuBar { frameParent parent args} {
 		for {set i 0} {$i < $algLibraryCount} {incr i} {
 		
 			if {$algLibraryNames($i,0) != ""} {
-				#Each of one algorithms will be put a value on the variable algorithmSelected and this will contain the algorithm selected
-				$frameParent.menu.build.algorithms add radio -value $algLibraryNames($i,1) -label $algLibraryNames($i,0) -variable algorithmSelected -command { }
+				#Each of one algorithms will be put a value on the variable schedSelected and this will contain the algorithm selected
+				$frameParent.menu.build.algorithms add radio -value $algLibraryNames($i,1) -label $algLibraryNames($i,0) -variable schedSelected -command {  }
 			} else {
 				$frameParent.menu.build.algorithms add separator
 			}
 		}
-		set algorithmSelected $algLibraryNames(0,1)
+		set schedSelected $algLibraryNames(0,1)
+		
+		puts "Algoritmo seleccionado $algLibraryNames(0,1)"
 	
 	
 	
@@ -624,15 +631,15 @@ proc makeMenuBar { frameParent parent args} {
 #		None
 ##########################################################################
 proc makeResultsBox { frameparent args} {
-	scrollbar $frameparent.trace.scrollbarTrace -command {$frameparent.trace.textoTrace yview} -orient vertical 
-	pack $frameparent.trace.scrollbarTrace -side left
+	#scrollbar $frameparent.trace.scrollbarTrace -command {$frameparent.trace.textoTrace yview} -orient vertical 
+	#pack $frameparent.trace.scrollbarTrace -side left
 	label $frameparent.trace.labtxt2 -bd 2 -text " [searchCommand RESULTS] "
 	text $frameparent.trace.textoTrace -bg white -width 50 -height 20
 	pack $frameparent.trace.labtxt2 -side top
 	pack $frameparent.trace.textoTrace -padx 10 -pady 1
 	
-	scrollbar $frameparent.statistics.scrollbarStatistics -command {$frameparent.trace.textoStatistics yview} -orient vertical 
-	pack $frameparent.statistics.scrollbarStatistics -side left
+	#scrollbar $frameparent.statistics.scrollbarStatistics -command {$frameparent.trace.textoStatistics yview} -orient vertical 
+	#pack $frameparent.statistics.scrollbarStatistics -side left
 #	label $frameparent.statistics.labtxt3 -bd 2 -text " [searchCommand RESULTS] "
 	text $frameparent.statistics.textoStatistics -bg white -width 50 -height 20
 #	pack $frameparent.statistics.labtxt3 -side top
