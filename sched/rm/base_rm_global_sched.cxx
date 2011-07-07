@@ -152,7 +152,7 @@ int start_rm(int mode, int no_proc, double max_time, task_set_t *t, char* outfil
 		new_event.processor = NULL;
 		event_list = add_sched_event_list_time_sorted(event_list, new_event);
 
-		task_to_execute = task_to_execute->next;
+		task_to_execute = (task_set_t*) (task_to_execute->next);
 		no_task++;
 	}
 
@@ -1114,10 +1114,10 @@ int start_rm_main(ALGORITHM_PARAMS parameters)
 
 				//add task to task list
 				t = add_task_list_p_sorted(t, new_task);
-				current_task = current_task->next;
+				current_task = (task_set_t*) (current_task->next);
 			}
 
-			sprintf(&partialname, "%s_partial%d",basename_trace,current_processor->id);
+			sprintf(partialname, "%s_partial%d",basename_trace,current_processor->id);
 
 #ifdef USE_THREAD
 			args.mode		= mode;
@@ -1142,7 +1142,7 @@ int start_rm_main(ALGORITHM_PARAMS parameters)
 #else
 			res += start_rm(mode, 1, max_time, t, partialname);
 #endif
-			current_processor = current_processor->next;
+			current_processor = (processor_t*) (current_processor->next);
 		}
 	}
 	
