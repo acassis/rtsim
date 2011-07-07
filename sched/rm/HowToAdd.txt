@@ -24,17 +24,21 @@
 			int Rmrboundmp_Init(Tcl_Interp *interp)
 			
 	Notas: 
-	* En este metodo se hace uso de la definicion del paso 3.2 para crear el comando de TCL. * Al final del archivo se incluye el archivo de codigo comun base_rm_global_sched.cxx, para completar el codigo de la libreria.
+	* En este metodo se hace uso de la definicion del paso 3.2 para crear el comando de TCL. 
+	* Al final del archivo se incluye el archivo de codigo comun base_rm_global_sched.cxx, para completar el codigo de la libreria.
 	
-4. Agregar la lista de archivos y el metodo al archiv makefile. El archivo makefile nos permitira compilar los archivos nuevos y generar la libreria que cargara TCL.
+4. Agregar la lista de archivos y el metodo al archivo makefile. El archivo makefile nos permitira compilar los archivos nuevos y generar la libreria que cargara TCL.
 	4.1 En la seccion 1 del makefile, copiar y configurar los nombres y rutas para los archivos que se han agregado y el nombre de la libreria que se desea generar. 
-		Como en el caso del nombre de la funcion (3.4) recordar que el nombre de la libreria debe coincidir con el nombre del metodo, asi por ejemplo si estamos agregando el metodo rmbfduuo, la libreria debera llamarse lib + rmbfduuo + .so
+		Como en el caso del nombre de la funcion (3.4) recordar que el nombre de la libreria debe coincidir con el nombre del metodo, asi por ejemplo si estamos agregando el metodo rmbfduuo, la libreria debera llamarse lib + rmbfduuo + .so osea librmbfduuo.so
 		Ej.
 		### Configuracion para metodo rm bf du uo
+		#carpeta donde estan los archivos
 		dir_rmbfduuo	=$(SCHED_DIR)/rm_bf_du_uo
+		#archivos c que se compilaran
 		file1_rmbfduuo	=$(dir_rmbfduuo)/rm_bf_du_uo.c
 		file2_rmbfduuo	=$(dir_rmbfduuo)/base_rm_global_sched.c
-		lib_rmbfduuo	=$(LIB_DIR)/librmbfduuo.so
+		#nombre de la libreria que se va a generar
+		lib_rmbfduuo	=$(LIB_DIR)/librmbfduuo.so	
 	
 	4.2 Crear el nombre del comando para compilar el nuevo metodo, y especificar los archivos que se agregaron. Ej.
 		### Crear libreria para rm bf du uo
