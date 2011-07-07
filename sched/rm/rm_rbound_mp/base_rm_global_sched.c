@@ -14,7 +14,7 @@
 //ejemplo de llamada desde TCL
 //set r [catch {eval COMMAND_NAME $algorithmSelected $numberProcessors $simulationTime $pathSavedTasks } errmsg]
 
-
+static int SimuladorCmd(ClientData clientData, Tcl_CmdDeleteProc* proc, int objc, Tcl_Obj* const objv[]);
 
 //llamar a la funcion parcial
 processor_t* partial_function(processor_t* list, int nproc, char *file)
@@ -26,46 +26,6 @@ processor_t* partial_function(processor_t* list, int nproc, char *file)
 	DBG(" \n END start_rbound_mp");
 }
 
-//nombre de la funcion que ejecutara los comandos
-//USAR NOMBRE DE LA LIBRERIA MAS Cmd, la primera letra debera ser Mayuscula
-//ejemplo RmnfllCmd para libreria librmnfll
-static int RmrboundmpCmd(ClientData clientData, Tcl_CmdDeleteProc* proc, int objc, Tcl_Obj* const objv[]) 
-{
-	int res = TCL_OK;
-	char* strings[255];
-	int t = 0;
-	ALGORITHM_PARAMS parameters;
-
-	DBG("\n cleaning log...");
-	init_logger();
-	
-//convertir la lista de parametros a cadenas de C
-	DBG("\n called with %d arguments", objc);
-	for(t=0;t<objc;t++)
-	{
-		DBG("\n%d: %s",t, (*objv[t]).bytes);
-		strings[t] = (*objv[t]).bytes;
-	}
-	DBG("\n");
-		
-	//USAR SIEMPRE MODO PARCIAL
-	parameters.algorithm	= RM;
-	parameters.mode			= MODE_PARTIAL;
-	// SOLO SE USARA UNA FUNCION PARCIAL, NO ESPECIFICAR EN LOS PARAMETROS
-	// parameters.partial_func = RM_PARTIAL_RBOUND_MP_NFR;
-	
-	parameters.processor	= atoi(strings[2]);
-	parameters.time			= atoi(strings[3]);
-	strcpy(parameters.data, strings[4]);
-
-	parameters.param_count = objc - 2;
-	
-	res = start_rm_main(parameters);
-	//res = simulator_main(objc, strings);
-
-	DBG("\n end main: %d",res);
-	return res;
-}
 
 //USAR NOMBRE DE LA LIBRERIA MAS _Init
 // ejemplo Rmnfll_init para librmnfll
@@ -79,7 +39,7 @@ int Rmrboundmp_Init(Tcl_Interp *interp)
     }
 	
 	DBG("\ncreating command [%s]\n",COMMAND_NAME);
-    Tcl_CreateObjCommand(interp, COMMAND_NAME, RmrboundmpCmd, NULL, NULL);
+    Tcl_CreateObjCommand(interp, COMMAND_NAME, SimuladorCmd, NULL, NULL);
     Tcl_PkgProvide(interp, COMMAND_NAME, "1.1");
 
 	return TCL_OK;
