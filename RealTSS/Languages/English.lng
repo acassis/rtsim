@@ -1,0 +1,93 @@
+REALTSS_SIMULATOR=Algorithms simulator Planning in Real Time
+NO_FILE_SELECTED=Not file selected!
+NEW=New
+SETTINGS_MENU=Settings
+SCHEDULER_SETTINGS=Scheduler Settings
+VIEW_MENU=View
+RUN_MENU=Run
+OPEN=Open
+SAVE=Save
+SAVE_AS=Save As..
+PRINT=Print
+FILE=File
+HELP=Help
+ABOUT_REALTSS=About RealTSS
+HELP_CONTENTS=Help Contents
+EXIT=Exit
+ABOUT_FILE=EnglishAbout.hlp
+SIMULATION_MENU=Simulation
+BUILD_MENU=Build
+TOOLS_MENU=Tools
+ALGORITHMS_MENU=Algorithms
+SIMULATION_TYPE=Simulation Type
+SCHEDULER_ALGORITHMS=Scheduler Algorithms
+SHARED_RESOURCES=Shared Resources
+BUILD_MENU=Build
+NO_PROCESSORS_MENU=No. of Processors
+PREFERENCES_MENU=Preferences
+#
+CANT_LOAD_LOG=Log file not found
+SAVE_SUCCESSFUL=The tasks were saves successfully
+NOT_FILE_SELECTED=There were not a file selected
+NOT_TASKS=There are not tasks for save
+TYPE_TEST=Type of test
+ACCURATE=Accurate
+INACCURATE=Inaccurate
+LOAD_LANGUAGE=Load Language
+LANGUAGE_MENU=Language Settings
+SELECT_LANGUAGE=Please select a language of the list
+LANGUAGE_FILE=English.lng
+COULD_NOT_FIND_KIWI=Could not find Kiwi
+SAVE_STATISTICS=Save statistics
+SAVE_PLAN=Save plan
+EXECUTE_KIWI=Execute Kiwi
+ADD=Add
+DELETE=Delete
+SIMULATION=Simulation
+FEASIBILITY_TEST=Feasibility test
+EXECUTION_TRACE=Execution Trace
+SIMULATION_TIME=Simulation Time
+RESULTS=Results
+SIMULATE=Simulate
+OPEN_KIWI=Open Trace in Kiwi
+TASKS=Tasks
+RESOURCES=Resources
+TIME=Time
+TASK_SET_EMPTY=There are not tasks to save
+NOT_FOUND_ALGORITHMS=Not found Algorithms
+SHOW_PROCESS_UTILIZATION=Show process utilization
+SHOW_TRACE=Show Trace
+SHOW_RESULTS=Show Results
+
+#
+TASK_ID=Task ID
+TASK_PHASE=Phase
+TASK_EXECUTION_TIME=Execution Time
+TASK_PERIOD=Period
+TASK_DEADLINE=DeadLine
+TASK_PERIODIC= Periodic Tasks
+TASK_PRIORITY=Priority
+#
+RESOURCES_TASK=Task
+RESOURCES_TASK_ID=ID Task
+RESOURCES_START=Start
+RESOURCES_TIME=Time
+RESOURCES_ID=ID
+RESOURCES_TASK=ID Task
+RESOURCES_TIME=Time
+#
+ABBREVIATION_TASK_ID=ID
+ABBREVIATION_TASK_PHASE=T.F.
+ABBREVIATION_TASK_EXECUTION=T.E.
+ABBREVIATION_TASK_PERIOD=T.P.
+ABBREVIATION_TASK_DEADLINE=T.D.
+ABBREVIATION_TASK_PERIODIC=T.PA.
+ABBREVIATION_TASK_PRIORITY=T.PTY.
+#
+WINDOW_DIALOG_EXTENSION_TXT=Text Files
+WINDOW_DIALOG_EXTENSION_RTS=RealTSS Files
+
+/
+
+##This file contains the indicate language by the name of it self, this file will be called in according to the
+## election of the user by the aplication of RealTSS

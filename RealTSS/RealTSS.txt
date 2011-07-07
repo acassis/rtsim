@@ -1,0 +1,117 @@
+===================================================================
+	RealTSS 0.1
+	2007
+===================================================================
+
+RealTSS is a free, open source real-time scheduling simulator 
+written in Tcl/TK. RealTSS is designed to help analyze real-time 
+systems. It can be also used as a teaching tool.
+RealTSS is developed and maintained by The Postgraduate studies 
+and investigation division of the Instituto Tecnologico de 
+Mexicali (http://www.itmexicali.edu.mx/posgrado/index.htm).
+
+
+===================================================================
+In this file:
+	1.0 Features 
+	2.0 Dependencies
+	3.0 Installation
+	4.0 Configuring RealTSS
+	5.0 Getting help
+
+
+===================================================================
+1.0 Features:
+
+Schedulling algorithms:
+  - Fixed Priorities (FP)
+  - Rate Monotonic (RM)
+  - Deadline Monotonic (DM)
+  - Earliest Deadline First (EDF)
+Feasiability tests:
+  - Spuri
+  - Liu & Layland
+  - Lehoczky, Sha & Ding
+Synchronization protocols:
+  - Priority inhetance protocol (PIP)
+  - Stack resource protocol (SRP)
+
+Statistics:
+  - The results include:
+  - Processor Utilization Time
+  - Processor Load
+  - Activations
+  - Context Changes
+  - Preemptions
+  - Miss
+  - Loss
+
+
+===================================================================
+2.0 Dependencies:
+
+- Tcl/TK 8.5 or higher
+- RealTSS uses KIWI to display the resulting execution trace. 
+  You can get KIWI here: http://rtportal.upv.es/apps/kiwi/
+
+
+===================================================================
+3.0 Installation
+
+RealTSS is fully written in Tcl/Tk, in order to run RealTSS, you 
+need the Tcl/Tk interpreter installed on your system. 
+Tcl/TK is available for almost any Unix system and for Windows 
+also, it is distributed in binaries or you could very easy compile 
+and install it. Refer to the Tcl Developer Xchange 
+(http://www.tcl.tk/) homepage for details.
+
+Unix Systems
+First, you must find the full pathname of the Tcl/TK interpreter 
+which is installed in your system. The name of this interpreter 
+is "wish" or "wishN.M" being N.M the version of Tcl/TK that you 
+have. You can execute "which wish" for getting the full pathname 
+of "wish". Next, edit the first line in the file called "RealTSS" 
+and correct the full pathname of "wish" if necessary.
+Although is not mandatory, it is recommended that you install and 
+configure kiwi on your system in order to visualize the execution 
+trace. After you install and configure both Tcl/TK and kiwi You can 
+run RealTSS just by executing the file named "RealTSS".
+
+Note:
+	If you have another version installed later than 8.5 and you
+	decide yo install the new version of tcl8.5 and tk8.5 you must
+	also change the links because they call regulary the version
+	that have before we installed the new version.
+	So to get works fine our simulator we have to change the links:
+	
+	ln -f /usr/bin/tclsh8.5 /usr/bin/tclsh
+	and
+	ln -f /usr/bin/wish8.5 /usr/bin/wish
+	
+	these commands change the links to our new versions of interpre-
+	ters installed 
+
+Windows Systems
+You should rename the file "RealTSS" to "RealTSS.tcl". You can run 
+now RealTSS by double-clicking the icon of the file "RealTSS.tcl". 
+
+
+===================================================================
+4.0 Configuring RealTSS
+RealTSS depends on the realtss.ini file to find and load diferent 
+information about the environment in wich it runs.
+You can edit this file to customize it accordingly to your needs.
+
+wish  = Name of the Tcl/TK interpreter. Only need in Windows.
+algos = path to the algorithm directory, default to algo.
+kiwi = Kiwi full path (including extension)
+language = Language that will be showed in the interface
+
+===================================================================
+5.0 Getting Help
+The RealTSS development team can be reached at:
+Arnoldo D�az, adiaz@itmexicali.edu.mx
+
+
+
+

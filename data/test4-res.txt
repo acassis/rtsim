@@ -1,0 +1,4 @@
+# count - id_res, wait_time, excecute_time - id_res ...
+1 1 1 1
+2 1 1 3 2 3 2
+1 2 1 4

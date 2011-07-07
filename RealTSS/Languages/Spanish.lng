@@ -1,0 +1,94 @@
+REALTSS_SIMULATOR=Simulador de Algoritmos de Planificacion en Tiempo Real
+NOT_FILE_SELECTED=No se ha seleccionado algun archivo
+NEW=Nuevo
+SETTINGS_MENU=Configuracion
+SCHEDULER_SETTINGS=Configuracion Planificador
+VIEW_MENU=Vista
+RUN_MENU=Ejecutar
+OPEN=Abrir
+SAVE=Guardar
+SAVE_AS=Guardar como..
+PRINT=Imprimir
+FILE=Archivo
+HELP=Ayuda
+ABOUT_REALTSS=Acerca de RealTSS
+HELP_CONTENTS=Contenido de Ayuda
+EXIT=Salir
+ABOUT_FILE=SpanishAbout.hlp
+SIMULATION_MENU=Simulacion
+BUILD_MENU=Simulacion
+TOOLS_MENU=Herramientas
+ALGORITHMS_MENU=Algoritmos
+SIMULATION_TYPE=Tipo de Simulacion
+SCHEDULER_ALGORITHMS=Algoritmo de Planificador
+SHARED_RESOURCES=Recursos Compartidos
+BUILD_MENU=Construir
+NO_PROCESSORS_MENU=No. de Procesadores
+PREFERENCES_MENU=Preferencias
+#
+CANT_LOAD_LOG=No se encontro el archivo de log
+SAVE_SUCCESSFUL=Se llevo a cabo la grabacion con exito
+NOT_FILE_SELECTED=No hubo algun archivo que se selecciono
+NOT_TASKS=No hay tareas que almacenar
+TYPE_TEST=Tipo de Prueba
+ACCURATE=Exacta
+INACCURATE=Inexacta
+LOAD_LANGUAGE=Cargar Lenguaje
+LANGUAGE_MENU=Opciones de Lenguaje
+SELECT_LANGUAGE=Please seleccione un lenguaje de la lista
+LANGUAGE_FILE=Spanish.lng
+COULD_NOT_FIND_KIWI=No se pudo encontrar la aplicacion de Kiwi
+SAVE_STATISTICS=Guardar Estadisticas
+SAVE_PLAN=Guardar el trazo de la ejecucion
+EXECUTE_KIWI=Ejecutar Kiwi
+ADD=Agregar
+DELETE=Borrar
+SIMULATION=Simular
+FEASIBILITY_TEST=Prueba de Eficacia
+EXECUTION_TRACE=Trazo de la ejecucion
+SIMULATION_TIME=Tiempo de Simulacion
+RESULTS=Resultados
+SIMULATE=Simular
+OPEN_KIWI=Abrir Trace en Kiwi
+TASKS=Tareas
+RESOURCES=Recursos
+TIME=Tiempo
+TASK_SET_EMPTY=No existen tareas que almacenar
+NOT_FOUND_ALGORITHMS=No existen algoritmos definidos
+SHOW_PROCESS_UTILIZATION=Mostrar la utilizacion del procesador
+SHOW_TRACE=Mostrar la traza
+SHOW_RESULTS=Mostrar los resultados
+#
+TASK_ID=No.Tarea
+TASK_PHASE=Fase
+TASK_EXECUTION_TIME=Tiempo de Ejecucion
+TASK_PERIOD=Periodo
+TASK_DEADLINE=Tiempo de Muerte
+TASK_PERIODIC=Tareas periodicas
+TASK_PRIORITY=Prioridad
+#
+RESOURCES_TASK=Tarea
+RESOURCES_TASK_ID=No. Tarea
+RESOURCES_START=Inicio
+RESOURCES_TIME=Tiempo
+RESOURCES_ID=No. del recurso
+RESOURCES_TASK=No de la tarea
+RESOURCES_TIME=Tiempo
+#
+ABBREVIATION_TASK_ID=ID
+ABBREVIATION_TASK_PHASE=T.F.
+ABBREVIATION_TASK_EXECUTION=T.E.
+ABBREVIATION_TASK_PERIOD=T.P.
+ABBREVIATION_TASK_DEADLINE=T.D.
+ABBREVIATION_TASK_PERIODIC=T.PA.
+ABBREVIATION_TASK_PRIORITY=T.PTY.
+#
+WINDOW_DIALOG_EXTENSION_TXT=Archivos de Texto
+WINDOW_DIALOG_EXTENSION_RTS=Archivos de RealTSS
+/
+
+##Este archivo contiene el lenguaje indicado en el nombre de este mismo, para el cual sera llamado dependiendo
+##de la eleccion del usuario en la aplicacion RealTSS
+
+##This file contains the indicate language by the name of it self, this file will be called in according to the
+## election of the user by the aplication of RealTSS
