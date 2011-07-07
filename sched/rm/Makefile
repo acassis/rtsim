@@ -26,15 +26,22 @@ objects = $(UTILS_DIR)/task_lists.o\
 # 1. Copiar y configurar las rutas para un nuevo metodo
 ############################################################################################
 ### Configuracion para metodo 
-# dir_rmrboundmp	=$(SCHED_DIR)/rm_rbound_mp
-# file1_rmrboundmp=$(dir_rmrboundmp)/rbound_mp.c -o $(dir_rmrboundmp)/rbound_mp.o
-# file2_rmrboundmp=$(dir_rmrboundmp)/base_rm_global_sched.c -o $(dir_rmrboundmp)/base_rm_global_sched.o
+#carpeta donde estan los archivos
+# dir_rmrboundmp	=$(SCHED_DIR)/rm_rbound_mp					
+# #archivos C que se compilaran
+# file1_rmrboundmp=$(dir_rmrboundmp)/rbound_mp.c
+# file2_rmrboundmp=$(dir_rmrboundmp)/base_rm_global_sched.c
+# #nombre de la libreria que se generara
 # lib_rmrboundmp	=$(LIB_DIR)/librmrboundmp.so
 
+
 ### Configuracion para metodo rm rbound
-dir_rmrboundmp	=$(SCHED_DIR)/rm_rbound_mp
+#carpeta donde estan los archivos
+dir_rmrboundmp	=$(SCHED_DIR)/rm_rbound_mp					
+#archivos C que se compilaran
 file1_rmrboundmp=$(dir_rmrboundmp)/rbound_mp.c
 file2_rmrboundmp=$(dir_rmrboundmp)/base_rm_global_sched.c
+#nombre de la libreria que se generara
 lib_rmrboundmp	=$(LIB_DIR)/librmrboundmp.so
 
 ### Configuracion para metodo rm bf du uo
