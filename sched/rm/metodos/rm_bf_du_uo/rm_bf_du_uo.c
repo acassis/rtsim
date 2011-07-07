@@ -26,7 +26,8 @@
             "file" contains the task's parameters, ordered in this fashion
             (a line per task):
 
-                  period   execution-time
+                  period   execution-time# cp $(APP_NAME).run ./$(APP_NAME)
+	
 
           Output:
 
@@ -57,7 +58,7 @@
 
    LAST REVISION:    June 2009                                                         */
 
-#include "../include/rm_bf_du_uo.h"
+#include "rm_bf_du_uo.h"
 
 
 processor_t*  start_rm_bf_du_uo(int nproc, char *file )
