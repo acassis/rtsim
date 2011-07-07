@@ -32,9 +32,10 @@
 
 #include <stdio.h>
 #include <math.h>
-#include "simulator.h"
-#include "task.h"
-#include "processor.h"
+
+#include <simulator.h>
+#include <task.h>
+#include <processor.h>
 
 extern processor_t*  start_rbound_mp(int nproc, char *file );
 extern processor_t*  start_rbound_mp_main(int argc, char *argv[] );

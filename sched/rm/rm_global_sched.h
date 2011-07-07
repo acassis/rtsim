@@ -1,16 +1,16 @@
 #ifndef __RM_GLOBAL_SCHED_H__
 #define __RM_GLOBAL_SCHED_H__
 
-#include "simulator.h"
+#include <simulator.h>
 
 #include <string.h>
 #include <stdio.h>
 #include <math.h>
 
-#include "../../include/task.h"
-#include "../../include/processor.h"
-#include "../../include/sched_event.h"
-#include "../../include/trace_event.h"
+#include <task.h>
+#include <processor.h>
+#include <sched_event.h>
+#include <trace_event.h>
 
 #ifdef SIMLUATOR_LIB_TCL
 	#include <tcl.h>
