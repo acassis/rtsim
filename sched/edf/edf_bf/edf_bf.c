@@ -55,7 +55,7 @@
 
 
 
-#include "../include/edf_bf.h"
+#include "edf_bf.h"
 
 processor_t* start_edf_bf(int nproc, char *file)
 {

@@ -54,13 +54,61 @@
 
 
 
-#include "../include/edf_global_sched.h"
 
+//archivo con el codigo base comun para todas las funciones parciales
+//este archivo se incluira en cada version de edf con cada funcion parcial
 
+//#define USE_RESOURCES
 #define USE_TRACE_FILE
 //#define END_ON_MISS_DEADLINE
 
 
+
+//funcion de entrada para ejecutar el planificador
+static int SimuladorCmd(ClientData clientData, Tcl_CmdDeleteProc* proc, int objc, Tcl_Obj* const objv[]) 
+{
+	int res = TCL_OK;
+	char* strings[255];
+	int t = 0;
+	ALGORITHM_PARAMS parameters;
+
+	DBG("\n cleaning log...");
+	init_logger();
+	
+//convertir la lista de parametros a cadenas de C
+	//DBG("\n called with %d arguments", objc);
+	for(t=0;t<objc;t++)
+	{
+		//DBG("\n%d: %s",t, (*objv[t]).bytes);
+		strings[t] = (*objv[t]).bytes;
+	}
+	//DBG("\n");
+		
+	//USAR SIEMPRE MODO PARCIAL
+	parameters.algorithm	= EDF;
+	parameters.mode			= MODE_PARTIAL;
+	// SOLO SE USARA UNA FUNCION PARCIAL, NO ESPECIFICAR EN LOS PARAMETROS
+	// parameters.partial_func = EDF_PARTIAL_RBOUND_MP_NFR;
+	
+	parameters.processor	= atoi(strings[2]);
+	parameters.time			= atoi(strings[3]);
+	strcpy(parameters.data, strings[4]);
+
+	parameters.param_count = objc - 2;
+
+	res = start_edf_main(parameters);
+	//res = simulator_main(objc, strings);
+
+	DBG("\n End SimuladorCmd: %d",res);
+	return res;
+}
+
+
+
+
+
+
+/*
 typedef enum
 {
 	PARAM_MODE=0,
@@ -69,7 +117,7 @@ typedef enum
 	PARAM_FILE,
 	PARAM_COUNT,
 }EDF_PARAMS;
-
+*/
 
 #ifdef USE_THREAD
 
@@ -162,7 +210,7 @@ int start_edf(int mode, int no_proc, double max_time, task_set_t *t, char* outfi
 		new_event.processor = NULL;
 		event_list = add_sched_event_list_time_sorted(event_list, new_event);
 
-		task_to_execute = task_to_execute->next;
+		task_to_execute = (task_set_t*) (task_to_execute->next);
 		no_task++;
 	}
 
@@ -508,7 +556,7 @@ int start_edf(int mode, int no_proc, double max_time, task_set_t *t, char* outfi
 		LOG("\nProcessor %d: U = %f", file_id, current_processor->u);
 		//print_trace_list((trace_event *)current_processor->tracer);
 		sprintf(file_trace, "%s_p%d.ktr", &basename_trace[0], file_id);
-		create_trace_list(file_trace, (trace_event *) current_processor->tracer, no_task, (int) max_time, (char *) "RM");
+		create_trace_list(file_trace, (trace_event *) current_processor->tracer, no_task, (int) max_time, (char *) "EDF");
 		current_processor = (processor_t *) current_processor->next;
 
 	}
@@ -616,7 +664,7 @@ int start_edf_main(ALGORITHM_PARAMS parameters)
 				new_task.d = new_task.r + new_task.t;
 				new_task.cet = 0.0;
 				new_task.e = -1;
-				new_task.p = set_task_rm_priority(&new_task);
+				new_task.p = set_task_edf_priority(&new_task);
 				new_task.state = TASK_READY;
 				new_task.se = 0;
 
@@ -645,6 +693,10 @@ int start_edf_main(ALGORITHM_PARAMS parameters)
 		res = 0;
 		
 		list = NULL;
+		//DBG("calling to partial function\n");
+		list = partial_function(list, 1, parameters.data);
+		//DBG("end partial function\n");
+/*
 		switch(parameters.partial_func)
 		{
 			case EDF_PARTIAL_NF:
@@ -666,10 +718,11 @@ int start_edf_main(ALGORITHM_PARAMS parameters)
 				return -1;
 
 		}
+		*/
 		
 		if(list == NULL)
 		{
-			LOG( "Error: unknow list for function %d\n", parameters.partial_func);
+			LOG( "Error: unknow list for function %s\n", COMMAND_NAME);
 			return -1;
 		}
 
@@ -693,17 +746,17 @@ int start_edf_main(ALGORITHM_PARAMS parameters)
 				new_task.d = new_task.r + new_task.t;
 				new_task.cet = 0.0;
 				new_task.e = -1;
-				new_task.p = set_task_rm_priority(&new_task);
+				new_task.p = set_task_edf_priority(&new_task);
 				new_task.state = TASK_READY;
 				new_task.se = 0;
 
 	
 				//add task to task list
 				t = add_task_list_p_sorted(t, new_task);
-				current_task = current_task->next;
+				current_task = (task_set_t*) (current_task->next);
 			}
 
-			sprintf(&partialname, "%s_partial%d",basename_trace,current_processor->id);
+			sprintf(partialname, "%s_partial%d",basename_trace,current_processor->id);
 #ifdef USE_THREAD
 			args.mode	= mode;
 			args.no_proc	= 1;
@@ -714,18 +767,18 @@ int start_edf_main(ALGORITHM_PARAMS parameters)
 			res = pthread_create(&thread_task, NULL, thread_start_edf, &args);
 
 			if( res != 0)
-				LOG("\n Error no se pudo crear el hilo");
+				DBG("\n Error no se pudo crear el hilo");
 			else
 			{
-				LOG("\nnew thread created...");
+				DBG("\nnew thread created...");
 				pthread_mutex_lock(&edf_mutex); 
 					edf_active_threads ++;
 				pthread_mutex_unlock(&edf_mutex); 
 			}
 #else
-			res += start_rm(mode, 1, max_time, t, partialname);
+			res += start_edf(mode, 1, max_time, t, partialname);
 #endif
-			current_processor = current_processor->next;
+			current_processor = (processor_t*) (current_processor->next);
 		}
 	}
 #ifdef USE_THREAD
