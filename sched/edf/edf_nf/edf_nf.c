@@ -52,7 +52,7 @@
 
    LAST REVISION:    June 2009                                                         */
 
-#include "../include/edf_nf.h"
+#include "edf_nf.h"
 
 processor_t* start_edf_nf(int nproc, char *file)
 {

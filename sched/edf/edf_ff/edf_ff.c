@@ -53,7 +53,7 @@
 
    LAST REVISION:    June 2009                                                         */
 
-#include "../include/edf_ff.h"
+#include "edf_ff.h"
 
 processor_t* start_edf_ff(int nproc, char *file)
 {

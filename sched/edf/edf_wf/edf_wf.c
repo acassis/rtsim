@@ -55,7 +55,7 @@
 
 
 
-#include "../include/edf_wf.h"
+#include "edf_wf.h"
 
 processor_t* start_edf_wf(int nproc, char *file)
 {

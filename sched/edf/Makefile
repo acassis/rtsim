@@ -35,7 +35,7 @@ objects = $(UTILS_DIR)/task_lists.o\
 # lib_edfbf	=$(LIB_DIR)/libedfbf.so
 
 
-### Configuracion para metodo rm rbound
+### Configuracion para metodo edf bf
 #carpeta donde estan los archivos
 dir_edfbf	=$(SCHED_DIR)/edf_bf
 #archivos C que se compilaran
@@ -43,6 +43,33 @@ file1_edfbf	=$(dir_edfbf)/edf_bf.c
 file2_edfbf	=$(dir_edfbf)/base_edf_global_sched.c
 #nombre de la libreria que se generara
 lib_edfbf	=$(LIB_DIR)/libedfbf.so
+
+### Configuracion para metodo edf ff
+#carpeta donde estan los archivos
+dir_edfff	=$(SCHED_DIR)/edf_ff
+#archivos C que se compilaran
+file1_edfff	=$(dir_edfbf)/edf_ff.c
+file2_edfff	=$(dir_edfbf)/base_edf_global_sched.c
+#nombre de la libreria que se generara
+lib_edfff	=$(LIB_DIR)/libedfff.so
+
+### Configuracion para metodo edf nf
+#carpeta donde estan los archivos
+dir_edfnf	=$(SCHED_DIR)/edf_nf
+#archivos C que se compilaran
+file1_edfnf	=$(dir_edfnf)/edf_nf.c
+file2_edfnf	=$(dir_edfnf)/base_edf_global_sched.c
+#nombre de la libreria que se generara
+lib_edfnf	=$(LIB_DIR)/libedfnf.so
+
+### Configuracion para metodo edf wf
+#carpeta donde estan los archivos
+dir_edfwf	=$(SCHED_DIR)/edf_wf
+#archivos C que se compilaran
+file1_edfwf	=$(dir_edfnf)/edf_wf.c
+file2_edfwf	=$(dir_edfnf)/base_edf_global_sched.c
+#nombre de la libreria que se generara
+lib_edfwf	=$(LIB_DIR)/libedfwf.so
 
 
 ############################################################################################
@@ -73,6 +100,36 @@ edf_bf: $(objects)
 	@echo Finish.
 	@echo ==================================================================
 
+### Crear libreria para edf ff
+edf_ff: $(objects)
+	@echo ==================================================================
+	@echo Compiling...
+	@echo ==================================================================
+	gcc $(file1_edfff) $(file2_edfff) $(objects) -shared -o $(lib_edfff) -DUSE_TCL_STUBS -DSIMLUATOR_LIB_TCL -I$(INCLUDE_DIR) -I/usr/include/tcl8.5 -L/usr/lib -ltclstub8.5 -lm $(CC_OPT)
+	@echo ==================================================================
+	@echo Finish.
+	@echo ==================================================================
+
+### Crear libreria para edf ff
+edf_nf: $(objects)
+	@echo ==================================================================
+	@echo Compiling...
+	@echo ==================================================================
+	gcc $(file1_edfnf) $(file2_edfnf) $(objects) -shared -o $(lib_edfnf) -DUSE_TCL_STUBS -DSIMLUATOR_LIB_TCL -I$(INCLUDE_DIR) -I/usr/include/tcl8.5 -L/usr/lib -ltclstub8.5 -lm $(CC_OPT)
+	@echo ==================================================================
+	@echo Finish.
+	@echo ==================================================================
+	
+### Crear libreria para edf ff
+edf_wf: $(objects)
+	@echo ==================================================================
+	@echo Compiling...
+	@echo ==================================================================
+	gcc $(file1_edfwf) $(file2_edfwf) $(objects) -shared -o $(lib_edfwf) -DUSE_TCL_STUBS -DSIMLUATOR_LIB_TCL -I$(INCLUDE_DIR) -I/usr/include/tcl8.5 -L/usr/lib -ltclstub8.5 -lm $(CC_OPT)
+	@echo ==================================================================
+	@echo Finish.
+	@echo ==================================================================
+	
 ### Limpiar
 clean:
 	-rm $(objects)
