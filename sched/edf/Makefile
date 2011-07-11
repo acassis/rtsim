@@ -48,8 +48,8 @@ lib_edfbf	=$(LIB_DIR)/libedfbf.so
 #carpeta donde estan los archivos
 dir_edfff	=$(SCHED_DIR)/edf_ff
 #archivos C que se compilaran
-file1_edfff	=$(dir_edfbf)/edf_ff.c
-file2_edfff	=$(dir_edfbf)/base_edf_global_sched.c
+file1_edfff	=$(dir_edfff)/edf_ff.c
+file2_edfff	=$(dir_edfff)/base_edf_global_sched.c
 #nombre de la libreria que se generara
 lib_edfff	=$(LIB_DIR)/libedfff.so
 
@@ -66,8 +66,8 @@ lib_edfnf	=$(LIB_DIR)/libedfnf.so
 #carpeta donde estan los archivos
 dir_edfwf	=$(SCHED_DIR)/edf_wf
 #archivos C que se compilaran
-file1_edfwf	=$(dir_edfnf)/edf_wf.c
-file2_edfwf	=$(dir_edfnf)/base_edf_global_sched.c
+file1_edfwf	=$(dir_edfwf)/edf_wf.c
+file2_edfwf	=$(dir_edfwf)/base_edf_global_sched.c
 #nombre de la libreria que se generara
 lib_edfwf	=$(LIB_DIR)/libedfwf.so
 
