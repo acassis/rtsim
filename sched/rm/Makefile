@@ -101,7 +101,7 @@ rm_rbound_mp_bf: $(objects)
 	@echo ==================================================================
 	@echo Compiling...
 	@echo ==================================================================
-	gcc $(file1_rmrboundmpbf) $(file2_rmrboundmpbf) $(objects) -shared -o $(lib_rmrbounmpbf) -DUSE_TCL_STUBS -DSIMLUATOR_LIB_TCL -I$(INCLUDE_DIR) -I/usr/include/tcl8.5 -L/usr/lib -ltclstub8.5 -lm $(CC_OPT)
+	gcc $(file1_rmrboundmpbf) $(file2_rmrboundmpbf) $(objects) -shared -o $(lib_rmrboundmpbf) -DUSE_TCL_STUBS -DSIMLUATOR_LIB_TCL -I$(INCLUDE_DIR) -I/usr/include/tcl8.5 -L/usr/lib -ltclstub8.5 -lm $(CC_OPT)
 	@echo ==================================================================
 	@echo Finish.
 	@echo ==================================================================

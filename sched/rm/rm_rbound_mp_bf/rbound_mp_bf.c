@@ -55,7 +55,7 @@
 
    LAST REVISION:    June 2009                                                         */
 
-#include "../include/rbound_mp_bf.h"
+#include "rbound_mp_bf.h"
 
 
 processor_t*  start_rbound_mp_bf(int nproc, char *file )

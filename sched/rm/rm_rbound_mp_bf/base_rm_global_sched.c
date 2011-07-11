@@ -5,7 +5,7 @@
 // ################################################################3
 // #include "rm_nf_ll.h"
 
-#include "rm_rbound_mp_bf"
+#include "rbound_mp_bf.h"
 
 // ################################################################3
 // 2. nombre del comando que se usaran dentro de TCL para llamar al codigo nativo
@@ -26,7 +26,7 @@ processor_t* partial_function(processor_t* list, int nproc, char *file)
 	//funcion parcial que se llamara en esta libreria
 	// ## Cambiar por la fucncion de la nueva funcion parcial
 	//list = start_rm_nf_ll(nproc, file);
-	list = start_rm_rbound_mp_bf(nproc, file);
+	list = start_rbound_mp_bf(nproc, file);
 	return list;
 }
 
