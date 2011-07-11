@@ -72,6 +72,14 @@ file2_edfwf	=$(dir_edfwf)/base_edf_global_sched.c
 lib_edfwf	=$(LIB_DIR)/libedfwf.so
 
 
+### Configuracion para metodo edf global
+#carpeta donde estan los archivos
+dir_edfglobal	=$(SCHED_DIR)/edf_global
+#archivos C que se compilaran
+file2_edfglobal	=$(dir_edfwf)/base_edf_global_sched.c
+#nombre de la libreria que se generara
+lib_edfglobal	=$(LIB_DIR)/libedfglobal.so
+
 ############################################################################################
 #all: $(objects) $(rm_rbound_mp) $(rm_bf_du_uo)
 
@@ -89,7 +97,16 @@ lib_edfwf	=$(LIB_DIR)/libedfwf.so
 	# @echo Finish.
 	# @echo ==================================================================
 ############################################################################################
-
+### Crear libreria para edf bf global
+edf_global: $(objects)
+	@echo ==================================================================
+	@echo Compiling...
+	@echo ==================================================================
+	gcc $(file2_edfglobal) $(objects) -shared -o $(lib_edfglobal) -DUSE_TCL_STUBS -DSIMLUATOR_LIB_TCL -I$(INCLUDE_DIR) -I/usr/include/tcl8.5 -L/usr/lib -ltclstub8.5 -lm $(CC_OPT)
+	@echo ==================================================================
+	@echo Finish.
+	@echo ==================================================================
+	
 ### Crear libreria para edf bf
 edf_bf: $(objects)
 	@echo ==================================================================

@@ -1,7 +1,15 @@
 #include "../edf_global_sched.h"
 
 // ################################################################3
-// 1. agregar el include donde se encuentra la funcion parcial
+// 0. Definir el modo de la libreria, MODE_GLOBAL o MODE_PARTIAL
+// ################################################################3
+//#define LIB_MODE MODE_GLOBAL
+#define LIB_MODE MODE_PARTIAL
+
+
+// ################################################################3
+// 1. agregar el include donde se encuentra la funcion parcial,  
+// solo en caso de MODE_PARTIAL
 // ################################################################3
 #include "edf_bf.h"
 
@@ -19,6 +27,7 @@
 
 // ################################################################3
 // 3. Cambiar por la fucncion de la nueva funcion parcial
+// solo en caso de MODE_PARTIAL, para MODE_GLOBAL no llamar ninguna
 // ################################################################3
 //llamar a la funcion parcial
 processor_t* partial_function(processor_t* list, int nproc, char *file)

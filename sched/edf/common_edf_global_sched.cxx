@@ -86,7 +86,7 @@ static int SimuladorCmd(ClientData clientData, Tcl_CmdDeleteProc* proc, int objc
 		
 	//USAR SIEMPRE MODO PARCIAL
 	parameters.algorithm	= EDF;
-	parameters.mode			= MODE_PARTIAL;
+	parameters.mode			= LIB_MODE;
 	// SOLO SE USARA UNA FUNCION PARCIAL, NO ESPECIFICAR EN LOS PARAMETROS
 	// parameters.partial_func = EDF_PARTIAL_RBOUND_MP_NFR;
 	
@@ -682,7 +682,8 @@ int start_edf_main(ALGORITHM_PARAMS parameters)
 
 		res = start_edf(mode,no_proc, max_time, t, basename_trace);
 
-	}else if(mode == MODE_PARTIAL)		//partial mode
+	}
+	else if(mode == MODE_PARTIAL)		//partial mode
 	{
 
 #ifdef USE_THREAD
