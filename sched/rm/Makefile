@@ -50,6 +50,11 @@ file1_rmbfduuo	=$(dir_rmbfduuo)/rm_bf_du_uo.c
 file2_rmbfduuo	=$(dir_rmbfduuo)/base_rm_global_sched.c
 lib_rmbfduuo	=$(LIB_DIR)/librmbfduuo.so
 
+### Configuracion para metodo rm rbound mp bf
+dir_rmrboundmpbf	=$(SCHED_DIR)/rm_rbound_mp_bf
+file1_rmrboundmpbf	=$(dir_rmrboundmpbf)/rbound_mp_bf.c
+file2_rmrboundmpbf	=$(dir_rmrboundmpbf)/base_rm_global_sched.c
+lib_rmrboundmpbf	=$(LIB_DIR)/librmrboundmpbf.so
 
 ############################################################################################
 all: $(objects) $(rm_rbound_mp) $(rm_bf_du_uo)
@@ -91,6 +96,15 @@ rm_bf_du_uo: $(objects)
 	@echo Finish.
 	@echo ==================================================================
 
+### Crear libreria para rm rbound mp bf
+rm_rbound_mp_bf: $(objects)
+	@echo ==================================================================
+	@echo Compiling...
+	@echo ==================================================================
+	gcc $(file1_rmrboundmpbf) $(file2_rmrboundmpbf) $(objects) -shared -o $(lib_rmrbounmpbf) -DUSE_TCL_STUBS -DSIMLUATOR_LIB_TCL -I$(INCLUDE_DIR) -I/usr/include/tcl8.5 -L/usr/lib -ltclstub8.5 -lm $(CC_OPT)
+	@echo ==================================================================
+	@echo Finish.
+	@echo ==================================================================
 ### Limpiar
 clean:
 	-rm $(objects)

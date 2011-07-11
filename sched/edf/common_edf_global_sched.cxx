@@ -146,7 +146,6 @@ void* thread_start_edf(void* params)
 }
 #endif
 int start_edf(int mode, int no_proc, double max_time, task_set_t *t, char* outfile)
-
 {
 	processor_t *p = NULL; /* Head of processor's list */
 	sched_event_t *event_list = NULL; /* Head of scheduling events list */
