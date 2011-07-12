@@ -1189,7 +1189,7 @@ int is_available_resource(int res_id, list_resource_t* list)
 
 int is_available_resources(task_set_t* task, list_resource_t* list)
 {
-	list_resource_t* resource_list_element = (task_resource_t*)list;
+	list_resource_t* resource_list_element = (list_resource_t*)list;
 	task_resource_t* task_resource_element = (task_resource_t*)task->res;
 	if (!list) { /* empty list  */
 		return 0;
@@ -1198,13 +1198,13 @@ int is_available_resources(task_set_t* task, list_resource_t* list)
 			resource_list_element = list;
 			while (resource_list_element) {
 				if (resource_list_element->id == task_resource_element->id)
-					if (resource_list_element->task != NULL && resource_list_element->task != task)
+					if (resource_list_element->task != NULL && ((task_set_t*)(resource_list_element->task) != task))
 						return 0;
 					else
 						break;
 				resource_list_element = (list_resource_t *) resource_list_element -> next;
 			}
-			task_resource_element = (list_resource_t*)(task_resource_element->next);
+			task_resource_element = (task_resource_t*)(task_resource_element->next);
 		}
 		return 1;
 	}
@@ -1265,12 +1265,11 @@ task_set_t* get_task_using_task_resource(task_set_t* task, list_resource_t* list
 			if (task_found && task_found != task) {
 				return task_found;
 			}
-			current_element = (list_resource_t *)(current_element->next);
+			current_element = (task_resource_t *)(current_element->next);
 		}
 	}
 
 	return NULL;
-
 }
 
 void assing_resources_to_task(task_set_t* task, list_resource_t* list)
@@ -1284,12 +1283,12 @@ void assing_resources_to_task(task_set_t* task, list_resource_t* list)
 			next = list;
 			while (next) {
 				if (next->id == res->id) {
-					next->task = task;
+					next->task = (task_set_t*)(task);
 					break;
 				}
 				next = (list_resource_t *) next -> next;
 			}
-			res = (list_resource_t*) res->next;
+			res = (task_resource_t*) res->next;
 		}
 	}
 }

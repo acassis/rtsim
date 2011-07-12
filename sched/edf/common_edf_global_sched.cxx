@@ -83,7 +83,7 @@ static int SimuladorCmd(ClientData clientData, Tcl_CmdDeleteProc* proc, int objc
 		strings[t] = (*objv[t]).bytes;
 	}
 	//DBG("\n");
-		
+
 	//USAR SIEMPRE MODO PARCIAL
 	parameters.algorithm	= EDF;
 	parameters.mode			= LIB_MODE;
@@ -93,13 +93,12 @@ static int SimuladorCmd(ClientData clientData, Tcl_CmdDeleteProc* proc, int objc
 	parameters.processor	= atoi(strings[2]);
 	parameters.time			= atoi(strings[3]);
 	strcpy(parameters.data, strings[4]);
-
-	parameters.param_count = objc - 2;
-
+	t = objc - 2;
+	parameters.param_count = t;
 	res = start_edf_main(parameters);
 	//res = simulator_main(objc, strings);
 
-	DBG("\n End SimuladorCmd: %d",res);
+	//DBG("\n End SimuladorCmd: %d",res);
 	return res;
 }
 
@@ -574,6 +573,7 @@ int start_edf(int mode, int no_proc, double max_time, task_set_t *t, char* outfi
 
 int start_edf_main(ALGORITHM_PARAMS parameters)
 {
+DBG("start_edf_main");
 #ifdef USE_THREAD
 	pthread_t thread_task;
 	edf_thread_args args;
@@ -642,6 +642,7 @@ int start_edf_main(ALGORITHM_PARAMS parameters)
 	
 	if(mode == MODE_GLOBAL)	//use global mode
 	{
+		DBG("MODE_GLOBAL");
 		//* Read in data
 		n = 0;
 		event_id = 0;
