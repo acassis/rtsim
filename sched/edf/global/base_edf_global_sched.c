@@ -45,7 +45,7 @@ static int SimuladorCmd(ClientData clientData, Tcl_CmdDeleteProc* proc, int objc
 // ejemplo Edfbf_Init para edfbf
 int Edfglobal_Init(Tcl_Interp *interp)
 {
-	DBG("\nEdfbf_Init TCL v[%s]", TCL_VERSION);
+	DBG("\nEdfglobal_Init TCL v[%s]", TCL_VERSION);
 	
     if (Tcl_InitStubs(interp, TCL_VERSION, 0) == NULL) {
 		DBG("\nerror ");
