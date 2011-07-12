@@ -57,4 +57,4 @@ int Rmrboundmp_Init(Tcl_Interp *interp)
 //#define END_ON_MISS_DEADLINE
 
 //incluir codigo comun
-#include "../base_rm_global_sched.cxx"
+#include "../common_rm_global_sched.cxx"

@@ -56,6 +56,21 @@ file1_rmrboundmpbf	=$(dir_rmrboundmpbf)/rbound_mp_bf.c
 file2_rmrboundmpbf	=$(dir_rmrboundmpbf)/base_rm_global_sched.c
 lib_rmrboundmpbf	=$(LIB_DIR)/librmrboundmpbf.so
 
+
+### Configuracion para metodo rm rbound mp nfr
+dir_rmrboundmpnfr	=$(SCHED_DIR)/rm_rbound_mp_nfr
+file1_rmrboundmpnfr	=$(dir_rmrboundmpnfr)/rbound_mp_nfr.c
+file2_rmrboundmpnfr	=$(dir_rmrboundmpnfr)/base_rm_global_sched.c
+lib_rmrboundmpnfr	=$(LIB_DIR)/librmrboundmpnfr.so
+
+
+### Configuracion para metodo rm bf ip
+dir_rmbfip	=$(SCHED_DIR)/rm_bf_ip
+file1_rmbfip	=$(dir_rmbfip)/rm_bf_ip.c
+file2_rmbfip	=$(dir_rmbfip)/base_rm_global_sched.c
+lib_rmbfip	=$(LIB_DIR)/librmbfip.so
+
+
 ############################################################################################
 all: $(objects) $(rm_rbound_mp) $(rm_bf_du_uo)
 
@@ -105,6 +120,28 @@ rm_rbound_mp_bf: $(objects)
 	@echo ==================================================================
 	@echo Finish.
 	@echo ==================================================================
+
+### Crear libreria para rm rbound mp nfr
+rm_rbound_mp_nfr: $(objects)
+	@echo ==================================================================
+	@echo Compiling...
+	@echo ==================================================================
+	gcc $(file1_rmrboundmpnfr) $(file2_rmrboundmpnfr) $(objects) -shared -o $(lib_rmrboundmpnfr) -DUSE_TCL_STUBS -DSIMLUATOR_LIB_TCL -I$(INCLUDE_DIR) -I/usr/include/tcl8.5 -L/usr/lib -ltclstub8.5 -lm $(CC_OPT)
+	@echo ==================================================================
+	@echo Finish.
+	@echo ==================================================================
+
+## Crear libreria para rm bf ip
+rm_bf_ip: $(objects)
+	@echo ==================================================================
+	@echo Compiling...
+	@echo ==================================================================
+	gcc $(file1_rmbfip) $(file2_rmbfip) $(objects) -shared -o $(lib_rmbfip) -DUSE_TCL_STUBS -DSIMLUATOR_LIB_TCL -I$(INCLUDE_DIR) -I/usr/include/tcl8.5 -L/usr/lib -ltclstub8.5 -lm $(CC_OPT)
+	@echo ==================================================================
+	@echo Finish.
+	@echo ==================================================================
+
+
 ### Limpiar
 clean:
 	-rm $(objects)

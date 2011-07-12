@@ -39,7 +39,7 @@ static int SimuladorCmd(ClientData clientData, Tcl_CmdDeleteProc* proc, int objc
 // ejemplo Rmnfll_init para rmnfll
 int Rmrboundmpbf_Init(Tcl_Interp *interp)
 {
-	DBG("\nrmffll_Init TCL v[%s]", TCL_VERSION);
+	DBG("\nrmrboundmpbf_Init TCL v[%s]", TCL_VERSION);
 	
     if (Tcl_InitStubs(interp, TCL_VERSION, 0) == NULL) {
 		DBG("\nerror ");
@@ -60,4 +60,4 @@ int Rmrboundmpbf_Init(Tcl_Interp *interp)
 //#define END_ON_MISS_DEADLINE
 
 //incluir el codigo comun para todos los metodos
-#include "../base_rm_global_sched.cxx"
+#include "../common_rm_global_sched.cxx"
