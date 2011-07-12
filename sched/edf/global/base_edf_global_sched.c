@@ -9,7 +9,7 @@
 // 1. agregar el include donde se encuentra la funcion parcial,  
 // solo en caso de MODE_PARTIAL
 // ################################################################3
-#include "edf_bf.h"
+//#include "edf_bf.h"
 
 
 
@@ -18,7 +18,7 @@
 // ################################################################3
 //name used for command call from TCL
 //#define COMMAND_NAME "edfbf"
-#define COMMAND_NAME "edfbf"
+#define COMMAND_NAME "edfglobal"
 //ejemplo de llamada desde TCL
 //set r [catch {eval COMMAND_NAME $algorithmSelected $numberProcessors $simulationTime $pathSavedTasks } errmsg]
 
@@ -32,7 +32,7 @@ processor_t* partial_function(processor_t* list, int nproc, char *file)
 {
 	//funcion parcial que se llamara en esta libreria
 	// ## Cambiar por la fucncion de la nueva funcion parcial
-	list = start_edf_bf(nproc, file);
+	//list = start_edf_bf(nproc, file);
 	return list;
 }
 
@@ -43,7 +43,7 @@ static int SimuladorCmd(ClientData clientData, Tcl_CmdDeleteProc* proc, int objc
 // 4. Renombrar la fucion usando el nombre de la libreria + _Init
 // ################################################################3
 // ejemplo Edfbf_Init para edfbf
-int Edfbf_Init(Tcl_Interp *interp)
+int Edfglobal_Init(Tcl_Interp *interp)
 {
 	DBG("\nEdfbf_Init TCL v[%s]", TCL_VERSION);
 	
@@ -54,7 +54,7 @@ int Edfbf_Init(Tcl_Interp *interp)
 	
 	DBG("\nCreating command [%s]\n",COMMAND_NAME);
 	//al recibir de TCL el commando COMMAND_NAME llamar a la funcion SimuladorCmd
-    Tcl_CreateObjCommand(interp, COMMAND_NAME, SimuladorCmd, NULL, NULL);
+    Tcl_CreateObjCommand(interp, COMMAND_NAME, (void*)SimuladorCmd, NULL, NULL);
     Tcl_PkgProvide(interp, COMMAND_NAME, "1.1");
 
 	return TCL_OK;

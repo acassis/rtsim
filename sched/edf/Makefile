@@ -74,9 +74,9 @@ lib_edfwf	=$(LIB_DIR)/libedfwf.so
 
 ### Configuracion para metodo edf global
 #carpeta donde estan los archivos
-dir_edfglobal	=$(SCHED_DIR)/edf_global
+dir_edfglobal	=$(SCHED_DIR)/global
 #archivos C que se compilaran
-file2_edfglobal	=$(dir_edfwf)/base_edf_global_sched.c
+file2_edfglobal	=$(dir_edfglobal)/base_edf_global_sched.c
 #nombre de la libreria que se generara
 lib_edfglobal	=$(LIB_DIR)/libedfglobal.so
 
@@ -97,7 +97,7 @@ lib_edfglobal	=$(LIB_DIR)/libedfglobal.so
 	# @echo Finish.
 	# @echo ==================================================================
 ############################################################################################
-### Crear libreria para edf bf global
+### Crear libreria para edf global
 edf_global: $(objects)
 	@echo ==================================================================
 	@echo Compiling...
