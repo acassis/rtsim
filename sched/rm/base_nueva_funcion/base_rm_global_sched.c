@@ -48,7 +48,7 @@ int Rmnfll_Init(Tcl_Interp *interp)
 	
 	DBG("\nCreating command [%s]\n",COMMAND_NAME);
 	//al recibir de TCL el commando COMMAND_NAME llamar a la funcion SimuladorCmd
-    Tcl_CreateObjCommand(interp, COMMAND_NAME, SimuladorCmd, NULL, NULL);
+    Tcl_CreateObjCommand(interp, COMMAND_NAME, (void*)SimuladorCmd, NULL, NULL);
     Tcl_PkgProvide(interp, COMMAND_NAME, "1.1");
 
 	return TCL_OK;
