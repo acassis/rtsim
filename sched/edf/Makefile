@@ -30,7 +30,7 @@ objects = $(UTILS_DIR)/task_lists.o\
 # dir_edfbf	=$(SCHED_DIR)/edf_bf
 # #archivos C que se compilaran
 # file1_edfbf	=$(dir_edfbf)/edf_bf.c
-# file2_edfbf	=$(dir_edfbf)/base_edf_global_sched.c
+# file2_edfbf	=$(dir_edfbf)/config_edf_sched.c
 # #nombre de la libreria que se generara
 # lib_edfbf	=$(LIB_DIR)/libedfbf.so
 
@@ -40,7 +40,7 @@ objects = $(UTILS_DIR)/task_lists.o\
 dir_edfbf	=$(SCHED_DIR)/edf_bf
 #archivos C que se compilaran
 file1_edfbf	=$(dir_edfbf)/edf_bf.c
-file2_edfbf	=$(dir_edfbf)/base_edf_global_sched.c
+file2_edfbf	=$(dir_edfbf)/config_edf_sched.c
 #nombre de la libreria que se generara
 lib_edfbf	=$(LIB_DIR)/libedfbf.so
 
@@ -49,7 +49,7 @@ lib_edfbf	=$(LIB_DIR)/libedfbf.so
 dir_edfff	=$(SCHED_DIR)/edf_ff
 #archivos C que se compilaran
 file1_edfff	=$(dir_edfff)/edf_ff.c
-file2_edfff	=$(dir_edfff)/base_edf_global_sched.c
+file2_edfff	=$(dir_edfff)/config_edf_sched.c
 #nombre de la libreria que se generara
 lib_edfff	=$(LIB_DIR)/libedfff.so
 
@@ -58,7 +58,7 @@ lib_edfff	=$(LIB_DIR)/libedfff.so
 dir_edfnf	=$(SCHED_DIR)/edf_nf
 #archivos C que se compilaran
 file1_edfnf	=$(dir_edfnf)/edf_nf.c
-file2_edfnf	=$(dir_edfnf)/base_edf_global_sched.c
+file2_edfnf	=$(dir_edfnf)/config_edf_sched.c
 #nombre de la libreria que se generara
 lib_edfnf	=$(LIB_DIR)/libedfnf.so
 
@@ -67,7 +67,7 @@ lib_edfnf	=$(LIB_DIR)/libedfnf.so
 dir_edfwf	=$(SCHED_DIR)/edf_wf
 #archivos C que se compilaran
 file1_edfwf	=$(dir_edfwf)/edf_wf.c
-file2_edfwf	=$(dir_edfwf)/base_edf_global_sched.c
+file2_edfwf	=$(dir_edfwf)/config_edf_sched.c
 #nombre de la libreria que se generara
 lib_edfwf	=$(LIB_DIR)/libedfwf.so
 
@@ -76,7 +76,7 @@ lib_edfwf	=$(LIB_DIR)/libedfwf.so
 #carpeta donde estan los archivos
 dir_edfglobal	=$(SCHED_DIR)/global
 #archivos C que se compilaran
-file2_edfglobal	=$(dir_edfglobal)/base_edf_global_sched.c
+file2_edfglobal	=$(dir_edfglobal)/config_edf_sched.c
 #nombre de la libreria que se generara
 lib_edfglobal	=$(LIB_DIR)/libedfglobal.so
 

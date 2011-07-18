@@ -1,15 +1,17 @@
-#include "../edf_global_sched.h"
+#include "../common_edf_sched.h"
 
 // ################################################################3
 // 0. Definir el modo de la libreria, MODE_GLOBAL o MODE_PARTIAL
 // ################################################################3
-#define LIB_MODE MODE_GLOBAL
-//#define LIB_MODE MODE_PARTIAL
+//#define LIB_MODE MODE_GLOBAL
+#define LIB_MODE MODE_PARTIAL
+
+
 // ################################################################3
 // 1. agregar el include donde se encuentra la funcion parcial,  
 // solo en caso de MODE_PARTIAL
 // ################################################################3
-//#include "edf_bf.h"
+#include "edf_bf.h"
 
 
 
@@ -18,7 +20,7 @@
 // ################################################################3
 //name used for command call from TCL
 //#define COMMAND_NAME "edfbf"
-#define COMMAND_NAME "edfglobal"
+#define COMMAND_NAME "edfbf"
 //ejemplo de llamada desde TCL
 //set r [catch {eval COMMAND_NAME $algorithmSelected $numberProcessors $simulationTime $pathSavedTasks } errmsg]
 
@@ -32,7 +34,7 @@ processor_t* partial_function(processor_t* list, int nproc, char *file)
 {
 	//funcion parcial que se llamara en esta libreria
 	// ## Cambiar por la fucncion de la nueva funcion parcial
-	//list = start_edf_bf(nproc, file);
+	list = start_edf_bf(nproc, file);
 	return list;
 }
 
@@ -43,9 +45,9 @@ static int SimuladorCmd(ClientData clientData, Tcl_CmdDeleteProc* proc, int objc
 // 4. Renombrar la fucion usando el nombre de la libreria + _Init
 // ################################################################3
 // ejemplo Edfbf_Init para edfbf
-int Edfglobal_Init(Tcl_Interp *interp)
+int Edfbf_Init(Tcl_Interp *interp)
 {
-	DBG("\nEdfglobal_Init TCL v[%s]", TCL_VERSION);
+	DBG("\nEdfbf_Init TCL v[%s]", TCL_VERSION);
 	
     if (Tcl_InitStubs(interp, TCL_VERSION, 0) == NULL) {
 		DBG("\nerror ");
@@ -61,4 +63,4 @@ int Edfglobal_Init(Tcl_Interp *interp)
 }
 
 //incluir el codigo comun para todos los metodos
-#include "../common_edf_global_sched.cxx"
+#include "../common_edf_sched.cxx"
