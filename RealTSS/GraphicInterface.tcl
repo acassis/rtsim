@@ -408,7 +408,7 @@ proc languageSelectionWindow { } {
 	bind .languageWindow.frameList.listLanguage <<ListboxSelect>> {
 		global languageSelected
 		set indice [.languageWindow.frameList.listLanguage curselection]
-		set languageSelected $languagesAvailables($indice,1)
+		                                                                                                                                                                                                                 Selected $languagesAvailables($indice,1)
 	}
 	#Create a button that will be write at the realtss.ini the changes for the language selected
 	button .languageWindow.select -text [searchCommand LOAD_LANGUAGE] -command { 
@@ -526,6 +526,7 @@ proc makeMenuBar { frameParent parent args} {
 	set run $frameParent.menu.run
 	set build $frameParent.menu.build
 	set help $frameParent.menu.helps
+	set view $frameparent.menu.view
 	
 	
 	set tools $frameParent.menu.tools
@@ -538,6 +539,7 @@ proc makeMenuBar { frameParent parent args} {
 	menu $run -tearoff 0
 	menu $build -tearoff 0
 	menu $help -tearoff 0
+	menu $view -tearoff 0
 	
 	menu $tools -tearoff 0
 	menu $algorithms -tearoff 0
@@ -545,9 +547,11 @@ proc makeMenuBar { frameParent parent args} {
 	
 	#Puts all the name of menus
 	$frameParent.menu add cascade -label "[searchCommand FILE]" -menu $files -underline 0
-	$frameParent.menu add cascade -label "[searchCommand SETTINGS_MENU]" -menu $settings -underline 0
-	$frameParent.menu add cascade -label "[searchCommand RUN_MENU]" -menu $run -underline 0
+	#Menu build is the same that menu Edit
 	$frameParent.menu add cascade -label "[searchCommand BUILD_MENU]" -menu $build -underline 0
+	$frameParent.menu add cascade -label "[searchCommand VIEW_MENU]" -menu $view -underline 0
+	$frameParent.menu add cascade -label "[searchCommand RUN_MENU]" -menu $run -underline 0
+	$frameParent.menu add cascade -label "[searchCommand SETTINGS_MENU]" -menu $settings -underline 0
 	$frameParent.menu add cascade -label "[searchCommand TOOLS_MENU]" -menu $tools -underline 0
 	$frameParent.menu add cascade -label "[searchCommand HELP]" -menu $help -underline 0
 	
@@ -575,7 +579,7 @@ proc makeMenuBar { frameParent parent args} {
 	#$run add command -label "[searchCommand SIMULATE]" -command { simulate $pathSavedTasks $fullLibFile $schedSelected [getResultsBoxFrame] } -underline 1 ;					#Simulate option
 	#run using partial library
 	$run add command -label "[searchCommand SIMULATE]" -command { simulate $pathSavedTasks $schedSelected [getResultsBoxFrame] } -underline 1 ;					#Simulate option
-	$run add command -label "[searchCommand OPEN_KIWI]" -command { loadTraceKiwi } -underline 1 ;				#Open kiwi option
+	$view add command -label "[searchCommand OPEN_KIWI]" -command { loadTraceKiwi } -underline 1 ;				#Open kiwi option
 	
 	#Build items menu
 	#$build add command -label "[searchCommand SIMULATION]" -command { testButtons [searchCommand SIMULATION] } -underline 0 ;			#Execute option

@@ -1,4 +1,4 @@
-REALTSS_SIMULATOR=Simulador de Algoritmos de Planificacion en Tiempo Real
+REALTSS_SIMULATOR=Simulador de Algoritmos de Planificacion en Tiempo-Real REALTSS
 NOT_FILE_SELECTED=No se ha seleccionado algun archivo
 NEW=Nuevo
 SETTINGS_MENU=Configuracion
@@ -16,18 +16,18 @@ HELP_CONTENTS=Contenido de Ayuda
 EXIT=Salir
 ABOUT_FILE=SpanishAbout.hlp
 SIMULATION_MENU=Simulacion
-BUILD_MENU=Simulacion
+BUILD_MENU=Editar
 TOOLS_MENU=Herramientas
 ALGORITHMS_MENU=Algoritmos
 SIMULATION_TYPE=Tipo de Simulacion
 SCHEDULER_ALGORITHMS=Algoritmo de Planificador
 SHARED_RESOURCES=Recursos Compartidos
-BUILD_MENU=Construir
+BUILD_MENU=Editar
 NO_PROCESSORS_MENU=No. de Procesadores
 PREFERENCES_MENU=Preferencias
 #
 CANT_LOAD_LOG=No se encontro el archivo de log
-SAVE_SUCCESSFUL=Se llevo a cabo la grabacion con exito
+SAVE_SUCCESSFUL=Se llevo a cabo con exito
 NOT_FILE_SELECTED=No hubo algun archivo que se selecciono
 NOT_TASKS=No hay tareas que almacenar
 TYPE_TEST=Tipo de Prueba

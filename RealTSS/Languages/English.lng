@@ -1,4 +1,4 @@
-REALTSS_SIMULATOR=Algorithms simulator Planning in Real Time
+REALTSS_SIMULATOR=Real-Time Scheduler Simulator
 NO_FILE_SELECTED=Not file selected!
 NEW=New
 SETTINGS_MENU=Settings
@@ -16,13 +16,13 @@ HELP_CONTENTS=Help Contents
 EXIT=Exit
 ABOUT_FILE=EnglishAbout.hlp
 SIMULATION_MENU=Simulation
-BUILD_MENU=Build
+BUILD_MENU=Edit
 TOOLS_MENU=Tools
 ALGORITHMS_MENU=Algorithms
 SIMULATION_TYPE=Simulation Type
 SCHEDULER_ALGORITHMS=Scheduler Algorithms
 SHARED_RESOURCES=Shared Resources
-BUILD_MENU=Build
+BUILD_MENU=Edit
 NO_PROCESSORS_MENU=No. of Processors
 PREFERENCES_MENU=Preferences
 #
