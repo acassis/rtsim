@@ -37,9 +37,9 @@ static int SimuladorCmd(ClientData clientData, Tcl_CmdDeleteProc* proc, int objc
 // 4. Renombrar la fucion usando el nombre de la libreria + _Init
 // ################################################################3
 // ejemplo Rmnfll_init para rmnfll
-int RmexactLehoczky_Init(Tcl_Interp *interp)
+int Rmexactlehoczky_Init(Tcl_Interp *interp)
 {
-	DBG("\nrmexactLehoczky_Init TCL v[%s]", TCL_VERSION);
+	DBG("\nrmexactlehoczky_Init TCL v[%s]", TCL_VERSION);
 	
     if (Tcl_InitStubs(interp, TCL_VERSION, 0) == NULL) {
 		DBG("\nerror ");

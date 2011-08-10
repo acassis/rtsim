@@ -127,15 +127,15 @@ lib_rmnfll	=$(LIB_DIR)/librmnfll.so
 
 ### Configuracion para metodo rm exact audsley
 dir_rmexactAudsley	=$(SCHED_DIR)/rm_exactAudsley
-file1_rmexactAudsley	=$(dir_rmnfll)/rm_exactAudsley.c
-file2_rmexactAudsley	=$(dir_rmnfll)/base_rm_global_sched.c
-lib_rmexactAudsley	=$(LIB_DIR)/librmexactAudsley.so
+file1_rmexactAudsley	=$(dir_rmexactAudsley)/rm_exactAudsley.c
+file2_rmexactAudsley	=$(dir_rmexactAudsley)/base_rm_global_sched.c
+lib_rmexactAudsley	=$(LIB_DIR)/librmeaudsley.so
 
 ### Configuracion para metodo rm exact lehoczky
-dir_rmexactlehoczky	=$(SCHED_DIR)/rm_exactlehoczky
-file1_rmexactlehoczky	=$(dir_rmexactlehoczky)/rm_exactlehoczky.c
-file2_rmexactlehoczky	=$(dir_rmexactlehoczky)/base_rm_global_sched.c
-lib_rmexactlehoczky	=$(LIB_DIR)/librmexactlehoczky.so
+dir_rmexactLehoczky	=$(SCHED_DIR)/rm_exactLehoczky
+file1_rmexactLehoczky	=$(dir_rmexactLehoczky)/rm_exactLehoczky.c
+file2_rmexactLehoczky	=$(dir_rmexactLehoczky)/base_rm_global_sched.c
+lib_rmexactLehoczky	=$(LIB_DIR)/librmexactLehoczky.so
 
 
 ############################################################################################

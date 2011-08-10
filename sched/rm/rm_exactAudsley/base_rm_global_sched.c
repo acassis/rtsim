@@ -12,7 +12,7 @@
 // ################################################################3
 //name used for command call from TCL
 //#define COMMAND_NAME "rmbfduuo"
-#define COMMAND_NAME "rmexactAudsley"
+#define COMMAND_NAME "rmeaudsley"
 //ejemplo de llamada desde TCL
 //set r [catch {eval COMMAND_NAME $algorithmSelected $numberProcessors $simulationTime $pathSavedTasks } errmsg]
 
@@ -37,9 +37,9 @@ static int SimuladorCmd(ClientData clientData, Tcl_CmdDeleteProc* proc, int objc
 // 4. Renombrar la fucion usando el nombre de la libreria + _Init
 // ################################################################3
 // ejemplo Rmnfll_init para rmnfll
-int RmexactAudsley_Init(Tcl_Interp *interp)
+int Rmeaudsley_Init(Tcl_Interp *interp)
 {
-	DBG("\nrmexactAudsley_Init TCL v[%s]", TCL_VERSION);
+	DBG("\nrmeaudsley_Init TCL v[%s]", TCL_VERSION);
 	
     if (Tcl_InitStubs(interp, TCL_VERSION, 0) == NULL) {
 		DBG("\nerror ");

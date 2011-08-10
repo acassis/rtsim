@@ -408,7 +408,7 @@ proc languageSelectionWindow { } {
 	bind .languageWindow.frameList.listLanguage <<ListboxSelect>> {
 		global languageSelected
 		set indice [.languageWindow.frameList.listLanguage curselection]
-		                                                                                                                                                                                                                 Selected $languagesAvailables($indice,1)
+		set languageSelected $languagesAvailables($indice,1)
 	}
 	#Create a button that will be write at the realtss.ini the changes for the language selected
 	button .languageWindow.select -text [searchCommand LOAD_LANGUAGE] -command { 
@@ -526,7 +526,7 @@ proc makeMenuBar { frameParent parent args} {
 	set run $frameParent.menu.run
 	set build $frameParent.menu.build
 	set help $frameParent.menu.helps
-	set view $frameparent.menu.view
+	set view $frameParent.menu.view
 	
 	
 	set tools $frameParent.menu.tools
