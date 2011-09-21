@@ -1,0 +1,55 @@
+# tcllibxml2Config.sh --
+# 
+# This shell script (for sh) is generated automatically by TclXML/libxml2's
+# configure script.  It will create shell variables for most of
+# the configuration options discovered by the configure script.
+# This script is intended to be included by the configure scripts
+# for tcldomxml extensions so that they don't have to figure this all
+# out for themselves.  This file does not duplicate information
+# already provided by tclConfig.sh, so you may need to use that
+# file in addition to this one.
+#
+# The information in this file is specific to a single platform.
+
+# tclxml_libxml2's version number.
+tclxml_libxml2_VERSION='@VERSION@'
+tclxml_libxml2_MAJOR_VERSION='@MAJOR_VERSION@'
+tclxml_libxml2_MINOR_VERSION='@MINOR_VERSION@'
+tclxml_libxml2_RELEASE_LEVEL='@PATCHLEVEL@'
+
+# The name of the TclXML/libxml2 library (may be either a .a file or a shared library):
+tclxml_libxml2_LIB_FILE=@tcldomxml_LIB_FILE@
+
+# String to pass to linker to pick up the tcldomxml library from its
+# build directory.
+tclxml_libxml2_BUILD_LIB_SPEC='@tclxml_libxml2_BUILD_LIB_SPEC@'
+
+# String to pass to linker to pick up the TclXML/libxml2 library from its
+# installed directory.
+tclxml_libxml2_LIB_SPEC='@tclxml_libxml2_LIB_SPEC@'
+
+# The name of the TclXML/libxml2 stub library (a .a file):
+tclxml_libxml2_STUB_LIB_FILE=@tclxml_libxml2_stub_LIB_FILE@
+
+# String to pass to linker to pick up the TclXML/libxml2 stub library from its
+# build directory.
+tclxml_libxml2_BUILD_STUB_LIB_SPEC='@tclxml_libxml2_BUILD_STUB_LIB_SPEC@'
+
+# String to pass to linker to pick up the TclXML/libxml2 stub library from its
+# installed directory.
+tclxml_libxml2_STUB_LIB_SPEC='@tclxml_libxml2_STUB_LIB_SPEC@'
+
+# String to pass to linker to pick up the TclXML/libxml2 stub library from its
+# build directory.
+tclxml_libxml2_BUILD_STUB_LIB_PATH='@tclxml_libxml2_BUILD_STUB_LIB_PATH@'
+
+# String to pass to linker to pick up the TclXML/libxml2 stub library from its
+# installed directory.
+tclxml_libxml2_STUB_LIB_PATH='@tclxml_libxml2_STUB_LIB_PATH@'
+
+# Location of the top-level source directories from which TclXML/libxml2
+# was built.  This is the directory that contains generic, unix, etc.
+# If TclXML/libxml2 was compiled in a different place than the directory
+# containing the source files, this points to the location of the sources,
+# not the location where TclXML/libxml2 was compiled.
+tclxml_libxml2_SRC_DIR='@srcdir@'
