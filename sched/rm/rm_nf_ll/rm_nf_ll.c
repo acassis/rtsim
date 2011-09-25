@@ -58,7 +58,9 @@
 
 processor_t*  start_rm_nf_ll(int nproc, char *file )
 {
-
+	DBG("Planificating by [rm nf ll]");
+	
+	
 	task_set_t *t=NULL;                 /* Head of task set's list */
 	processor_t *p=NULL;                /* Head of processor's list */
 
@@ -82,13 +84,13 @@ processor_t*  start_rm_nf_ll(int nproc, char *file )
 
    no_proc = nproc;
    if (no_proc < 0) {
-      LOG("Error: number of processor must be >= 0 (%s)\n", no_proc);
+      DBG("Error: number of processor must be >= 0 (%s)\n", no_proc);
       return NULL;
    }
 
    in_file = fopen(file, "r");
    if (in_file == NULL) {
-      LOG("Error:Unable to open %s file\n", file);
+      DBG("Error:Unable to open %s file\n", file);
       return NULL;
    }
 
@@ -109,35 +111,35 @@ processor_t*  start_rm_nf_ll(int nproc, char *file )
          new_task.c = (double) wcet;
 		 new_task.f = (double) phase;
          t = add_task_list_t_sorted(t, new_task);
-         // LOG("added task %d =\t%.2f\t%.2f\n", new_task.id, new_task.t, new_task.c);
+         // DBG("added task %d =\t%.2f\t%.2f\n", new_task.id, new_task.t, new_task.c);
      }
    }
 
    if (!n) {
-      LOG("Error: empty file %s\n", file);
+      DBG("Error: empty file %s\n", file);
       return;
    }
-//    LOG("No of tasks = %d\n", n);
+//    DBG("No of tasks = %d\n", n);
 //    print_task_list(t);
 
     /*
      * Get System's Utilization
      */
 
-   // LOG("\nTask's utilization:\n");
+   // DBG("\nTask's utilization:\n");
    util = 0.0;
 
    task = t;
    while (task) {
       util += task -> c/task -> t;     /* Ui = Ci/Ti  */
-      // LOG("u(%d) = %f\n", task -> id, task -> c/task -> t);
+      // DBG("u(%d) = %f\n", task -> id, task -> c/task -> t);
       task = (task_set_t *) task -> next;
    }
-//    LOG("\nTotal utilization of task set = %f\n", util);
+//    DBG("\nTotal utilization of task set = %f\n", util);
 //    if (no_proc)
-//       LOG("\nTotal utilization of multiprocessor system = %f\n\n", util/no_proc);
+//       DBG("\nTotal utilization of multiprocessor system = %f\n\n", util/no_proc);
 //    else
-//       LOG("\n");
+//       DBG("\n");
 
    /*
     * Apply RM-NF algorithm
@@ -155,26 +157,26 @@ processor_t*  start_rm_nf_ll(int nproc, char *file )
    task = t;                          /* assign tasks to processors */
    while (task) {
       util = current_processor -> u  + task -> c / task -> t;         /* check if task can be assigned to current processor */
-      // LOG("\nUtil current processor %d = %.4f\n", current_processor -> id, util);
+      // DBG("\nUtil current processor %d = %.4f\n", current_processor -> id, util);
       if (current_processor -> n)
          bound = (current_processor -> n + 1) * (pow(2, (double) 1/(current_processor -> n + 1)) - 1);
       else
          bound = 1;                        /* it is an empty processor */
-      // LOG("bound = %.4f\n", bound);
+      // DBG("bound = %.4f\n", bound);
       if (util <= bound) {
          current_processor -> u = util;
          current_processor -> n++;
-         // LOG("current processor -> %d\n", current_processor -> id);
+         // DBG("current processor -> %d\n", current_processor -> id);
          new_task.id = task -> id;
          new_task.c = task -> c;
          new_task.t = task -> t;
 		 new_task.f = task -> f;
 		 new_task.res = NULL;
          current_processor -> task = add_task_list(current_processor -> task, new_task);
-         // LOG("task %d added to processor %d\n", task -> id, current_processor -> id);
+         // DBG("task %d added to processor %d\n", task -> id, current_processor -> id);
          task = (task_set_t *) task -> next;
       } else {                          /* otherwise, use an empty (new) processor */
-         // LOG("\nUsing new processor\n");
+         // DBG("\nUsing new processor\n");
          m++;                                               /* current processor */
          new_processor.id = m;                              /* create first processor */
          new_processor.u = 0.0;
@@ -182,23 +184,29 @@ processor_t*  start_rm_nf_ll(int nproc, char *file )
 		new_processor.status = PROCESSOR_BUSY;
 		new_processor.task = NULL;
          p = add_processor_list(p, new_processor);
-         // LOG("New processor added to list\n");
+         // DBG("New processor added to list\n");
          current_processor = get_processor_pointer(p, m);
       }
    }
-//    LOG("Task assigned to %d processors:\n", m);
+//    DBG("Task assigned to %d processors:\n", m);
 //    print_processor_list(p);
 
    if (no_proc) {
       if (m <= no_proc) {
-	 LOG("%d", m);
+	LOG("\n[rm nf ll] Planifacable using %d processors", m);
+	DBG("\n[rm nf ll] Planifacable using %d processors", m);
+	
+	
 	 return p;
       } else {
-	 LOG("%d", 0);
+	 LOG("\n[rm nf ll] Not planifacable using %d processors, processors required %d", no_proc, m);
+	DBG("[rm nf ll] Not planificable required processors %d", m);
+	
 	 return NULL;
       }
    } else {
-      LOG("%d", m);
+      LOG("\n[rm nf ll] Planifacable using %d processors", m);
+	DBG("\n[rm nf ll] Planifacable using %d processors", m);
       return p;
    }
 
@@ -208,7 +216,7 @@ processor_t*  start_rm_nf_ll(int nproc, char *file )
 processor_t*  start_rm_nf_ll_main(int argc, char *argv[] )
 {
    if (argc != 3) {
-     LOG("You must supply the number of processors ( 0 = infinite ), and a file name with the task set parameters (see README file for details)\n");
+     DBG("You must supply the number of processors ( 0 = infinite ), and a file name with the task set parameters (see README file for details)\n");
      return NULL;
    }
 

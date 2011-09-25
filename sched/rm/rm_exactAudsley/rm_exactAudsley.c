@@ -49,6 +49,10 @@
 
 int start_rm_exactAudsley(int nproc, char *file)
 {
+
+	DBG("Planificating by [rm exactAudsley]");
+	
+
 	task_set_t *t=NULL;              /* Head of task set's list */
 	int n;                           /* Number of tasks */
 	FILE *in_file;  /* Input file */
@@ -60,13 +64,13 @@ int start_rm_exactAudsley(int nproc, char *file)
 	float r, s, x, period, wcet, phase;
 
 	// if (argc != 2) {
-	 // LOG("You must supply a file name (see README file for details)\n");
+	 // DBG("You must supply a file name (see README file for details)\n");
 	 // return -1;
 	// }
 
 	in_file = fopen(file, "r");
 	if (in_file == NULL) {
-	  LOG("Error:Unable to open %s file\n", file);
+	  DBG("Error:Unable to open %s file\n", file);
 	  return -1;
 	}
 
@@ -93,7 +97,7 @@ int start_rm_exactAudsley(int nproc, char *file)
 	}
 
 	if (!n) {
-		LOG( "Error: empty file %s\n", file);
+		DBG( "Error: empty file %s\n", file);
 	  return -1;
 	}
 
@@ -124,6 +128,8 @@ int start_rm_exactAudsley(int nproc, char *file)
 	  //printf("r(n) = %.2f\n", r);
 	  //printf("r(n+1) = %.2f\n\n", s);
 	  if ( r == s ) {
+		LOG("\n[rm exactAudsley] Planifacable ");
+		DBG("\n[rm exactAudsley] Planifacable ");
 		 //printf("The task set (%d tasks) is schedulable  by the RM algorithm\n", n);
 		 //printf("%d", n);
 		 return n;
@@ -132,6 +138,9 @@ int start_rm_exactAudsley(int nproc, char *file)
 	  }
 	}
 
+	
+	LOG("\n[rm exactAudsley] Not planifacable");
+	DBG("\n[rm exactAudsley] Not planificable ");
 	//printf("The complete task set is NOT schedulable by the RM algorithm\n");
 	//printf("%d", 0);
 	return 0;
@@ -140,7 +149,7 @@ int start_rm_exactAudsley(int nproc, char *file)
 int start_rm_exactAudsley_main(int argc, char *argv[])
 {
 	if (argc != 3) {
-		LOG( "You must supply the number of processors ( 0 = infinite ), and a file name with the task set parameters (see README file for details)\n");
+		DBG( "You must supply the number of processors ( 0 = infinite ), and a file name with the task set parameters (see README file for details)\n");
 		return 0;
 	}
 

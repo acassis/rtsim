@@ -49,7 +49,8 @@
 
 int start_rm_exactLehoczky(int nproc, char *file)
 {
-
+	DBG("Planificating by [rm exactLehoczky]");
+	
 	task_set_t *t=NULL;             /* Head of task set's list */
 	int n, s_max;                   /* Number of tasks */
 	s_t s_ele, *sp = NULL;          /* List of scheduling points */
@@ -65,13 +66,13 @@ int start_rm_exactLehoczky(int nproc, char *file)
 	float w, period, wcet, phase;
 
 	// if (argc != 2) {
-	 // LOG("You must supply a file name (see README file for details)\n");
+	 // DBG("You must supply a file name (see README file for details)\n");
 	 // return -1;
 	// }
 
 	in_file = fopen(file, "r");
 	if (in_file == NULL) {
-	  LOG("Error:Unable to open %s file\n", file);
+	  DBG("Error:Unable to open %s file\n", file);
 	  return -1;
 	}
 
@@ -92,16 +93,16 @@ int start_rm_exactLehoczky(int nproc, char *file)
 			new_task.c	= (double) wcet;
 			new_task.f	= (double) phase;
 			t = add_task_list_t_sorted(t, new_task);
-			// LOG("added task %d =\t%.2f\t%.2f\n", new_task.id, new_task.t, new_task.c);
+			// DBG("added task %d =\t%.2f\t%.2f\n", new_task.id, new_task.t, new_task.c);
 		}
 	}
 
 	if (!n) {
-		LOG( "Error: empty file %s\n", file);
+		DBG( "Error: empty file %s\n", file);
 	  return -1;
 	}
 
-//    LOG("No of tasks = %d\n", n);
+//    DBG("No of tasks = %d\n", n);
 //    print_task_list(t);
 
 	task = t;
@@ -130,7 +131,7 @@ int start_rm_exactLehoczky(int nproc, char *file)
 	  Check if task set is schedulable
 	*/
 
-	//LOG("\nApplying schedulability test:\n");
+	//DBG("\nApplying schedulability test:\n");
 	s_list = sp;
 	while (s_list) {
 	  w=0.0;
@@ -139,25 +140,32 @@ int start_rm_exactLehoczky(int nproc, char *file)
 		 w += task -> c * ( ceil( s_list -> s / task -> t) );
 		 task = (task_set_t *) task -> next;
 	  }
-	  //LOG("w() = %.1f,\tt = %.1f\n", w, s_list -> s);
+	  //DBG("w() = %.1f,\tt = %.1f\n", w, s_list -> s);
 	  if ( w <=  s_list -> s) {
-		 // LOG("\nFound w(): %.1f <= t: %.1f\n", w, s_list -> s);
-		 //LOG("The task set (%d tasks) is schedulable  by the RM algorithm\n", n);
-		 //LOG("%d", n);
+	  
+	  
+		LOG("\n[rm exactLehoczky] Planifacable");
+		DBG("\n[rm exactLehoczky] Planifacable");
+		 // DBG("\nFound w(): %.1f <= t: %.1f\n", w, s_list -> s);
+		 //DBG("The task set (%d tasks) is schedulable  by the RM algorithm\n", n);
+		 //DBG("%d", n);
 		 return n;
 	  }
 	  s_list = (s_t *) s_list -> next;
 	}
 
-	//LOG("The complete task set is NOT schedulable by the RM algorithm\n");
-	//LOG("%d", 0);
+		
+	LOG("\n[rm exactLehoczky] Not planifacable");
+	DBG("[rm exactLehoczky] Not planificable");
+	//DBG("The complete task set is NOT schedulable by the RM algorithm\n");
+	//DBG("%d", 0);
 	return 0;
 }
 
 int start_rm_exactLehoczky_main(int argc, char *argv[])
 {
 	if (argc != 3) {
-		LOG( "You must supply the number of processors ( 0 = infinite ), and a file name with the task set parameters (see README file for details)\n");
+		DBG( "You must supply the number of processors ( 0 = infinite ), and a file name with the task set parameters (see README file for details)\n");
 		return 0;
 	}
 

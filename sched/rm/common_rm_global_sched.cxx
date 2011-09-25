@@ -1012,9 +1012,9 @@ int start_rm_main(ALGORITHM_PARAMS parameters)
 		res = 0;
 		list = NULL;
 		
-		//DBG("calling to partial function\n");
-		list = partial_function(list, 1, parameters.data);
-		//DBG("end partial function\n");
+		DBG("calling to partial function\n");
+		list = partial_function(list, no_proc, parameters.data);
+		DBG("end partial function\n");
 /* no seleccionar la funcion parcial.
 		switch(parameters.partial_func)
 		{
@@ -1074,7 +1074,7 @@ int start_rm_main(ALGORITHM_PARAMS parameters)
 		
 		if(list == NULL)
 		{
-			LOG( "Error: unknow list for function %s\n", COMMAND_NAME);
+			LOG("\nError: Task set no scheduable using partial function");
 			return -1;
 		}
 		current_processor = list;

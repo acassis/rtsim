@@ -57,6 +57,7 @@
 
 processor_t* start_edf_ff(int nproc, char *file)
 {
+	DBG("Planificating by [edf ff]");
 	task_set_t *t = NULL; /* Head of task set's list */
 	processor_t *p = NULL; /* Head of processor's list */
 
@@ -80,13 +81,13 @@ processor_t* start_edf_ff(int nproc, char *file)
 
 	no_proc = nproc;
 	if (no_proc < 0) {
-		LOG( "Error: number of processor must be >= 0 (%s)\n", no_proc);
+		DBG( "Error: number of processor must be >= 0 (%s)\n", no_proc);
 		return NULL;
 	}
 
 	in_file = fopen(file, "r");
 	if (in_file == NULL) {
-		LOG( "Error:Unable to open %s file\n", file);
+		DBG( "Error:Unable to open %s file\n", file);
 		return NULL;
 	}
 
@@ -107,28 +108,28 @@ processor_t* start_edf_ff(int nproc, char *file)
 	 new_task.c= (double) wcet;
 			new_task.f = (double) phase;
          t = add_task_list_t_sorted(t, new_task);
-         // LOG("added task %d =\t%.2f\t%.2f\n", new_task.id, new_task.t, new_task.c);
+			DBG("added task %d =\t%.2f\t%.2f\n", new_task.id, new_task.t, new_task.c);
      }
    }
 
    if (!n) {
-		LOG( "Error: empty file %s\n", file);
+		DBG( "Error: empty file %s\n", file);
       return;
    }
-//    LOG("No of tasks = %d\n", n);
+   DBG("No of tasks = %d\n", n);
 //    print_task_list(t);
 
     /*
      * Get System's Utilization
      */
 
-   // LOG("\nTask's utilization:\n");
+   DBG("\nTask's utilization:\n");
    util = 0.0;
 
    task = t;
    while (task) {
       util += task -> c/task -> t;     /* Ui = Ci/Ti  */
-      // LOG("u(%d) = %f\n", task -> id, task -> c/task -> t);
+      DBG("u(%d) = %f\n", task -> id, task -> c/task -> t);
       task = (task_set_t *) task -> next;
    }
 
@@ -187,18 +188,21 @@ processor_t* start_edf_ff(int nproc, char *file)
          }
       }
    }
-//    LOG("Task assigned to %d processors:\n", m);
+   DBG("Task assigned to %d processors:\n", m);
 //    print_processor_list(p);
    if (no_proc) {
       if (m <= no_proc) {
-	 LOG("%d", m);
+			LOG("\n[edf ff] Planifacable using %d processors", m);
+			DBG("[edf ff] Planifacable using %d processors", m);
 			return p;
       } else {
-	 LOG("%d", 0);
+			LOG("\n[edf ff] Not planifacable using %d processors, processors required %d", no_proc, m);
+			DBG("[edf ff] Not planificable required processors %d", m);
 			return NULL;
       }
    } else {
-      LOG("%d", m);
+		LOG("\n[edf ff] Planifacable using %d processors", m);
+		DBG("[edf ff] Planifacable using %d processors", m);
 		return p;
    }
 
@@ -207,7 +211,7 @@ processor_t* start_edf_ff(int nproc, char *file)
 processor_t* start_edf_ff_main(int argc, char *argv[])
 {
 	if (argc != 3) {
-		LOG( "You must supply the number of processors ( 0 = infinite ), and a file name with the task set parameters (see README file for details)\n");
+		DBG( "You must supply the number of processors ( 0 = infinite ), and a file name with the task set parameters (see README file for details)\n");
 		return NULL;
 	}
 

@@ -59,6 +59,9 @@
 
 processor_t*  start_rm_gt(int nproc, char *file )
 {
+	DBG("Planificating by [rm gt]");
+	
+	
 task_set_t *t=NULL;                 /* Head of task set's list 1 (alpha <= 1/3) */
 task_set_t *t2=NULL;                /* Head of task set's list 2 (alpha > 1/3) */
 processor_t *p=NULL;                /* Head of processor's list */
@@ -81,19 +84,19 @@ double bound;                      /* schedulability bound (Liu and Layland)  */
    float s, beta, condition1, condition2;
 
    /*if (argc != 3) {
-     LOG("You must supply the number of processors ( 0 = infinite ), and a file name with the task set parameters (see README file for details)\n");
+     DBG("You must supply the number of processors ( 0 = infinite ), and a file name with the task set parameters (see README file for details)\n");
      return;
    }*/
 
    no_proc = nproc;
    if (no_proc < 0) {
-      LOG("Error: number of processor must be >= 0 (%s)\n", no_proc);
+      DBG("Error: number of processor must be >= 0 (%s)\n", no_proc);
       return NULL;
    }
 
    in_file = fopen(file, "r");
    if (in_file == NULL) {
-      LOG("Error:Unable to open %s file\n", file);
+      DBG("Error:Unable to open %s file\n", file);
       return NULL;
    }
 
@@ -116,7 +119,7 @@ double bound;                      /* schedulability bound (Liu and Layland)  */
          if ( (new_task.c/new_task.t) <= (float) 1/3 ) {
             new_task.s = log10(new_task.t)/log10(2)  - floor( log10(new_task.t)/log10(2) );  /* get Si */
             t = add_task_list_s_sorted(t, new_task);                                      /* sort tasks by Si  */
-            // LOG("added task %d to list 1 =\t%.2f\t%.2f\t%.4f\n", new_task.id, new_task.t, new_task.c, new_task.s);
+            // DBG("added task %d to list 1 =\t%.2f\t%.2f\t%.4f\n", new_task.id, new_task.t, new_task.c, new_task.s);
          } else {
             t2 = add_task_list(t2, new_task);
          }
@@ -124,39 +127,39 @@ double bound;                      /* schedulability bound (Liu and Layland)  */
    }
 
    if (!n) {
-      LOG("Error: empty file %s\n", file);
+      DBG("Error: empty file %s\n", file);
       return;
    }
-//    LOG("No of tasks list 1:\n");
+//    DBG("No of tasks list 1:\n");
 //    print_task_list(t);
-//    LOG("No of tasks list 2:\n");
+//    DBG("No of tasks list 2:\n");
 //    print_task_list(t2);
 
     /*
      * Get System's Utilization
      */
 
-   // LOG("\nTask's utilization:\n");
+   // DBG("\nTask's utilization:\n");
    util = 0.0;
 
    task = t;
    while (task) {
       util += task -> c/task -> t;     /* Ui = Ci/Ti  */
-      // LOG("u(%d) = %f\n", task -> id, task -> c/task -> t);
+      // DBG("u(%d) = %f\n", task -> id, task -> c/task -> t);
       task = (task_set_t *) task -> next;
    }
 
    task = t2;
    while (task) {
       util += task -> c/task -> t;     /* Ui = Ci/Ti  */
-      // LOG("u(%d) = %f\n", task -> id, task -> c/task -> t);
+      // DBG("u(%d) = %f\n", task -> id, task -> c/task -> t);
       task = (task_set_t *) task -> next;
    }
-//    LOG("\nTotal utilization of task set = %f\n", util);
+//    DBG("\nTotal utilization of task set = %f\n", util);
 //    if (no_proc)
-//       LOG("\nTotal utilization of multiprocessor system = %f\n\n", util/no_proc);
+//       DBG("\nTotal utilization of multiprocessor system = %f\n\n", util/no_proc);
 //    else
-//       LOG("\n");
+//       DBG("\n");
 
    /*
     * Apply RM-ST algorithm to task set of list 1 (alpha <= 1/3)
@@ -176,7 +179,7 @@ double bound;                      /* schedulability bound (Liu and Layland)  */
       task = t;                          /* assign tasks to processors */
       while (task) {
          util = current_processor -> u  + task -> c / task -> t;         /* check if task can be assigned to current processor */
-         // LOG("\nUtil current processor %d = %.4f\n", current_processor -> id, util);
+         // DBG("\nUtil current processor %d = %.4f\n", current_processor -> id, util);
 
          if (current_processor -> n) {
             beta = task -> s - s;
@@ -187,20 +190,20 @@ double bound;                      /* schedulability bound (Liu and Layland)  */
          } else {
             bound = 1;              /* it is an empty processor */
          }
-         // LOG("bound = %.4f\n", bound);
+         // DBG("bound = %.4f\n", bound);
          if (util <= bound) {
             current_processor -> u = util;
             current_processor -> n++;
-            // LOG("current processor -> %d\n", current_processor -> id);
+            // DBG("current processor -> %d\n", current_processor -> id);
             new_task.id = task -> id;
             new_task.c = task -> c;
             new_task.t = task -> t;
             current_processor -> task = add_task_list(current_processor -> task, new_task);
-            // LOG("task %d added to processor %d\n", task -> id, current_processor -> id);
+            // DBG("task %d added to processor %d\n", task -> id, current_processor -> id);
             s = task -> s;
             task = (task_set_t *) task -> next;
          } else {                          /* otherwise, use an empty (new) processor */
-            // LOG("\nUsing new processor\n");
+            // DBG("\nUsing new processor\n");
             m++;                                               /* current processor */
             new_processor.id = m;                              /* create first processor */
             new_processor.u = 0.0;
@@ -232,10 +235,10 @@ double bound;                      /* schedulability bound (Liu and Layland)  */
          task_not_assigned = 1;
          while ( task_not_assigned ) {
             if ( (current_processor) && (current_processor -> n < 2)) {  /* processor is not full, we're going to check it */
-               // LOG("checking processor %d\n", current_processor -> id);
+               // DBG("checking processor %d\n", current_processor -> id);
                is_schedulable = 1;
                if (current_processor -> n) {           /* it has one task assigned to it */
-                  // LOG("current processor has one task\n");
+                  // DBG("current processor has one task\n");
                   task_in_proc = current_processor -> task;
                   if (task -> t < task_in_proc -> t) { /* check if first schedulabilty condition is satisfied */
                      condition1 = floor( task_in_proc -> t / task -> t) * (task -> t - task -> c);
@@ -254,19 +257,19 @@ double bound;                      /* schedulability bound (Liu and Layland)  */
                if (is_schedulable) {  /* if schedulability condition is satisfied, or if it's an empty processor, assign task */
                   current_processor -> u += util;
                   current_processor -> n++;
-                  // LOG("current processor -> %d\n", current_processor -> id);
+                  // DBG("current processor -> %d\n", current_processor -> id);
                   new_task.id = task -> id;
                   new_task.c = task -> c;
                   new_task.t = task -> t;
                   current_processor -> task = add_task_list(current_processor -> task, new_task);
-                  // LOG("task %d added to processor %d\n", task -> id, current_processor -> id);
+                  // DBG("task %d added to processor %d\n", task -> id, current_processor -> id);
                   task = (task_set_t *) task -> next;
                   task_not_assigned = 0;
                } else {                          /* otherwise, check next processor, if any */
                   current_processor = (processor_t *) current_processor -> next;
                }
             } else {                      /* last processor is full, we need an empty one */
-               // LOG("\nUsing new processor\n");
+               // DBG("\nUsing new processor\n");
                m++;                                               /* current processor */
                new_processor.id = m;                              /* create first processor */
                new_processor.u = 0.0;
@@ -279,18 +282,24 @@ double bound;                      /* schedulability bound (Liu and Layland)  */
          }
       }
    }
-//    LOG("Task assigned to %d processors:\n", m);
+//    DBG("Task assigned to %d processors:\n", m);
 //    print_processor_list(p);
    if (no_proc) {
       if (m <= no_proc) {
-	 LOG("%d", m);
+	 
+	LOG("\n[rm gt] Planifacable using %d processors", m);
+	DBG("\n[rm gt] Planifacable using %d processors", m);
+	
+	
 	 return p;
       } else {
-	 LOG("%d", 0);
+	 LOG("\n[rm gt] Not planifacable using %d processors, processors required %d", no_proc, m);
+	DBG("[rm gt] Not planificable required processors %d", m);
 	 return NULL;
       }
    } else {
-      LOG("%d", m);
+      LOG("\n[rm gt] Planifacable using %d processors", m);
+	DBG("\n[rm gt] Planifacable using %d processors", m);
       return p;
    }
    return NULL;
@@ -299,7 +308,7 @@ double bound;                      /* schedulability bound (Liu and Layland)  */
 processor_t*  start_rm_gt_main(int argc, char *argv[] )
 {
    if (argc != 3) {
-     LOG("You must supply the number of processors ( 0 = infinite ), and a file name with the task set parameters (see README file for details)\n");
+     DBG("You must supply the number of processors ( 0 = infinite ), and a file name with the task set parameters (see README file for details)\n");
      return NULL;
    }
 
