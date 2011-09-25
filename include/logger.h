@@ -30,6 +30,7 @@
 
 #define LOG logger
 #define DBG dbg
+#define DBG_LN()	DBG("\n%s: %u", __FILE__, __LINE__)
 
 
 extern void init_logger();

@@ -109,7 +109,7 @@ double bound = 1.0;                /* schedulability bound (Liu and Layland)  */
 	 new_task.c= (double) wcet;
 			new_task.f = (double) phase;
          t = add_task_list_t_sorted(t, new_task);
-         // LOG("added task %d =\t%.2f\t%.2f\n", new_task.id, new_task.t, new_task.c);
+         LOG("added task %d =\t%.2f\t%.2f\n", new_task.id, new_task.t, new_task.c);
      }
    }
 
@@ -117,26 +117,27 @@ double bound = 1.0;                /* schedulability bound (Liu and Layland)  */
 		LOG( "Error: empty file %s\n", file);
       return;
    }
-//    LOG("No of tasks = %d\n", n);
+   LOG("No of tasks = %d\n", n);
 //    print_task_list(t);
 
     /*
      * Get System's Utilization
      */
-   // LOG("\nTask's utilization:\n");
+   LOG("\nTask's utilization:\n");
    util = 0.0;
 
    task = t;
    while (task) {
       util += task -> c/task -> t;     /* Ui = Ci/Ti  */
-      // LOG("u(%d) = %f\n", task -> id, task -> c/task -> t);
+      LOG("u(%d) = %f\n", task -> id, task -> c/task -> t);
       task = (task_set_t *) task -> next;
    }
-//    LOG("\nTotal utilization of task set = %f\n", util);
-//    if (no_proc)
-//       LOG("\nTotal utilization of multiprocessor system = %f\n\n", util/no_proc);
-//    else
-//       LOG("\n");
+
+   LOG("\nTotal utilization of task set = %f\n", util);
+   if (no_proc)
+      LOG("\nTotal utilization of multiprocessor system = %f\n\n", util/no_proc);
+   else
+      LOG("\n");
 
    /*
     * Apply EDF-BF algorithm
@@ -153,15 +154,15 @@ double bound = 1.0;                /* schedulability bound (Liu and Layland)  */
    task = t;                          /* assign tasks to processors */
    while (task) {
       util =  task -> c / task -> t;
-      // LOG("\nutilization of task %d: %.4f\n", task -> id, util);
+      LOG("\nutilization of task %d: %.4f\n", task -> id, util);
       current_processor = p;
       task_not_assigned = 1;
       while ( task_not_assigned ) {
-         // LOG("\nchecking processor %d, with u= %.4f\n", current_processor -> id, current_processor -> u);
+         LOG("\nchecking processor %d, with u= %.4f\n", current_processor -> id, current_processor -> u);
          if ( (current_processor -> u + util) <= bound) {
             current_processor -> u += util;
             current_processor -> n++;
-            // LOG("current processor -> %d\n", current_processor -> id);
+            LOG("current processor -> %d\n", current_processor -> id);
             new_task.id = task -> id;
             new_task.c = task -> c;
             new_task.t = task -> t;
@@ -172,7 +173,7 @@ double bound = 1.0;                /* schedulability bound (Liu and Layland)  */
             new_processor.u = current_processor -> u;
             new_processor.n = current_processor -> n;
             new_processor.task = current_processor -> task;
-            // LOG("task %d added to processor %d\n", task -> id, current_processor -> id);
+            LOG("task %d added to processor %d\n", task -> id, current_processor -> id);
             p = del_processor_list(p, current_processor -> id);
             p = add_processor_list_u_sorted_desc(p, new_processor);
             task = (task_set_t *) task -> next;
@@ -182,7 +183,7 @@ double bound = 1.0;                /* schedulability bound (Liu and Layland)  */
             current_processor = (processor_t *) current_processor -> next;
          }
          if ( (!current_processor) ) {
-            // LOG("\nUsing new processor\n");
+            LOG("\nUsing new processor\n");
             m++;                                               /* current processor */
             new_processor.id = m;                              /* create an empty processor */
             new_processor.u = 0.0;
@@ -195,7 +196,7 @@ double bound = 1.0;                /* schedulability bound (Liu and Layland)  */
          }
       }
    }
-//    LOG("Task assigned to %d processors:\n", m);
+   LOG("Task assigned to %d processors:\n", m);
 //    print_processor_list(p);
    if (no_proc) {
       if (m <= no_proc) {

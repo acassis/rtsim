@@ -76,13 +76,13 @@ static int SimuladorCmd(ClientData clientData, Tcl_CmdDeleteProc* proc, int objc
 	init_logger();
 	
 //convertir la lista de parametros a cadenas de C
-	//DBG("\n called with %d arguments", objc);
+	DBG("\n called with %d arguments", objc);
 	for(t=0;t<objc;t++)
 	{
-		//DBG("\n%d: %s",t, (*objv[t]).bytes);
+		DBG("\n%d: %s",t, (*objv[t]).bytes);
 		strings[t] = (*objv[t]).bytes;
 	}
-	//DBG("\n");
+	DBG("\n");
 
 	//USAR SIEMPRE MODO PARCIAL
 	parameters.algorithm	= EDF;
@@ -98,7 +98,7 @@ static int SimuladorCmd(ClientData clientData, Tcl_CmdDeleteProc* proc, int objc
 	res = start_edf_main(parameters);
 	//res = simulator_main(objc, strings);
 
-	//DBG("\n End SimuladorCmd: %d",res);
+	DBG("\n End SimuladorCmd: %d",res);
 	return res;
 }
 
@@ -142,6 +142,8 @@ void* thread_start_edf(void* params)
 	char* outfile	= edf_params->outfile;
 	
 	start_edf(mode, no_proc, max_time, t, outfile);
+
+	LOG("\nThread End.");
 }
 #endif
 int start_edf(int mode, int no_proc, double max_time, task_set_t *t, char* outfile)
@@ -576,19 +578,21 @@ int start_edf_main(ALGORITHM_PARAMS parameters)
 DBG("start_edf_main");
 #ifdef USE_THREAD
 	pthread_t thread_task;
+DBG_LN();
 	edf_thread_args args;
+DBG_LN();
 #endif
 	sched_event_t new_event;
 	task_set_t *t = NULL; /* Head of task set's list */
 	task_set_t *current_task = NULL; /* Head of task set's list */
 	task_set_t new_task; /* List pointers */
 	processor_t* list, *current_processor;
-
+DBG_LN();
 
 	char line[255];
 	char basename_trace[255];
 	char partialname[255];
-
+DBG_LN();
 	int res;
 	int n, i;
 	ALGORITHM_MODE mode;
@@ -596,7 +600,7 @@ DBG("start_edf_main");
 	int event_id;
 	double max_time;
 	float period, wcet, phase;
-
+DBG_LN();
 	FILE *in_file; /* Input file */
 
 	/////////////////////////////////////// checking params
@@ -604,25 +608,25 @@ DBG("start_edf_main");
 		LOG( "\n You must supply the number of processors, simulation time (0 = lcm) and a file name with the task set parameters (see README file for details)\n");
 		return -1;
 	}*/
-
+DBG_LN();
 	mode = parameters.mode;//atoi(argv[argid+PARAM_MODE]);
 	if (mode < 0 || mode >= MODE_COUNT) {
 		LOG( "Error: invalid mode, use 0 for global or 1 for partial %d\n", mode);
 		return -1;
 	}
-
+DBG_LN();
 	no_proc = parameters.processor;//atoi(argv[argid+PARAM_NOPROC]);
 	if (no_proc <= 0) {
 		LOG( "Error: number of processor must be > 0 (%s)\n", no_proc);		
 		return -1;
 	}
-
+DBG_LN();
 	max_time = (double) parameters.time;//atoi(argv[argid + PARAM_MAXTIME]);
 	if (max_time < 0) {
 		LOG( "Error: simulation time must be >= 0 (%s)\n", max_time); //argv[argid + PARAM_MAXTIME]);
 		return -1;
 	}
-
+DBG_LN();
 	//in_file = fopen(argv[argid + PARAM_FILE], "r");
 	in_file = fopen(parameters.data, "r");
 	if (in_file == NULL) {
@@ -631,7 +635,7 @@ DBG("start_edf_main");
 	}
 	/////////////////////////////////////////////////////////////////////////////////////
 
-
+DBG_LN();
 #ifdef USE_TRACE_FILE
 	//get basename used for trace file output
 	//get_basename(argv[argid + PARAM_FILE], &basename_trace[0]);
@@ -639,7 +643,7 @@ DBG("start_edf_main");
 #endif
 
 	no_task = 0;
-	
+DBG_LN();	
 	if(mode == MODE_GLOBAL)	//use global mode
 	{
 		DBG("MODE_GLOBAL");
@@ -680,13 +684,14 @@ DBG("start_edf_main");
 			return -1;
 		}
 
-
+		DBG_LN();
 		res = start_edf(mode,no_proc, max_time, t, basename_trace);
+		DBG_LN();
 
 	}
 	else if(mode == MODE_PARTIAL)		//partial mode
 	{
-
+		DBG("\nMODE_PARTIAL");
 #ifdef USE_THREAD
 		pthread_mutex_init (&edf_mutex, NULL); 
 		edf_active_threads = 0;
@@ -694,9 +699,9 @@ DBG("start_edf_main");
 		res = 0;
 		
 		list = NULL;
-		//DBG("calling to partial function\n");
-		list = partial_function(list, 1, parameters.data);
-		//DBG("end partial function\n");
+		DBG("\ncalling to partial function for %d processors", no_proc);
+		list = partial_function(list, no_proc, parameters.data);
+		DBG("\nend partial function");
 /*
 		switch(parameters.partial_func)
 		{
@@ -723,12 +728,13 @@ DBG("start_edf_main");
 		
 		if(list == NULL)
 		{
-			LOG( "Error: unknow list for function %s\n", COMMAND_NAME);
+			LOG( "\nError: unknow list for function %s", COMMAND_NAME);
 			return -1;
 		}
 
 		current_processor = list;
 
+		DBG_LN();
 		while(current_processor)
 		{
 			n = 0;
@@ -757,31 +763,43 @@ DBG("start_edf_main");
 				current_task = (task_set_t*) (current_task->next);
 			}
 
+			DBG_LN();
 			sprintf(partialname, "%s_partial%d",basename_trace,current_processor->id);
+
 #ifdef USE_THREAD
+			
 			args.mode	= mode;
 			args.no_proc	= 1;
 			args.max_time	= max_time;
 			args.task	= t;
 			args.outfile	= partialname;
 
+			DBG("\nNew thread for %s, tasks %d", partialname, n);
 			res = pthread_create(&thread_task, NULL, thread_start_edf, &args);
 
 			if( res != 0)
 				DBG("\n Error no se pudo crear el hilo");
 			else
 			{
-				DBG("\nnew thread created...");
+				DBG("\nnew thread created.");
 				pthread_mutex_lock(&edf_mutex); 
 					edf_active_threads ++;
 				pthread_mutex_unlock(&edf_mutex); 
 			}
 #else
+
+			DBG("\nNo thread version for %s, tasks %d", partialname, n);
 			res += start_edf(mode, 1, max_time, t, partialname);
+			DBG("\n Finish %s", partialname);
 #endif
+			DBG_LN();
 			current_processor = (processor_t*) (current_processor->next);
 		}
 	}
+
+	DBG_LN();
+
+
 #ifdef USE_THREAD
 	//wait for finish threads
 	while(edf_active_threads != 0);
@@ -789,6 +807,7 @@ DBG("start_edf_main");
 		LOG("\nwaitting for threads ... %d", edf_active_threads);
 	}
 #endif
+
 
 	LOG("\n");
 	return res;

@@ -382,7 +382,7 @@ proc simulate { pathSavedTasks schedSelected frameResultsBox} {
 #	global pathSavedTrace
 	set resultAlg ""
 	#usar siempre test4.txt como ejemplo
-	set pathSavedTasks "/home/kary/simulador/RealTSS/test4.txt"
+	set pathSavedTasks "/home/kary/simulador/RealTSS/test5.txt"
 	deleteResultsBox $frameResultsBox
 	
 	#el nombre de la libreria siempre debera ser lib+nombredelplanificador
