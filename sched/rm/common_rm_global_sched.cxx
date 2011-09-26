@@ -67,7 +67,7 @@ typedef struct {
 
 void* thread_start_rm(void* params)
 {
-	//DBG("\ncreating new thread ...");
+	DBG("\ncreating new thread ...");
 	rm_thread_args* rm_params = (rm_thread_args*)params;
 	int mode		= rm_params->mode;
 	int no_proc		= rm_params->no_proc;
@@ -76,6 +76,7 @@ void* thread_start_rm(void* params)
 	char* outfile	= rm_params->outfile;
 
 	start_rm(mode, no_proc, max_time, t, outfile);
+	DBG("\nEnd thread.");
 	free(rm_params);
 }
 #endif
@@ -119,12 +120,14 @@ int start_rm(int mode, int no_proc, double max_time, task_set_t *t, char* outfil
 
 	trace_event new_trace_event;
 	new_trace_event.next = NULL;
+
+	strcpy(basename_trace, outfile);
 	///////////////////////////////
 #endif
 
 	//DBG("\n start rm simulator");
 
-	strcpy(basename_trace, outfile);
+	
 	
 	/// Create processor's list
 	for (i = 0; i < no_proc; i++) {
@@ -863,6 +866,7 @@ int start_rm(int mode, int no_proc, double max_time, task_set_t *t, char* outfil
 		file_id++;
 		LOG("\nProcessor %d: U = %f", file_id, current_processor->u);
 		//print_trace_list((trace_event *)current_processor->tracer);
+		
 		sprintf(file_trace, "%s_p%d.ktr", &basename_trace[0], file_id);
 		create_trace_list(file_trace, (trace_event *) current_processor->tracer, no_task, (int) max_time, (char *) "RM");
 		current_processor = (processor_t *) current_processor->next;
@@ -1130,7 +1134,7 @@ int start_rm_main(ALGORITHM_PARAMS parameters)
 			args->outfile[0] = '\0';
 			strcpy(args->outfile, partialname);
 
-			res = pthread_create(&thread_task, NULL, thread_start_rm, &args);
+			res = pthread_create(&thread_task, NULL, thread_start_rm, args);
 
 
 			if( res != 0)
