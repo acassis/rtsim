@@ -62,12 +62,12 @@ typedef struct {
 	int no_proc;
 	double max_time;
 	task_set_t *task;
-	char* outfile;
+	char outfile[255];
 }rm_thread_args;
 
 void* thread_start_rm(void* params)
 {
-	DBG("\ncreating new thread ...");
+	//DBG("\ncreating new thread ...");
 	rm_thread_args* rm_params = (rm_thread_args*)params;
 	int mode		= rm_params->mode;
 	int no_proc		= rm_params->no_proc;
@@ -76,6 +76,7 @@ void* thread_start_rm(void* params)
 	char* outfile	= rm_params->outfile;
 
 	start_rm(mode, no_proc, max_time, t, outfile);
+	free(rm_thread_args);
 }
 #endif
 int start_rm(int mode, int no_proc, double max_time, task_set_t *t, char* outfile)
@@ -950,6 +951,7 @@ int start_rm_main(ALGORITHM_PARAMS parameters)
 	
 	if(mode == MODE_GLOBAL)	//use global mode
 	{
+		DBG("MODE_GLOBAL");
 		//* Read in data
 		n = 0;
 		event_id = 0;
@@ -1004,7 +1006,7 @@ int start_rm_main(ALGORITHM_PARAMS parameters)
 	}
 	else if(mode == MODE_PARTIAL)		//partial mode
 	{
-
+		DBG("\nMODE_PARTIAL");
 #ifdef USE_THREAD
 		pthread_mutex_init (&rm_mutex, NULL); 
 		rm_active_threads = 0;
@@ -1012,9 +1014,9 @@ int start_rm_main(ALGORITHM_PARAMS parameters)
 		res = 0;
 		list = NULL;
 		
-		DBG("calling to partial function\n");
+		DBG("\ncalling to partial function for %d processors", no_proc);
 		list = partial_function(list, no_proc, parameters.data);
-		DBG("end partial function\n");
+		DBG("\nend partial function");
 /* no seleccionar la funcion parcial.
 		switch(parameters.partial_func)
 		{
@@ -1120,20 +1122,22 @@ int start_rm_main(ALGORITHM_PARAMS parameters)
 			sprintf(partialname, "%s_partial%d",basename_trace,current_processor->id);
 
 #ifdef USE_THREAD
-			args.mode		= mode;
-			args.no_proc	= 1;
-			args.max_time	= max_time;
-			args.task		= t;
-			args.outfile	= partialname;
+			args 			= (rm_thread_args*) (malloc(sizeof(edf_thread_args)));
+			args->mode		= mode;
+			args->no_proc	= 1;
+			args->max_time	= max_time;
+			args->task		= t;
+			args->outfile[0] = '\0';
+			strcpy(args->outfile, partialname);
 
 			res = pthread_create(&thread_task, NULL, thread_start_rm, &args);
 
 
 			if( res != 0)
-				DBG("\n Error no se pudo crear el hilo");
+				DBG("\n Error creating thread");
 			else
 			{
-				DBG("\nnew thread created...");
+				//DBG("\nnew thread created...");
 				pthread_mutex_lock(&rm_mutex); 
 					rm_active_threads ++;
 				pthread_mutex_unlock(&rm_mutex); 

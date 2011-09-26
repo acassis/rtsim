@@ -560,14 +560,8 @@ int start_edf(int mode, int no_proc, double max_time, task_set_t *t, char* outfi
 
 		sprintf(file_trace, "%s_p%d.ktr", &basename_trace[0], file_id);
 
-	#ifdef USE_THREAD
-		//pthread_mutex_lock(&edf_filetracker_mutex);
-	#endif
-		//DBG("\nCreating trace file %s", &file_trace[0]);
+
 		create_trace_list(file_trace, (trace_event *) current_processor->tracer, no_task, (int) max_time, (char *) "EDF");
-	#ifdef USE_THREAD
-		//pthread_mutex_unlock(&edf_filetracker_mutex);
-	#endif
 		current_processor = (processor_t *) current_processor->next;
 
 	}
@@ -701,7 +695,7 @@ DBG("\nstart_edf_main");
 	{
 		DBG("\nMODE_PARTIAL");
 #ifdef USE_THREAD
-		pthread_mutex_init (&edf_filetracker_mutex, NULL); 
+		
 		pthread_mutex_init (&edf_mutex, NULL); 
 		edf_active_threads = 0;
 #endif
@@ -796,9 +790,9 @@ DBG("\nstart_edf_main");
 			}
 #else
 
-			//DBG("\nNo thread version for %s, tasks %d", partialname, n);
+
 			res += start_edf(mode, 1, max_time, t, partialname);
-			//DBG("\n Finish %s", partialname);
+
 #endif
 			current_processor = (processor_t*) (current_processor->next);
 		}
