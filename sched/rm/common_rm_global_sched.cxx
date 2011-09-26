@@ -76,7 +76,7 @@ void* thread_start_rm(void* params)
 	char* outfile	= rm_params->outfile;
 
 	start_rm(mode, no_proc, max_time, t, outfile);
-	free(rm_thread_args);
+	free(rm_params);
 }
 #endif
 int start_rm(int mode, int no_proc, double max_time, task_set_t *t, char* outfile)
@@ -886,7 +886,7 @@ int start_rm_main(ALGORITHM_PARAMS parameters)
 {
 #ifdef USE_THREAD
 	pthread_t thread_task;
-	rm_thread_args args;
+	rm_thread_args* args;
 #endif
 	sched_event_t new_event;
 	task_set_t *t = NULL; /* Head of task set's list */
@@ -1122,7 +1122,7 @@ int start_rm_main(ALGORITHM_PARAMS parameters)
 			sprintf(partialname, "%s_partial%d",basename_trace,current_processor->id);
 
 #ifdef USE_THREAD
-			args 			= (rm_thread_args*) (malloc(sizeof(edf_thread_args)));
+			args 			= (rm_thread_args*) (malloc(sizeof(rm_thread_args)));
 			args->mode		= mode;
 			args->no_proc	= 1;
 			args->max_time	= max_time;
