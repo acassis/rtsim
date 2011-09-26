@@ -120,6 +120,7 @@ typedef enum
 
 #ifdef USE_THREAD
 
+pthread_mutex_t edf_filetracker_mutex;
 pthread_mutex_t edf_mutex; 
 int edf_active_threads;
 
@@ -128,22 +129,23 @@ typedef struct {
 	int no_proc;
 	double max_time;
 	task_set_t *task;
-	char* outfile;
+	char outfile[255];
 }edf_thread_args;
 
 void* thread_start_edf(void* params)
 {
-	LOG("\ncreating new thread ...");
 	edf_thread_args* edf_params = (edf_thread_args*)params;
 	int mode		= edf_params->mode;
 	int no_proc		= edf_params->no_proc;
 	double max_time = edf_params->max_time;
 	task_set_t *t	= edf_params->task;
-	char* outfile	= edf_params->outfile;
-	
+	char* outfile	= &(edf_params->outfile);
+
+	//DBG("\nCreating new thread ... %s", edf_params->outfile);
 	start_edf(mode, no_proc, max_time, t, outfile);
 
-	LOG("\nThread End.");
+	free(edf_params);
+	//DBG("\nThread End.");
 }
 #endif
 int start_edf(int mode, int no_proc, double max_time, task_set_t *t, char* outfile)
@@ -177,11 +179,10 @@ int start_edf(int mode, int no_proc, double max_time, task_set_t *t, char* outfi
 	trace_event new_trace_event;
 	new_trace_event.next = NULL;
 	///////////////////////////////
-#endif
-
-
 
 	strcpy(basename_trace, outfile);
+
+#endif
 	
 	/// Create processor's list
 	for (i = 0; i < no_proc; i++) {
@@ -448,6 +449,7 @@ int start_edf(int mode, int no_proc, double max_time, task_set_t *t, char* outfi
 				while (current_processor) {
 					file_id++;
 					//print_trace_list(current_processor->tracer);
+					//DBG("\nOutfile %s",basename_trace);
 					sprintf(file_trace, "%s_p%d.ktr", &basename_trace[0], file_id);
 					create_trace_list(file_trace, current_processor->tracer, no_task, current_time, (char *) "EDF");
 					
@@ -555,8 +557,17 @@ int start_edf(int mode, int no_proc, double max_time, task_set_t *t, char* outfi
 		file_id++;
 		LOG("\nProcessor %d: U = %f", file_id, current_processor->u);
 		//print_trace_list((trace_event *)current_processor->tracer);
+
 		sprintf(file_trace, "%s_p%d.ktr", &basename_trace[0], file_id);
+
+	#ifdef USE_THREAD
+		//pthread_mutex_lock(&edf_filetracker_mutex);
+	#endif
+		//DBG("\nCreating trace file %s", &file_trace[0]);
 		create_trace_list(file_trace, (trace_event *) current_processor->tracer, no_task, (int) max_time, (char *) "EDF");
+	#ifdef USE_THREAD
+		//pthread_mutex_unlock(&edf_filetracker_mutex);
+	#endif
 		current_processor = (processor_t *) current_processor->next;
 
 	}
@@ -575,10 +586,10 @@ int start_edf(int mode, int no_proc, double max_time, task_set_t *t, char* outfi
 
 int start_edf_main(ALGORITHM_PARAMS parameters)
 {
-DBG("start_edf_main");
+DBG("\nstart_edf_main");
 #ifdef USE_THREAD
 	pthread_t thread_task;
-	edf_thread_args args;
+	edf_thread_args* args;
 #endif
 	sched_event_t new_event;
 	task_set_t *t = NULL; /* Head of task set's list */
@@ -690,6 +701,7 @@ DBG("start_edf_main");
 	{
 		DBG("\nMODE_PARTIAL");
 #ifdef USE_THREAD
+		pthread_mutex_init (&edf_filetracker_mutex, NULL); 
 		pthread_mutex_init (&edf_mutex, NULL); 
 		edf_active_threads = 0;
 #endif
@@ -762,30 +774,31 @@ DBG("start_edf_main");
 			sprintf(partialname, "%s_partial%d",basename_trace,current_processor->id);
 
 #ifdef USE_THREAD
-			
-			args.mode	= mode;
-			args.no_proc	= 1;
-			args.max_time	= max_time;
-			args.task	= t;
-			args.outfile	= partialname;
+			args 			= (edf_thread_args*) (malloc(sizeof(edf_thread_args)));
+			args->mode		= mode;
+			args->no_proc	= 1;
+			args->max_time	= max_time;
+			args->task		= t;
+			args->outfile[0] = '\0';
+			strcpy(args->outfile, partialname);
 
-			DBG("\nNew thread for %s, tasks %d", partialname, n);
-			res = pthread_create(&thread_task, NULL, thread_start_edf, &args);
+			//DBG("\nNew thread for %s, tasks %d", args->outfile, n);
+			res = pthread_create(&thread_task, NULL, thread_start_edf, args);
 
 			if( res != 0)
-				DBG("\n Error no se pudo crear el hilo");
+				DBG("\n Error creating thread");
 			else
 			{
-				DBG("\nnew thread created.");
+				//DBG("\nnew thread created.");
 				pthread_mutex_lock(&edf_mutex); 
 					edf_active_threads ++;
 				pthread_mutex_unlock(&edf_mutex); 
 			}
 #else
 
-			DBG("\nNo thread version for %s, tasks %d", partialname, n);
+			//DBG("\nNo thread version for %s, tasks %d", partialname, n);
 			res += start_edf(mode, 1, max_time, t, partialname);
-			DBG("\n Finish %s", partialname);
+			//DBG("\n Finish %s", partialname);
 #endif
 			current_processor = (processor_t*) (current_processor->next);
 		}
@@ -794,7 +807,7 @@ DBG("start_edf_main");
 	//wait for finish threads
 	while(edf_active_threads != 0);
 	{
-		LOG("\nwaitting for threads ... %d", edf_active_threads);
+		DBG("\nwaitting for threads ... %d", edf_active_threads);
 	}
 #endif
 
