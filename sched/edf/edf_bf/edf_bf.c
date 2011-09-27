@@ -59,7 +59,7 @@
 
 processor_t* start_edf_bf(int nproc, char *file)
 {
-	DBG("Planificating by [edf bf]");
+	DBG("Schedulable by [edf bf]");
 	task_set_t *t=NULL;                 /* Head of task set's list */
 	processor_t *p=NULL;                /* Head of processor's list */
 
@@ -202,17 +202,17 @@ processor_t* start_edf_bf(int nproc, char *file)
 //    print_processor_list(p);
 	if (no_proc) {
 		if (m <= no_proc) {
-			LOG("\n[edf bf] Planifacable using %d processors", m);
-			DBG("\n[edf bf] Planifacable using %d processors", m);
+			LOG("\n[edf bf] Schedulable using %d processors", m);
+			DBG("\n[edf bf] Schedulable using %d processors", m);
 			return p;
 		} else {
-			LOG("\n[edf bf] Not planifacable using %d processors, processors required %d", no_proc, m);
-			DBG("[edf bf] Not planificable required processors %d", m);
+			LOG("\n[edf bf] Not Schedulable using %d processors, processors required %d", no_proc, m);
+			DBG("[edf bf] Not Schedulable required processors %d", m);
 			return NULL;
 		}
 	} else {
-		LOG("\n[edf bf] Planifacable using %d processors", m);
-		DBG("\n[edf bf] Planifacable using %d processors", m);
+		LOG("\n[edf bf] Schedulable using %d processors", m);
+		DBG("\n[edf bf] Schedulable using %d processors", m);
 		return p;
 	}
 	
