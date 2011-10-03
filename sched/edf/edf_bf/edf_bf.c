@@ -59,7 +59,7 @@
 
 processor_t* start_edf_bf(int nproc, char *file)
 {
-	DBG("Schedulable by [edf bf]");
+
 	task_set_t *t=NULL;                 /* Head of task set's list */
 	processor_t *p=NULL;                /* Head of processor's list */
 
@@ -80,7 +80,7 @@ processor_t* start_edf_bf(int nproc, char *file)
 	processor_t *current_processor;
 
 
-
+	DBG("Schedulable by [edf bf]");
 	no_proc = nproc;
    if (no_proc < 0) {
 		DBG( "Error: number of processor must be >= 0 (%s)\n", no_proc);

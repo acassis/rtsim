@@ -53,8 +53,6 @@
 
 
 
-
-
 //archivo con el codigo base comun para todas las funciones parciales
 //este archivo se incluira en cada version de edf con cada funcion parcial
 
@@ -63,7 +61,7 @@
 //#define END_ON_MISS_DEADLINE
 
 
-
+#ifdef SIMLUATOR_LIB_TCL
 //funcion de entrada para ejecutar el planificador
 static int SimuladorCmd(ClientData clientData, Tcl_CmdDeleteProc* proc, int objc, Tcl_Obj* const objv[]) 
 {
@@ -101,22 +99,37 @@ static int SimuladorCmd(ClientData clientData, Tcl_CmdDeleteProc* proc, int objc
 	//DBG("\n End SimuladorCmd: %d",res);
 	return res;
 }
+#else
 
 
-
-
-
-
-/*
-typedef enum
+int main(int argc, char* argv[])
 {
-	PARAM_MODE=0,
-	PARAM_NOPROC,
-	PARAM_MAXTIME,
-	PARAM_FILE,
-	PARAM_COUNT,
-}EDF_PARAMS;
-*/
+	int res = 01;
+	char* strings[255];
+	int t = 0;
+	ALGORITHM_PARAMS parameters;
+
+	DBG("\n cleaning log...");
+	init_logger();
+
+	//USAR SIEMPRE MODO PARCIAL
+	parameters.algorithm	= EDF;
+	parameters.mode			= LIB_MODE;
+	// SOLO SE USARA UNA FUNCION PARCIAL, NO ESPECIFICAR EN LOS PARAMETROS
+	// parameters.partial_func = EDF_PARTIAL_RBOUND_MP_NFR;
+	
+	parameters.processor	= 2;
+	parameters.time			= 60;
+	strcpy(parameters.data, "X:\\Simulator\\RealTSS\\test5.txt");
+	//t = objc - 2;
+	parameters.param_count = 6;
+	res = start_edf_main(parameters);
+	//res = simulator_main(objc, strings);
+
+	//DBG("\n End SimuladorCmd: %d",res);
+	return res;
+}
+#endif
 
 #ifdef USE_THREAD
 
@@ -148,6 +161,7 @@ void* thread_start_edf(void* params)
 	//DBG("\nThread End.");
 }
 #endif
+
 int start_edf(int mode, int no_proc, double max_time, task_set_t *t, char* outfile)
 {
 	processor_t *p = NULL; /* Head of processor's list */
@@ -203,7 +217,7 @@ int start_edf(int mode, int no_proc, double max_time, task_set_t *t, char* outfi
 		
 		//* add event (task release) to sched events list
 		new_event.id = event_id++;
-		new_event.t_event = (int) SCHEDE_RELEASE;
+		new_event.t_event =  SCHEDE_RELEASE;
 		new_event.time = task_to_execute->f;
 		new_event.task = task_in_event;
 		new_event.p = task_in_event -> p;
@@ -304,7 +318,7 @@ int start_edf(int mode, int no_proc, double max_time, task_set_t *t, char* outfi
 				// idle processors found	Active the current task	/////////////////////////////////
 				// add FINISH event for task	/////////////////////////////////////////////////////
 				new_event.id = event_id++;
-				new_event.t_event = (int) SCHEDE_FINISH;
+				new_event.t_event =  SCHEDE_FINISH;
 				new_event.time = current_time + task_in_event -> c;
 				new_event.task = task_in_event;
 				new_event.p = event_list -> p;
@@ -388,7 +402,7 @@ int start_edf(int mode, int no_proc, double max_time, task_set_t *t, char* outfi
 
 					// ADD schedule FINISH event for new task	/////////////////////////////////
 					new_event.id = event_id++;
-					new_event.t_event = (int) SCHEDE_FINISH;
+					new_event.t_event =  SCHEDE_FINISH;
 					new_event.time = current_time + task_in_event -> c;
 					new_event.task = task_in_event;
 					new_event.p = task_in_event -> p; //changed from event_list->p
@@ -410,7 +424,7 @@ int start_edf(int mode, int no_proc, double max_time, task_set_t *t, char* outfi
 
 
 				} else { // Task less prioritary NOT FOUND, set this task in ready state, set execute time to 0
-					task_in_event -> state = (int) TASK_READY;
+					task_in_event -> state = TASK_READY;
 					task_in_event -> cet = 0.0;
 				}
 			}
@@ -429,7 +443,7 @@ int start_edf(int mode, int no_proc, double max_time, task_set_t *t, char* outfi
 				LOG("|_ **Task deadline missed\n");
 				//print task fail
 				new_event.id = deadln_miss_id++;
-				new_event.t_event = (int) SCHEDE_DEADLN_MISS;
+				new_event.t_event =  SCHEDE_DEADLN_MISS;
 				new_event.time = current_time;
 				new_event.p = 0;
 				new_event.task = task_in_event;
@@ -471,11 +485,11 @@ int start_edf(int mode, int no_proc, double max_time, task_set_t *t, char* outfi
 			task_in_event->d = task_in_event -> r + task_in_event -> t;
 			task_in_event->cet = 0.0;
 			task_in_event->e = -1;
-			task_in_event->state = (int) TASK_READY;
+			task_in_event->state = TASK_READY;
 			task_in_event->p = set_task_edf_priority(task_in_event);
 			/* add event (task release) for next task activation (since current activation has finished */
 			new_event.id = event_id++;
-			new_event.t_event = (int) SCHEDE_RELEASE;
+			new_event.t_event =  SCHEDE_RELEASE;
 			new_event.time = task_in_event -> r;
 			new_event.task = task_in_event;
 			new_event.p = task_in_event -> p;
@@ -511,7 +525,7 @@ int start_edf(int mode, int no_proc, double max_time, task_set_t *t, char* outfi
 				}
 
 				new_event.id = event_id++;
-				new_event.t_event = (int) SCHEDE_FINISH;
+				new_event.t_event =  SCHEDE_FINISH;
 				new_event.time = current_time + (task_to_execute -> c - task_to_execute -> cet);
 				new_event.task = task_to_execute;
 				new_event.p = task_to_execute -> p;
@@ -521,7 +535,7 @@ int start_edf(int mode, int no_proc, double max_time, task_set_t *t, char* outfi
 				assign_task_to_processor(current_processor, task_to_execute, current_time);
 				LOG("|_ Task %d is now executing on processor %d\n", task_to_execute->id, current_processor->id);
 				task_to_execute -> e = current_time;
-				task_to_execute -> state = (int) TASK_RUNNING;
+				task_to_execute -> state = TASK_RUNNING;
 				//LOG("task %d assigned to processor %d\n", task_to_execute -> id, current_processor -> id);
 
 #ifdef USE_TRACE_FILE
@@ -580,7 +594,7 @@ int start_edf(int mode, int no_proc, double max_time, task_set_t *t, char* outfi
 
 int start_edf_main(ALGORITHM_PARAMS parameters)
 {
-DBG("\nstart_edf_main");
+
 #ifdef USE_THREAD
 	pthread_t thread_task;
 	edf_thread_args* args;
@@ -605,7 +619,7 @@ DBG("\nstart_edf_main");
 	float period, wcet, phase;
 
 	FILE *in_file; /* Input file */
-
+	DBG("\nstart_edf_main");
 	/////////////////////////////////////// checking params
 	/*if (parameters.param_count != PARAM_COUNT) {
 		LOG( "\n You must supply the number of processors, simulation time (0 = lcm) and a file name with the task set parameters (see README file for details)\n");
