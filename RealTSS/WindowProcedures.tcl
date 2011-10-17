@@ -488,20 +488,22 @@ proc loadTraceKiwi { } {
 	global pathSavedTrace
 	puts $config(kiwi)
 	if {$config(kiwi) != ""} {
-		if {$pathSavedTrace == ""} {
-			tk_messageBox -message "There is not tasks saved..." -type ok
-			return
-		}
-		puts "\n\nsss\n$pathSavedTrace"
+		
+		#if {$pathSavedTrace == ""} {
+		#	tk_messageBox -message "There is not tasks saved..." -type ok
+		#	return
+		#}
+		#puts "\n\nsss\n$pathSavedTrace"
 		set tmp [file exists $config(kiwi)]
 		if {$tmp <= 0} {
-			tk_messageBox -message "Could not find KIWI..." -type ok
+			tk_messageBox -message "Could not find KIWI... $config(kiwi)" -type ok
 			return
 		}
 		set dir [file dirname $config(kiwi)]
 		set arch [file tail $config(kiwi)]
 		set kiwiarch [file join $dir $arch]
 		set wishapp $config(wish)
+
 		###Plataform????
 #		set plat [string toupper $tcl_platform(platform)]
 #		###Is it windows???
