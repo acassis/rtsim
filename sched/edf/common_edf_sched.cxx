@@ -591,7 +591,14 @@ int start_edf(int mode, int no_proc, double max_time, task_set_t *t, char* outfi
 		LOG("\nProcessor %d: U = %f", file_id, current_processor->u);
 		//print_trace_list((trace_event *)current_processor->tracer);
 
-		sprintf(file_trace, "%s_p%d.ktr", &basename_trace[0], file_id);
+		//if is only 1 processor skip _p# from file name
+		if(no_proc == 1)
+		{
+			sprintf(file_trace, "%s.ktr", &basename_trace[0]);
+		}else
+		{
+			sprintf(file_trace, "%s_p%d.ktr", &basename_trace[0], file_id);
+		}
 
 
 		create_trace_list(file_trace, (trace_event *) current_processor->tracer, no_task, (int) max_time, (char *) "EDF");
@@ -799,7 +806,7 @@ int start_edf_main(ALGORITHM_PARAMS parameters)
 				current_task = (task_set_t*) (current_task->next);
 			}
 
-			sprintf(partialname, "%s_partial%d",basename_trace,current_processor->id);
+			sprintf(partialname, "%s_%s_partial_taskset%d", basename_trace, COMMAND_NAME, current_processor->id);
 
 #ifdef USE_THREAD
 			args 			= (edf_thread_args*) (malloc(sizeof(edf_thread_args)));
