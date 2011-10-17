@@ -49,7 +49,7 @@ typedef enum {
 
 #define MAX_SIMULATION_TIME  10000000
 
-typedef struct {
+typedef struct sched_event_t{
 	int id;
 	event_type t_event;
 	double time;
@@ -60,7 +60,7 @@ typedef struct {
 	struct sched_event_t * next;
 } sched_event_t;
 
-typedef struct {
+typedef struct stack_event_task{
 	event_type t_event;
 	double time;
 	double p; /* event (task) priority, if any*/

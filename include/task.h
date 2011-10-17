@@ -40,7 +40,7 @@ typedef enum {
 	TASK_TERMINATED,
 } task_state;
 
-typedef struct {
+typedef struct task_resource_t{
 	int id; /* resource id in resource list */
 	double c; /* execution time */
 	double e; /* start execution time */
@@ -49,18 +49,18 @@ typedef struct {
 	struct task_resource_t* next;
 } task_resource_t;
 
-typedef struct {
+typedef struct list_resource_t{
 	int id;
 	struct task_set_t* task;
 	struct list_resource_t* next;
 } list_resource_t;
 
-typedef struct {
+typedef struct stack_priority{
 	double p;
 	struct stack_priority* prev;
 } stack_priority;
 
-typedef struct {
+typedef struct task_set_t{
 	int id;
 	task_state state;
 	double t; /* period  */
@@ -79,7 +79,7 @@ typedef struct {
 	struct task_set_t * next;
 } task_set_t;
 
-typedef struct {
+typedef struct s_t{
 	int id;
 	float s; /* dummy variable */
 	float r; /* dummy variable */

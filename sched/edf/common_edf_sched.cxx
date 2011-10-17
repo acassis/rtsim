@@ -91,8 +91,10 @@ static int SimuladorCmd(ClientData clientData, Tcl_CmdDeleteProc* proc, int objc
 	parameters.processor	= atoi(strings[2]);
 	parameters.time			= atoi(strings[3]);
 	strcpy(parameters.data, strings[4]);
-	t = objc - 2;
-	parameters.param_count = t;
+	
+	//unused params count
+	//t = objc - 2;
+	//parameters.param_count = t;
 	res = start_edf_main(parameters);
 	//res = simulator_main(objc, strings);
 
@@ -112,21 +114,38 @@ int main(int argc, char* argv[])
 	DBG("\n cleaning log...");
 	init_logger();
 
+
+	if(argc != 4)
+	{
+		DBG("Invalid params");
+		return -1;
+	}
+	// 4 required params
+	// 0 (as default) application name for example Simulator.exe
+	// 1 file name
+	// 2 processator counts
+	// 3 time
+	
+	for(t=0;t<argc;t++)
+	{
+		strings[t] = argv[t];
+	}
+
+
 	//USAR SIEMPRE MODO PARCIAL
 	parameters.algorithm	= EDF;
 	parameters.mode			= LIB_MODE;
 	// SOLO SE USARA UNA FUNCION PARCIAL, NO ESPECIFICAR EN LOS PARAMETROS
 	// parameters.partial_func = EDF_PARTIAL_RBOUND_MP_NFR;
 	
-	parameters.processor	= 2;
-	parameters.time			= 60;
-	strcpy(parameters.data, "X:\\Simulator\\RealTSS\\test5.txt");
+	strcpy(parameters.data, strings[1]);
+	parameters.processor	= atoi(strings[2]);
+	parameters.time			= atoi(strings[3]);
+	
 	//t = objc - 2;
-	parameters.param_count = 6;
+	//parameters.param_count = 6; //unused
 	res = start_edf_main(parameters);
-	//res = simulator_main(objc, strings);
-
-	//DBG("\n End SimuladorCmd: %d",res);
+	
 	return res;
 }
 #endif
@@ -686,8 +705,10 @@ int start_edf_main(ALGORITHM_PARAMS parameters)
 				new_task.cet = 0.0;
 				new_task.e = -1;
 				new_task.p = set_task_edf_priority(&new_task);
+				new_task.sp = NULL;
 				new_task.state = TASK_READY;
 				new_task.se = 0;
+				
 
 				//add task to task list
 				t = add_task_list_p_sorted(t, new_task);
@@ -718,36 +739,34 @@ int start_edf_main(ALGORITHM_PARAMS parameters)
 		list = NULL;
 		DBG("\ncalling to partial function for %d processors", no_proc);
 		list = partial_function(list, no_proc, parameters.data);
-		DBG("\nend partial function");
-/*
-		switch(parameters.partial_func)
-		{
-			case EDF_PARTIAL_NF:
-				//list = start_edf_nf(1, argv[argid + PARAM_FILE]);
-				list = start_edf_nf(1, parameters.data);
-				break;
-			case EDF_PARTIAL_FF:
-				list = start_edf_ff(1, parameters.data);
-				break;
-			case EDF_PARTIAL_BF:
-				list = start_edf_bf(1, parameters.data);
-				break;
 
-			case EDF_PARTIAL_WF:
-				list = start_edf_wf(1, parameters.data);
-				break;
-			default:
-				LOG( "Error: unknow partial function %d\n", parameters.partial_func);
-				return -1;
 
-		}
-		*/
-		
+		//task are not scheduable using partial funciton
 		if(list == NULL)
 		{
 			LOG("\nError: Task set no scheduable using partial function");
 			return -1;
 		}
+
+		
+		//task are shceduable, display task assignations
+		DBG("\n::: Planning :::");
+		current_processor = list;
+		while(current_processor)
+		{
+			DBG("\nProcessor %d", current_processor->id);
+			current_task = current_processor->task;
+			while(current_task)
+			{
+				DBG("\n    Task %d",current_task->id);
+				current_task = current_task->next;
+			}
+			current_processor = current_processor->next;
+		}
+
+		DBG("\n ::: End Planning :::");
+		
+	
 
 		current_processor = list;
 
@@ -770,6 +789,7 @@ int start_edf_main(ALGORITHM_PARAMS parameters)
 				new_task.cet = 0.0;
 				new_task.e = -1;
 				new_task.p = set_task_edf_priority(&new_task);
+				new_task.sp = NULL;
 				new_task.state = TASK_READY;
 				new_task.se = 0;
 

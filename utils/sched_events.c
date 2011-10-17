@@ -151,7 +151,7 @@ sched_event_t* pop_task_stack_events(task_set_t* task, sched_event_t * event_lis
 	while (stack_event) {
 
 		new_event.id = (*event_id)++;
-		new_event.t_event = (int) stack_event->t_event;
+		new_event.t_event =  stack_event->t_event;
 		new_event.time = current_time + stack_event->time;
 		new_event.task = task;
 		new_event.p = stack_event -> p;

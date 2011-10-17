@@ -1,8 +1,8 @@
 #ifndef __SIMULATOR_H__
 #define __SIMULATOR_H__
 
-	//#define OS_WINDOWS
-	#define OS_LINUX
+	#define OS_WINDOWS
+	//#define OS_LINUX
 
 
 	#ifdef OS_LINUX

@@ -40,6 +40,7 @@ void init_logger()
 
 void logger(const char* fmt, ...)
 {
+	FILE* file;
 	char str[5*1024];
 	va_list arg_list;
 	
@@ -50,7 +51,7 @@ void logger(const char* fmt, ...)
 	//printf("%s", str);
 	
 //#ifdef DEBUG_IN_FILE
-	FILE* file = fopen("logs.txt", "a+");
+	file = fopen("logs.txt", "a+");
 	if(file)
 	{
 		fprintf(file, "%s", str);

@@ -32,7 +32,7 @@
 #define PROCESSOR_IDLE  0
 #define PROCESSOR_BUSY  1
 
-typedef struct {
+typedef struct processor_t{
 	int id;
 	int status;
 	int n; /* no of tasks assigned to processor */

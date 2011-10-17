@@ -41,7 +41,7 @@ enum TEVENT {
 
 extern char* event_name[];
 
-typedef struct {
+typedef struct trace_event{
 	double time;
 	int task;
 	enum TEVENT t_event;
