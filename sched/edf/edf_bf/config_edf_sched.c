@@ -34,7 +34,9 @@ processor_t* partial_function(processor_t* list, int nproc, char *file)
 {
 	//funcion parcial que se llamara en esta libreria
 	// ## Cambiar por la fucncion de la nueva funcion parcial
+	DBG("\ncall start_edf_bf(%d, %s)", nproc, file);
 	list = start_edf_bf(nproc, file);
+	DBG("\nend start_edf_bf, list = %x", list);
 	return list;
 }
 #ifdef SIMLUATOR_LIB_TCL

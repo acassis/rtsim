@@ -11,6 +11,9 @@ OBJ_DIR 	=$(SCHED_DIR)/obj
 # opcion de compilador para el uso de threads
 CC_OPT 		= -lpthread
 
+#BUILD Lib or executable
+BUILD_TCL_LIB	=-DUSE_TCL_STUBS -DSIMLUATOR_LIB_TCL -I$(INCLUDE_DIR) -I/usr/include/tcl8.5 -L/usr/lib -ltclstub8.5 -lm $(CC_OPT)
+BUILD_EXECUTABLE=-I$(INCLUDE_DIR) -lm $(CC_OPT)
 
 ############################################################################################
 # Lista de objectos comunes para todos los metodos
@@ -33,7 +36,8 @@ objects = $(UTILS_DIR)/task_lists.o\
 # file2_edfbf	=$(dir_edfbf)/config_edf_sched.c
 # #nombre de la libreria que se generara
 # lib_edfbf	=$(LIB_DIR)/libedfbf.so
-
+# #nombre del ejecutable que se generara
+# exe_edfbf	=edfbf
 
 ### Configuracion para metodo edf bf
 #carpeta donde estan los archivos
@@ -43,6 +47,7 @@ file1_edfbf	=$(dir_edfbf)/edf_bf.c
 file2_edfbf	=$(dir_edfbf)/config_edf_sched.c
 #nombre de la libreria que se generara
 lib_edfbf	=$(LIB_DIR)/libedfbf.so
+exe_edfbf	=edfbf
 
 ### Configuracion para metodo edf ff
 #carpeta donde estan los archivos
@@ -52,6 +57,7 @@ file1_edfff	=$(dir_edfff)/edf_ff.c
 file2_edfff	=$(dir_edfff)/config_edf_sched.c
 #nombre de la libreria que se generara
 lib_edfff	=$(LIB_DIR)/libedfff.so
+exe_edfff	=edfff
 
 ### Configuracion para metodo edf nf
 #carpeta donde estan los archivos
@@ -61,6 +67,7 @@ file1_edfnf	=$(dir_edfnf)/edf_nf.c
 file2_edfnf	=$(dir_edfnf)/config_edf_sched.c
 #nombre de la libreria que se generara
 lib_edfnf	=$(LIB_DIR)/libedfnf.so
+exe_edfnf	=edfnf
 
 ### Configuracion para metodo edf wf
 #carpeta donde estan los archivos
@@ -70,7 +77,7 @@ file1_edfwf	=$(dir_edfwf)/edf_wf.c
 file2_edfwf	=$(dir_edfwf)/config_edf_sched.c
 #nombre de la libreria que se generara
 lib_edfwf	=$(LIB_DIR)/libedfwf.so
-
+exe_edfwf	=edfwf
 
 ### Configuracion para metodo edf global
 #carpeta donde estan los archivos
@@ -79,7 +86,7 @@ dir_edfglobal	=$(SCHED_DIR)/global
 file2_edfglobal	=$(dir_edfglobal)/config_edf_sched.c
 #nombre de la libreria que se generara
 lib_edfglobal	=$(LIB_DIR)/libedfglobal.so
-
+exe_edfglobal	=edfglobal
 ############################################################################################
 #all: $(objects) $(rm_rbound_mp) $(rm_bf_du_uo)
 
@@ -92,7 +99,7 @@ lib_edfglobal	=$(LIB_DIR)/libedfglobal.so
 	# @echo ==================================================================
 	# @echo Compiling...
 	# @echo ==================================================================
-	# gcc $(file1_edfbf) $(file2_edfbf) $(objects) -shared -o $(lib_edfbf) -DUSE_TCL_STUBS -DSIMLUATOR_LIB_TCL -I$(INCLUDE_DIR) -I/usr/include/tcl8.5 -L/usr/lib -ltclstub8.5 -lm $(CC_OPT)
+	# gcc $(file1_edfbf) $(file2_edfbf) $(objects) -shared -o $(lib_edfbf) $(BUILD_TCL_LIB)
 	# @echo ==================================================================
 	# @echo Finish.
 	# @echo ==================================================================
@@ -102,7 +109,8 @@ edf_global: $(objects)
 	@echo ==================================================================
 	@echo Compiling...
 	@echo ==================================================================
-	gcc $(file2_edfglobal) $(objects) -shared -o $(lib_edfglobal) -DUSE_TCL_STUBS -DSIMLUATOR_LIB_TCL -I$(INCLUDE_DIR) -I/usr/include/tcl8.5 -L/usr/lib -ltclstub8.5 -lm $(CC_OPT)
+	gcc $(file2_edfglobal) $(objects) -shared -o $(lib_edfglobal) $(BUILD_TCL_LIB)
+
 	@echo ==================================================================
 	@echo Finish.
 	@echo ==================================================================
@@ -112,7 +120,12 @@ edf_bf: $(objects)
 	@echo ==================================================================
 	@echo Compiling...
 	@echo ==================================================================
-	gcc $(file1_edfbf) $(file2_edfbf) $(objects) -shared -o $(lib_edfbf) -DUSE_TCL_STUBS -DSIMLUATOR_LIB_TCL -I$(INCLUDE_DIR) -I/usr/include/tcl8.5 -L/usr/lib -ltclstub8.5 -lm $(CC_OPT)
+	@echo Building lib...
+	gcc $(file1_edfbf) $(file2_edfbf) $(objects) -shared -o $(lib_edfbf) $(BUILD_TCL_LIB)
+	
+	@echo ------------------------------------------------------------------
+	@echo Building executable...
+	gcc $(file1_edfbf) $(file2_edfbf) $(objects) -o ./$(exe_edfbf) $(BUILD_EXECUTABLE)
 	@echo ==================================================================
 	@echo Finish.
 	@echo ==================================================================
@@ -122,7 +135,12 @@ edf_ff: $(objects)
 	@echo ==================================================================
 	@echo Compiling...
 	@echo ==================================================================
-	gcc $(file1_edfff) $(file2_edfff) $(objects) -shared -o $(lib_edfff) -DUSE_TCL_STUBS -DSIMLUATOR_LIB_TCL -I$(INCLUDE_DIR) -I/usr/include/tcl8.5 -L/usr/lib -ltclstub8.5 -lm $(CC_OPT)
+	@echo Building lib...
+	gcc $(file1_edfff) $(file2_edfff) $(objects) -shared -o $(lib_edfff) $(BUILD_TCL_LIB)
+
+	@echo ------------------------------------------------------------------
+	@echo Building executable...
+	gcc $(file1_edfff) $(file2_edfff) $(objects) -o ./$(exe_edfff) $(BUILD_EXECUTABLE)
 	@echo ==================================================================
 	@echo Finish.
 	@echo ==================================================================
@@ -132,7 +150,12 @@ edf_nf: $(objects)
 	@echo ==================================================================
 	@echo Compiling...
 	@echo ==================================================================
-	gcc $(file1_edfnf) $(file2_edfnf) $(objects) -shared -o $(lib_edfnf) -DUSE_TCL_STUBS -DSIMLUATOR_LIB_TCL -I$(INCLUDE_DIR) -I/usr/include/tcl8.5 -L/usr/lib -ltclstub8.5 -lm $(CC_OPT)
+	@echo Building lib...
+	gcc $(file1_edfnf) $(file2_edfnf) $(objects) -shared -o $(lib_edfnf) $(BUILD_TCL_LIB)
+
+	@echo ------------------------------------------------------------------
+	@echo Building executable...
+	gcc $(file1_edfnf) $(file2_edfnf) $(objects) -o ./$(exe_edfnf) $(BUILD_EXECUTABLE)
 	@echo ==================================================================
 	@echo Finish.
 	@echo ==================================================================
@@ -142,7 +165,12 @@ edf_wf: $(objects)
 	@echo ==================================================================
 	@echo Compiling...
 	@echo ==================================================================
-	gcc $(file1_edfwf) $(file2_edfwf) $(objects) -shared -o $(lib_edfwf) -DUSE_TCL_STUBS -DSIMLUATOR_LIB_TCL -I$(INCLUDE_DIR) -I/usr/include/tcl8.5 -L/usr/lib -ltclstub8.5 -lm $(CC_OPT)
+	@echo Building lib...
+	gcc $(file1_edfwf) $(file2_edfwf) $(objects) -shared -o $(lib_edfwf) $(BUILD_TCL_LIB)
+
+	@echo ------------------------------------------------------------------
+	@echo Building executable...
+	gcc $(file1_edfwf) $(file2_edfwf) $(objects) -o ./$(exe_edfwf) $(BUILD_EXECUTABLE)
 	@echo ==================================================================
 	@echo Finish.
 	@echo ==================================================================
