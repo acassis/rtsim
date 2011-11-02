@@ -489,11 +489,6 @@ proc loadTraceKiwi { } {
 	puts $config(kiwi)
 	if {$config(kiwi) != ""} {
 		
-		#if {$pathSavedTrace == ""} {
-		#	tk_messageBox -message "There is not tasks saved..." -type ok
-		#	return
-		#}
-		#puts "\n\nsss\n$pathSavedTrace"
 		set tmp [file exists $config(kiwi)]
 		if {$tmp <= 0} {
 			tk_messageBox -message "Could not find KIWI... $config(kiwi)" -type ok
@@ -502,7 +497,21 @@ proc loadTraceKiwi { } {
 		set dir [file dirname $config(kiwi)]
 		set arch [file tail $config(kiwi)]
 		set kiwiarch [file join $dir $arch]
-		set wishapp $config(wish)
+
+		#read the output file, with names of traces
+		set archName "kiwi_files.txt"
+		set archExist [file exists $archName]
+
+		if {$archExist > 0} {
+			set arch [open $archName { RDWR CREAT } ]
+			#for each line
+			while { [gets $arch line ] >= 0} {
+				puts "Openning... $kiwiarch - $line"
+				#launch kiwi and open file, & for call in new thread kiwi
+				exec $kiwiarch $line &
+    		} 
+			close $arch
+		}
 
 		###Plataform????
 #		set plat [string toupper $tcl_platform(platform)]
@@ -512,8 +521,8 @@ proc loadTraceKiwi { } {
 #			exec $wishapp $kiwiarch $pathSavedTasks
 #		} else {
 			###Just need kiwi and the trace log
-			puts "$kiwiarch - $pathSavedTrace"
-			exec $kiwiarch $pathSavedTrace
+			#puts "$kiwiarch - $pathSavedTrace"
+			#exec $kiwiarch $pathSavedTrace
 #		}
 		
 		# $entorno(archtraza)

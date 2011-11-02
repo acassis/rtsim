@@ -738,7 +738,7 @@ int start_edf_main(ALGORITHM_PARAMS parameters)
 		}
 
 
-		fprintf(kiwi_files, "%s", basename_trace);
+		fprintf(kiwi_files, "%s.ktr\n", basename_trace);
 		
 		res = start_edf(mode,no_proc, max_time, t, basename_trace);
 
@@ -818,7 +818,7 @@ int start_edf_main(ALGORITHM_PARAMS parameters)
 
 			sprintf(partialname, "%s_%s_partial_taskset%d", basename_trace, COMMAND_NAME, current_processor->id);
 
-			fprintf(kiwi_files, "%s", partialname);
+			fprintf(kiwi_files, "%s.ktr\n", partialname);
 #ifdef USE_THREAD
 			//crear el hilo para el conjunto de tareas
 			args 			= (edf_thread_args*) (malloc(sizeof(edf_thread_args)));
