@@ -103,7 +103,7 @@ static int SimuladorCmd(ClientData clientData, Tcl_CmdDeleteProc* proc, int objc
 }
 #else
 
-
+//funcion de entrada para ejecutar la funcion como aplicacion
 int main(int argc, char* argv[])
 {
 	int res = 01;
@@ -644,6 +644,7 @@ int start_edf_main(ALGORITHM_PARAMS parameters)
 	double max_time;
 	float period, wcet, phase;
 
+	FILE *kiwi_files;
 	FILE *in_file; /* Input file */
 	DBG("\nstart_edf_main");
 	/////////////////////////////////////// checking params
@@ -678,6 +679,13 @@ int start_edf_main(ALGORITHM_PARAMS parameters)
 	}
 	/////////////////////////////////////////////////////////////////////////////////////
 
+	
+	kiwi_files = fopen("kiwi_files.txt","w+");
+	if (in_file == NULL) {
+		LOG( "Error:Unable to create kiwi_files.txt file\n");
+		return -1;
+	}
+	
 
 #ifdef USE_TRACE_FILE
 	//get basename used for trace file output
@@ -730,6 +738,8 @@ int start_edf_main(ALGORITHM_PARAMS parameters)
 		}
 
 
+		fprintf(kiwi_files, "%s", basename_trace);
+		
 		res = start_edf(mode,no_proc, max_time, t, basename_trace);
 
 	}
@@ -808,7 +818,9 @@ int start_edf_main(ALGORITHM_PARAMS parameters)
 
 			sprintf(partialname, "%s_%s_partial_taskset%d", basename_trace, COMMAND_NAME, current_processor->id);
 
+			fprintf(kiwi_files, "%s", partialname);
 #ifdef USE_THREAD
+			//crear el hilo para el conjunto de tareas
 			args 			= (edf_thread_args*) (malloc(sizeof(edf_thread_args)));
 			args->mode		= mode;
 			args->no_proc	= 1;
@@ -830,14 +842,15 @@ int start_edf_main(ALGORITHM_PARAMS parameters)
 				pthread_mutex_unlock(&edf_mutex); 
 			}
 #else
-
-
+			//ejecutar sin hilo.
 			res += start_edf(mode, 1, max_time, t, partialname);
-
 #endif
 			current_processor = (processor_t*) (current_processor->next);
 		}
 	}
+	
+	fclose(kiwi_files);
+	
 #ifdef USE_THREAD
 	//wait for finish threads
 	while(edf_active_threads != 0);
