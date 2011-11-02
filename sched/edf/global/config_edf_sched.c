@@ -35,7 +35,7 @@ processor_t* partial_function(processor_t* list, int nproc, char *file)
 	//list = start_edf_bf(nproc, file);
 	return list;
 }
-
+#ifdef SIMLUATOR_LIB_TCL
 // Nombre del metodo comun usado para entrar a ejecutar el planificador
 static int SimuladorCmd(ClientData clientData, Tcl_CmdDeleteProc* proc, int objc, Tcl_Obj* const objv[]);
 
@@ -59,6 +59,6 @@ int Edfglobal_Init(Tcl_Interp *interp)
 
 	return TCL_OK;
 }
-
+#endif
 //incluir el codigo comun para todos los metodos
 #include "../common_edf_sched.cxx"
