@@ -681,7 +681,8 @@ int start_edf_main(ALGORITHM_PARAMS parameters)
 
 	
 	//create output list for open using kiwi.
-	kiwi_files = fopen("%s_kiwi_files.txt", COMMAND_NAME, "w+");
+	sprintf(partialname,"%s_kiwi_files.txt", COMMAND_NAME);
+	kiwi_files = fopen(partialname, "w+");
 	if (kiwi_files == NULL) {
 		LOG( "Error: Unable to create kiwi_files.txt file\n");
 		return -1;
