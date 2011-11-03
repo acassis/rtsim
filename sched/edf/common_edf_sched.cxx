@@ -680,9 +680,10 @@ int start_edf_main(ALGORITHM_PARAMS parameters)
 	/////////////////////////////////////////////////////////////////////////////////////
 
 	
-	kiwi_files = fopen("kiwi_files.txt","w+");
-	if (in_file == NULL) {
-		LOG( "Error:Unable to create kiwi_files.txt file\n");
+	//create output list for open using kiwi.
+	kiwi_files = fopen("%s_kiwi_files.txt", COMMAND_NAME, "w+");
+	if (kiwi_files == NULL) {
+		LOG( "Error: Unable to create kiwi_files.txt file\n");
 		return -1;
 	}
 	
@@ -738,6 +739,7 @@ int start_edf_main(ALGORITHM_PARAMS parameters)
 		}
 
 
+		//add to kiwi list the output file.
 		fprintf(kiwi_files, "%s.ktr\n", basename_trace);
 		
 		res = start_edf(mode,no_proc, max_time, t, basename_trace);
@@ -818,7 +820,9 @@ int start_edf_main(ALGORITHM_PARAMS parameters)
 
 			sprintf(partialname, "%s_%s_partial_taskset%d", basename_trace, COMMAND_NAME, current_processor->id);
 
+			//add to kiwi list the output file.
 			fprintf(kiwi_files, "%s.ktr\n", partialname);
+			
 #ifdef USE_THREAD
 			//crear el hilo para el conjunto de tareas
 			args 			= (edf_thread_args*) (malloc(sizeof(edf_thread_args)));
@@ -849,6 +853,7 @@ int start_edf_main(ALGORITHM_PARAMS parameters)
 		}
 	}
 	
+	//close output to kiwi list.
 	fclose(kiwi_files);
 	
 #ifdef USE_THREAD
