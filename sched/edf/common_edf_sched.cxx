@@ -51,7 +51,8 @@
 
    LAST REVISION:    June 2009                                                         */
 
-
+#include <stdlib.h>
+#include "common_edf_sched.h"
 
 //archivo con el codigo base comun para todas las funciones parciales
 //este archivo se incluira en cada version de edf con cada funcion parcial
@@ -171,7 +172,7 @@ void* thread_start_edf(void* params)
 	int no_proc		= edf_params->no_proc;
 	double max_time = edf_params->max_time;
 	task_set_t *t	= edf_params->task;
-	char* outfile	= &(edf_params->outfile);
+	char* outfile	= (edf_params->outfile);
 
 	//DBG("\nCreating new thread ... %s", edf_params->outfile);
 	start_edf(mode, no_proc, max_time, t, outfile);
