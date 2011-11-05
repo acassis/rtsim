@@ -23,6 +23,8 @@
    LAST REVISION:    January 2010
 
  */
+
+#include <stdlib.h>
 #include "../include/trace_event.h"
 
 char *event_name[] ={
