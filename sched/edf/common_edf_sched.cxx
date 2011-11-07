@@ -820,7 +820,7 @@ int start_edf_main(ALGORITHM_PARAMS parameters)
 				current_task = (task_set_t*) (current_task->next);
 			}
 
-			sprintf(partialname, "%s_%s_partial_taskset%d", basename_trace, COMMAND_NAME, current_processor->id);
+			sprintf(partialname, "%s_%s_partial_P%d", basename_trace, COMMAND_NAME,( current_processor->id)-1);
 
 			//add to kiwi list the output file.
 			fprintf(kiwi_files, "%s.ktr\n", partialname);
