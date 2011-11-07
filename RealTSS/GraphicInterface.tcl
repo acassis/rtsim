@@ -143,8 +143,10 @@ proc initializationProcedures { } {
 	wm withdraw .	;					#Hides the window parent	
 	toplevel .realtss ;					#Set at top level the window
 	wm title .realtss [searchCommand REALTSS_SIMULATOR];	#Put the title of the window
-	set width [expr {[winfo screenwidth .] - 8}] ;		#This var is for obtain the width of the actual resolution
-	set height [expr {[winfo screenheight .] - 100}] ;	#This var is for obtain the height of the actual resolution
+	#set width [expr {[winfo screenwidth .] - 8}] ;		#This var is for obtain the width of the actual resolution
+	set width 800
+	#set height [expr {[winfo screenheight .] - 100}] ;	#This var is for obtain the height of the actual resolution
+	set height 600
 	wm minsize .realtss $width $height
 	#We add direct access to some process
 	

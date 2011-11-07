@@ -1327,7 +1327,7 @@ void remove_resources_from_task(task_set_t* task, list_resource_t* list)
 				}
 				next = (list_resource_t *) next -> next;
 			}
-			res = (list_resource_t*) res->next;
+			res = (task_resource_t*) res->next;
 		}
 	}
 }
