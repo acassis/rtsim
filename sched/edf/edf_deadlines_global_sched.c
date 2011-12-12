@@ -53,7 +53,7 @@
 
 
 
-#include "../include/edf_deadlines_global_sched.h"
+#include "edf_deadlines_global_sched.h"
 
 
 #define USE_TRACE_FILE

@@ -1,4 +1,4 @@
-#include "../common_edf_sched.h"
+#include "common_edf_sched.h"
 
 // ################################################################3
 // 0. Definir el modo de la libreria, MODE_GLOBAL o MODE_PARTIAL

@@ -35,8 +35,8 @@
 #
 ################################################################################
 package require Tk
-package require tablelist
 package require Tcl
+package require tablelist
 
 global array entorno ;		#Array to store framewrok variables
 global array config

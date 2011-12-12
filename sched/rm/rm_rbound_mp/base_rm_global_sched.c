@@ -1,4 +1,4 @@
-#include "../rm_global_sched.h"
+#include "rm_global_sched.h"
 
 // ################################################################3
 // 0. agregar el include donde se encuentra la funcion parcial
