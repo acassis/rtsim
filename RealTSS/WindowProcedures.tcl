@@ -482,11 +482,12 @@ proc newSetTasks {frameTasksEntrys frameResultsBox } {
 	$frameTasksEntrys.table delete 0 end
 }
 
-proc loadTraceKiwi { } {
+proc loadTraceKiwi { sched } {
 	global pathSavedTasks
 	global array config
 	global pathSavedTrace
 	puts $config(kiwi)
+	puts "Searching kiwi file for $sched"
 	if {$config(kiwi) != ""} {
 		
 		set tmp [file exists $config(kiwi)]
@@ -499,7 +500,7 @@ proc loadTraceKiwi { } {
 		set kiwiarch [file join $dir $arch]
 
 		#read the output file, with names of traces
-		set archName "kiwi_files.txt"
+		set archName "$sched_kiwi_files.txt"
 		set archExist [file exists $archName]
 
 		if {$archExist > 0} {

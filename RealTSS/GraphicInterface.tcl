@@ -581,7 +581,7 @@ proc makeMenuBar { frameParent parent args} {
 	#$run add command -label "[searchCommand SIMULATE]" -command { simulate $pathSavedTasks $fullLibFile $schedSelected [getResultsBoxFrame] } -underline 1 ;					#Simulate option
 	#run using partial library
 	$run add command -label "[searchCommand SIMULATE]" -command { simulate $pathSavedTasks $schedSelected [getResultsBoxFrame] } -underline 1 ;					#Simulate option
-	$view add command -label "[searchCommand OPEN_KIWI]" -command { loadTraceKiwi } -underline 1 ;				#Open kiwi option
+	$view add command -label "[searchCommand OPEN_KIWI]" -command { loadTraceKiwi $schedSelected } -underline 1 ;				#Open kiwi option
 	
 	#Build items menu
 	#$build add command -label "[searchCommand SIMULATION]" -command { testButtons [searchCommand SIMULATION] } -underline 0 ;			#Execute option
