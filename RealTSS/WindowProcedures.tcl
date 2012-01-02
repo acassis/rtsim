@@ -382,7 +382,9 @@ proc simulate { pathSavedTasks schedSelected frameResultsBox} {
 #	global pathSavedTrace
 	set resultAlg ""
 	#usar siempre test4.txt como ejemplo
-	#set pathSavedTasks "/home/kary/simulador/RealTSS/test5.txt"
+	set pathSavedTasks "/home/kary/simulador/RealTSS/test5.txt"
+	set pathSavedTasks "/home/JDuran/simulator/RealTSS/test5.txt"
+	
 	deleteResultsBox $frameResultsBox
 	
 	#el nombre de la libreria siempre debera ser lib+nombredelplanificador
@@ -412,10 +414,10 @@ proc simulate { pathSavedTasks schedSelected frameResultsBox} {
 					tk_messageBox -icon error -title "Error" -message $err
 				}
 
-        		### Ejecutar el comando de la libreria		
+				### Ejecutar el comando de la libreria		
 				puts "Ejecutando $cmdName $schedSelected $numberProcessors $simulationTime $pathSavedTasks"
-        		set r [catch {eval $cmdName $schedSelected $numberProcessors $simulationTime $pathSavedTasks } errmsg]
-				
+	        		set r [catch {eval $cmdName $schedSelected $numberProcessors $simulationTime $pathSavedTasks } errmsg]
+			
 				### Cargar el log  en la interface
 				set r [catch { cargarLog [getResultsBoxFrame] } errmsg]
 
@@ -423,6 +425,18 @@ proc simulate { pathSavedTasks schedSelected frameResultsBox} {
 				if {$r} {
 					tk_messageBox -icon error -title "Error" -message $errmsg
 				}
+				
+				#### Ejecutar como programa
+				#puts "Ejecutando $libName $pathSavedTasks $numberProcessors $simulationTime"
+				#exec $APP_PATH/AlgorithmsLibraries/$libName $pathSavedTasks $numberProcessors $simulationTime
+				#
+				#### Cargar el log  en la interface
+				#set r [catch { cargarLog [getResultsBoxFrame] } errmsg]
+				#### Si ocurrio un error
+				#if {$r} {
+				#	tk_messageBox -icon error -title "Error" -message $errmsg
+				#}
+
 			}
 		}
 	}
@@ -500,7 +514,8 @@ proc loadTraceKiwi { sched } {
 		set kiwiarch [file join $dir $arch]
 
 		#read the output file, with names of traces
-		set archName "$sched_kiwi_files.txt"
+		set archName $sched
+		append archName "_kiwi_files.txt"
 		set archExist [file exists $archName]
 
 		if {$archExist > 0} {
@@ -510,8 +525,10 @@ proc loadTraceKiwi { sched } {
 				puts "Openning... $kiwiarch - $line"
 				#launch kiwi and open file, & for call in new thread kiwi
 				exec $kiwiarch $line &
-    		} 
+    			} 
 			close $arch
+		} else {
+			tk_messageBox -message "File not found $archName" -type ok
 		}
 
 		###Plataform????
