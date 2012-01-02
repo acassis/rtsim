@@ -60,7 +60,7 @@
 processor_t*  start_rm_st(int nproc, char *file )
 {
 
-	DBG("Planificating by [rm st]");
+	DBG("Planning by [rm st]");
 	
 	
 
@@ -205,19 +205,19 @@ double bound;                      /* schedulability bound (Liu and Layland)  */
 //    print_processor_list(p);
    if (no_proc) {
       if (m <= no_proc) {
-	 LOG("\n[rm st] Planifacable using %d processors", m);
-	DBG("\n[rm st] Planifacable using %d processors", m);
+	 LOG("\n[rm st] Schedulable using %d processors", m);
+	DBG("\n[rm st] Schedulable using %d processors", m);
 	
 	
 	 return p;
       } else {
-	 LOG("\n[rm st] Not planifacable using %d processors, processors required %d", no_proc, m);
-	DBG("[rm st] Not planificable required processors %d", m);
+	 LOG("\n[rm st] Not schedulable using %d processors, processors required %d", no_proc, m);
+	DBG("[rm st] Not schedulable required processors %d", m);
 	 return NULL;
       }
    } else {
-      LOG("\n[rm st] Planifacable using %d processors", m);
-	DBG("\n[rm st] Planifacable using %d processors", m);
+      LOG("\n[rm st] Schedulable using %d processors", m);
+	DBG("\n[rm st] Schedulable using %d processors", m);
       return p;
    }
    return NULL;

@@ -60,7 +60,7 @@
 processor_t*  start_rm_bf_ll(int nproc, char *file )
 {
 
-	DBG("Planificating by [bf ll]");
+	DBG("Planning by [bf ll]");
 	
 task_set_t *t=NULL;                 /* Head of task set's list */
 processor_t *p=NULL;                /* Head of processor's list */
@@ -220,19 +220,19 @@ double bound;                      /* schedulability bound (Liu and Layland)  */
 
    if (no_proc) {
       if (m <= no_proc) {
-	 LOG("\n[bf ll] Planifacable using %d processors", m);
-	DBG("\n[bf ll] Planifacable using %d processors", m);
+	 LOG("\n[bf ll] Schedulable using %d processors", m);
+	DBG("\n[bf ll] Schedulable using %d processors", m);
 	
 	
 	 return p;
       } else {
-	 LOG("\n[bf ll] Not planifacable using %d processors, processors required %d", no_proc, m);
-	DBG("[bf ll] Not planificable required processors %d", m);
+	 LOG("\n[bf ll] Not schedulable using %d processors, processors required %d", no_proc, m);
+	DBG("[bf ll] Not schedulable required processors %d", m);
 	 return NULL;
       }
    } else {
-      LOG("\n[bf ll] Planifacable using %d processors", m);
-	DBG("\n[bf ll] Planifacable using %d processors", m);
+      LOG("\n[bf ll] Schedulable using %d processors", m);
+	DBG("\n[bf ll] Schedulable using %d processors", m);
       return p;
    }
 

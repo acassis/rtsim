@@ -1,9 +1,10 @@
 //archivo con el codigo base comun para todas las funciones parciales
 //este archivo se incluira en cada version de rm con cada funcion parcial
 
+#include <stdlib.h>
 
 //funcion de entrada para ejecutar el planificador
-static int SimuladorCmd(ClientData clientData, Tcl_CmdDeleteProc* proc, int objc, Tcl_Obj* const objv[]) 
+static int SimulatorCmd(ClientData clientData, Tcl_CmdDeleteProc* proc, int objc, Tcl_Obj* const objv[]) 
 {
 	int res = TCL_OK;
 	char* strings[255];
@@ -37,7 +38,7 @@ static int SimuladorCmd(ClientData clientData, Tcl_CmdDeleteProc* proc, int objc
 	res = start_rm_main(parameters);
 	//res = simulator_main(objc, strings);
 
-	DBG("\n End SimuladorCmd: %d",res);
+	DBG("\n End SimulatorCmd: %d",res);
 	return res;
 }
 
@@ -752,7 +753,7 @@ int start_rm(int mode, int no_proc, double max_time, task_set_t *t, char* outfil
 					//print_trace_list(current_processor->tracer);
 					sprintf(file_trace, "%s_p%d.ktr", &basename_trace[0], file_id);
 					create_trace_list(file_trace, current_processor->tracer, no_task, current_time, (char *) "RM");
-					current_processor = current_processor->next;
+			common_rm_global_sched		current_processor = current_processor->next;
 
 				}
 				current_processor = event_list -> processor;
@@ -874,7 +875,7 @@ int start_rm(int mode, int no_proc, double max_time, task_set_t *t, char* outfil
 	}
 	////////////////////////////////////////////////////////
 #endif
-
+//common_rm_global_sched
 #ifdef USE_THREAD
 	pthread_mutex_lock(&rm_mutex); 
 		rm_active_threads--;

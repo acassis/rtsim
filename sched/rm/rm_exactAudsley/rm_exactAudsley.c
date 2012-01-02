@@ -50,7 +50,7 @@
 int start_rm_exactAudsley(int nproc, char *file)
 {
 
-	DBG("Planificating by [rm exactAudsley]");
+	DBG("Planning by [rm exactAudsley]");
 	
 
 	task_set_t *t=NULL;              /* Head of task set's list */
@@ -128,8 +128,8 @@ int start_rm_exactAudsley(int nproc, char *file)
 	  //printf("r(n) = %.2f\n", r);
 	  //printf("r(n+1) = %.2f\n\n", s);
 	  if ( r == s ) {
-		LOG("\n[rm exactAudsley] Planifacable ");
-		DBG("\n[rm exactAudsley] Planifacable ");
+		LOG("\n[rm exactAudsley] Schedulable ");
+		DBG("\n[rm exactAudsley] Schedulable ");
 		 //printf("The task set (%d tasks) is schedulable  by the RM algorithm\n", n);
 		 //printf("%d", n);
 		 return n;
@@ -139,8 +139,8 @@ int start_rm_exactAudsley(int nproc, char *file)
 	}
 
 	
-	LOG("\n[rm exactAudsley] Not planifacable");
-	DBG("\n[rm exactAudsley] Not planificable ");
+	LOG("\n[rm exactAudsley] Not schedulable");
+	DBG("\n[rm exactAudsley] Not schedulable ");
 	//printf("The complete task set is NOT schedulable by the RM algorithm\n");
 	//printf("%d", 0);
 	return 0;

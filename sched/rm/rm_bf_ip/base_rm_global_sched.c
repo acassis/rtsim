@@ -26,12 +26,12 @@ processor_t* partial_function(processor_t* list, int nproc, char *file)
 	//funcion parcial que se llamara en esta libreria
 	// ## Cambiar por la fucncion de la nueva funcion parcial
 	//list = start_rm_nf_ll(nproc, file);
-	list = start_rm_bf_ip(nproc, file);
+	list = start_rm_bf_ip(nproc, fileSimuladorCmd);
 	return list;
 }
 
 // Nombre del metodo comun usado para entrar a ejecutar el planificador
-static int SimuladorCmd(ClientData clientData, Tcl_CmdDeleteProc* proc, int objc, Tcl_Obj* const objv[]);
+static int SimulatorCmd(ClientData clientData, Tcl_CmdDeleteProc* proc, int objc, Tcl_Obj* const objv[]);
 
 // ################################################################3
 // 4. Renombrar la fucion usando el nombre de la libreria + _Init
@@ -47,8 +47,8 @@ int Rmbfip_Init(Tcl_Interp *interp)
     }
 	
 	DBG("\nCreating command [%s]\n",COMMAND_NAME);
-	//al recibir de TCL el commando COMMAND_NAME llamar a la funcion SimuladorCmd
-    Tcl_CreateObjCommand(interp, COMMAND_NAME, SimuladorCmd, NULL, NULL);
+	//al recibir de TCL el commando COMMAND_NAME llamar a la funcion SimulatorCmd
+    Tcl_CreateObjCommand(interp, COMMAND_NAME, SimulatorCmd, NULL, NULL);
     Tcl_PkgProvide(interp, COMMAND_NAME, "1.1");
 
 	return TCL_OK;

@@ -49,7 +49,7 @@
 
 int start_rm_exactLehoczky(int nproc, char *file)
 {
-	DBG("Planificating by [rm exactLehoczky]");
+	DBG("Planning by [rm exactLehoczky]");
 	
 	task_set_t *t=NULL;             /* Head of task set's list */
 	int n, s_max;                   /* Number of tasks */
@@ -144,8 +144,8 @@ int start_rm_exactLehoczky(int nproc, char *file)
 	  if ( w <=  s_list -> s) {
 	  
 	  
-		LOG("\n[rm exactLehoczky] Planifacable");
-		DBG("\n[rm exactLehoczky] Planifacable");
+		LOG("\n[rm exactLehoczky] Schedulable");
+		DBG("\n[rm exactLehoczky] Schedulable");
 		 // DBG("\nFound w(): %.1f <= t: %.1f\n", w, s_list -> s);
 		 //DBG("The task set (%d tasks) is schedulable  by the RM algorithm\n", n);
 		 //DBG("%d", n);
@@ -155,8 +155,8 @@ int start_rm_exactLehoczky(int nproc, char *file)
 	}
 
 		
-	LOG("\n[rm exactLehoczky] Not planifacable");
-	DBG("[rm exactLehoczky] Not planificable");
+	LOG("\n[rm exactLehoczky] Not schedulable");
+	DBG("[rm exactLehoczky] Not schedulable");
 	//DBG("The complete task set is NOT schedulable by the RM algorithm\n");
 	//DBG("%d", 0);
 	return 0;

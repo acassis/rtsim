@@ -58,7 +58,7 @@
 
 processor_t*  start_rm_nf_ll(int nproc, char *file )
 {
-	DBG("Planificating by [rm nf ll]");
+	DBG("Planning by [rm nf ll]");
 	
 	
 	task_set_t *t=NULL;                 /* Head of task set's list */
@@ -193,20 +193,20 @@ processor_t*  start_rm_nf_ll(int nproc, char *file )
 
    if (no_proc) {
       if (m <= no_proc) {
-	LOG("\n[rm nf ll] Planifacable using %d processors", m);
-	DBG("\n[rm nf ll] Planifacable using %d processors", m);
+	LOG("\n[rm nf ll] Schedulable using %d processors", m);
+	DBG("\n[rm nf ll] Schedulable using %d processors", m);
 	
 	
 	 return p;
       } else {
-	 LOG("\n[rm nf ll] Not planifacable using %d processors, processors required %d", no_proc, m);
-	DBG("[rm nf ll] Not planificable required processors %d", m);
+	 LOG("\n[rm nf ll] Not schedulable using %d processors, processors required %d", no_proc, m);
+	DBG("[rm nf ll] Not schedulable required processors %d", m);
 	
 	 return NULL;
       }
    } else {
-      LOG("\n[rm nf ll] Planifacable using %d processors", m);
-	DBG("\n[rm nf ll] Planifacable using %d processors", m);
+      LOG("\n[rm nf ll] Schedulable using %d processors", m);
+	DBG("\n[rm nf ll] Schedulable using %d processors", m);
       return p;
    }
 

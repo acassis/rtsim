@@ -54,6 +54,7 @@
 
 
 #include "edf_deadlines_global_sched.h"
+#include <stdlib.h>
 
 
 #define USE_TRACE_FILE

@@ -64,7 +64,7 @@
 
 #ifdef SIMLUATOR_LIB_TCL
 //funcion de entrada para ejecutar el planificador
-static int SimuladorCmd(ClientData clientData, Tcl_CmdDeleteProc* proc, int objc, Tcl_Obj* const objv[]) 
+static int SimulatorCmd(ClientData clientData, Tcl_CmdDeleteProc* proc, int objc, Tcl_Obj* const objv[]) 
 {
 	int res = TCL_OK;
 	char* strings[255];
@@ -99,7 +99,7 @@ static int SimuladorCmd(ClientData clientData, Tcl_CmdDeleteProc* proc, int objc
 	res = start_edf_main(parameters);
 	//res = simulator_main(objc, strings);
 
-	//DBG("\n End SimuladorCmd: %d",res);
+	//DBG("\n End SimulatorCmd: %d",res);
 	return res;
 }
 #else

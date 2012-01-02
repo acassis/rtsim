@@ -64,7 +64,7 @@
 processor_t*  start_rm_bf_du_uo(int nproc, char *file )
 {
 
-	DBG("Planificating by [bf du uo]");
+	DBG("Planning by [bf du uo]");
 	
 task_set_t *t=NULL;                 /* Head of task set's list */
 processor_t *p=NULL;                /* Head of processor's list */
@@ -161,7 +161,7 @@ double bound;                      /* schedulability bound */
    new_processor.task = NULL;
    p = add_processor_list(p, new_processor);
 
-   task = t;                          /* assign tasks to processors */
+   task = t;                   planificable       /* assign tasks to processors */
    while (task) {
       util =  task -> c / task -> t;
       // DBG("\nutilization of task %d: %.4f\n", task -> id, util);
@@ -216,20 +216,20 @@ double bound;                      /* schedulability bound */
    if (no_proc) {
       if (m <= no_proc) {
 	 	
-	LOG("\n[bf du uo] Planifacable using %d processors", m);
-	DBG("\n[bf du uo] Planifacable using %d processors", m);
+	LOG("\n[bf du uo] Schedulable using %d processors", m);
+	DBG("\n[bf du uo] Schedulable using %d processors", m);
 	
 
 	 return p;
       } else {
-	 	LOG("\n[bf du uo] Not planifacable using %d processors, processors required %d", no_proc, m);
-		DBG("[bf du uo] Not planificable required processors %d", m);
+	 	LOG("\n[bf du uo] Not shedulable using %d processors, processors required %d", no_proc, m);
+		DBG("[bf du uo] Not shedulable required processors %d", m);
 
 	 return NULL;
       }
    } else {
-      LOG("\n[bf du uo] Planifacable using %d processors", m);
-		DBG("\n[bf du uo] Planifacable using %d processors", m);
+      LOG("\n[bf du uo] Schedulable using %d processors", m);
+		DBG("\n[bf du uo] Schedulable using %d processors", m);
 	
       return p;
    }

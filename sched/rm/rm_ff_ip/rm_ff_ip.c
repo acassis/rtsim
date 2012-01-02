@@ -59,7 +59,7 @@
 
 processor_t*  start_rm_ff_ip(int nproc, char *file )
 {
-	DBG("Planificating by [rm ff ip]");
+	DBG("Planning by [rm ff ip]");
 	
 	
 	
@@ -206,18 +206,18 @@ double bound;                      /* schedulability bound  */
 
    if (no_proc) {
       if (m <= no_proc) {
-	 LOG("\n[rm ff ip] Planifacable using %d processors", m);
-	DBG("\n[rm ff ip] Planifacable using %d processors", m);
+	 LOG("\n[rm ff ip] Schedulable using %d processors", m);
+	DBG("\n[rm ff ip] Schedulable using %d processors", m);
 	
 	 return p;
       } else {
-	 LOG("\n[rm ff ip] Not planifacable using %d processors, processors required %d", no_proc, m);
-	DBG("[rm ff ip] Not planificable required processors %d", m);
+	 LOG("\n[rm ff ip] Not schedulable using %d processors, processors required %d", no_proc, m);
+	DBG("[rm ff ip] Not schedulable required processors %d", m);
 	 return NULL;
       }
    } else {
-      LOG("\n[rm ff ip] Planifacable using %d processors", m);
-	DBG("\n[rm ff ip] Planifacable using %d processors", m);
+      LOG("\n[rm ff ip] Schedulable using %d processors", m);
+	DBG("\n[rm ff ip] Schedulable using %d processors", m);
       return p;
    }
    return NULL;

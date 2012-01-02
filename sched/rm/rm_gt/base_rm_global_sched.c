@@ -31,7 +31,7 @@ processor_t* partial_function(processor_t* list, int nproc, char *file)
 }
 
 // Nombre del metodo comun usado para entrar a ejecutar el planificador
-static int SimuladorCmd(ClientData clientData, Tcl_CmdDeleteProc* proc, int objc, Tcl_Obj* const objv[]);
+static int SimulatorCmd(ClientData clientData, Tcl_CmdDeleteProc* proc, int objc, Tcl_Obj* const objv[]);
 
 // ################################################################3
 // 4. Renombrar la fucion usando el nombre de la libreria + _Init
@@ -47,8 +47,8 @@ int Rmgt_Init(Tcl_Interp *interp)
     }
 	
 	DBG("\nCreating command [%s]\n",COMMAND_NAME);
-	//al recibir de TCL el commando COMMAND_NAME llamar a la funcion SimuladorCmd
-    Tcl_CreateObjCommand(interp, COMMAND_NAME, (void*)SimuladorCmd, NULL, NULL);
+	//al recibir de TCL el commando COMMAND_NAME llamar a la funcion SimulatorCmd
+    Tcl_CreateObjCommand(interp, COMMAND_NAME, (void*)SimulatorCmd, NULL, NULL);
     Tcl_PkgProvide(interp, COMMAND_NAME, "1.1");
 
 	return TCL_OK;

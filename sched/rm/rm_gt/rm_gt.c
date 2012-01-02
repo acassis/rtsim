@@ -59,7 +59,7 @@
 
 processor_t*  start_rm_gt(int nproc, char *file )
 {
-	DBG("Planificating by [rm gt]");
+	DBG("Planning by [rm gt]");
 	
 	
 task_set_t *t=NULL;                 /* Head of task set's list 1 (alpha <= 1/3) */
@@ -90,7 +90,7 @@ double bound;                      /* schedulability bound (Liu and Layland)  */
 
    no_proc = nproc;
    if (no_proc < 0) {
-      DBG("Error: number of processor must be >= 0 (%s)\n", no_proc);
+      DBG("Error: number oSimuladorCmdf processor must be >= 0 (%s)\n", no_proc);
       return NULL;
    }
 
@@ -287,19 +287,19 @@ double bound;                      /* schedulability bound (Liu and Layland)  */
    if (no_proc) {
       if (m <= no_proc) {
 	 
-	LOG("\n[rm gt] Planifacable using %d processors", m);
-	DBG("\n[rm gt] Planifacable using %d processors", m);
+	LOG("\n[rm gt] Schedulable using %d processors", m);
+	DBG("\n[rm gt] Schedulable using %d processors", m);
 	
 	
 	 return p;
       } else {
-	 LOG("\n[rm gt] Not planifacable using %d processors, processors required %d", no_proc, m);
-	DBG("[rm gt] Not planificable required processors %d", m);
+	 LOG("\n[rm gt] Not schedulable using %d processors, processors required %d", no_proc, m);
+	DBG("[rm gt] Not schedulable required processors %d", m);
 	 return NULL;
       }
    } else {
-      LOG("\n[rm gt] Planifacable using %d processors", m);
-	DBG("\n[rm gt] Planifacable using %d processors", m);
+      LOG("\n[rm gt] Schedulable using %d processors", m);
+	DBG("\n[rm gt] Schedulable using %d processors", m);
       return p;
    }
    return NULL;

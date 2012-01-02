@@ -61,7 +61,7 @@
 processor_t*  start_rbound_mp(int nproc, char *file )
 {
 
-	DBG("Planificating by [rm rbound mp]");
+	DBG("Planning by [rm rbound mp]");
 	
 	
 task_set_t *t=NULL, *tp = NULL;      /* Head of task set's list */
@@ -239,20 +239,20 @@ float r;                           /* period ratio */
 //    print_processor_list(p);
    if (no_proc) {
       if (m <= no_proc) {
-	 LOG("\n[rm rbound mp] Planifacable using %d processors", m);
-	DBG("\n[rm rbound mp] Planifacable using %d processors", m);
+	 LOG("\n[rm rbound mp] Schedulable using %d processors", m);
+	DBG("\n[rm rbound mp] Schedulable using %d processors", m);
 	
 	
 	 return p;
       } else {
-	 LOG("\n[rm rbound mp] Not planifacable using %d processors, processors required %d", no_proc, m);
-	DBG("[rm rbound mp] Not planificable required processors %d", m);
+	 LOG("\n[rm rbound mp] Not schedulable using %d processors, processors required %d", no_proc, m);
+	DBG("[rm rbound mp] Not schedulable required processors %d", m);
 	
 	 return NULL;
       }
    } else {
-       LOG("\n[rm rbound mp] Planifacable using %d processors", m);
-	DBG("\n[rm rbound mp] Planifacable using %d processors", m);
+       LOG("\n[rm rbound mp] Schedulable using %d processors", m);
+	DBG("\n[rm rbound mp] Schedulable using %d processors", m);
       return p;
    }
    return NULL;
