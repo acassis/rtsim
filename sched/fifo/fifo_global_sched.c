@@ -52,7 +52,7 @@
    LAST REVISION:    June 2009                                                         */
 
 
-#include "../include/fifo_global_sched.h"
+#include "/include/fifo_global_sched.h"
 
 
 #define USE_TRACE_FILE
