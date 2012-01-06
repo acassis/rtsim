@@ -47,7 +47,7 @@ file1_edfbf	=$(dir_edfbf)/edf_bf.c
 file2_edfbf	=$(dir_edfbf)/config_edf_sched.c
 #nombre de la libreria que se generara
 lib_edfbf	=$(LIB_DIR)/libedfbf.so
-exe_edfbf	=edfbf
+exe_edfbf	=$(LIB_DIR)/libedfbf
 
 ### Configuracion para metodo edf ff
 #carpeta donde estan los archivos
@@ -57,7 +57,7 @@ file1_edfff	=$(dir_edfff)/edf_ff.c
 file2_edfff	=$(dir_edfff)/config_edf_sched.c
 #nombre de la libreria que se generara
 lib_edfff	=$(LIB_DIR)/libedfff.so
-exe_edfff	=edfff
+exe_edfff	=libedfff
 
 ### Configuracion para metodo edf nf
 #carpeta donde estan los archivos
@@ -109,7 +109,7 @@ edf_global: $(objects)
 	@echo ==================================================================
 	@echo Compiling...
 	@echo ==================================================================
-	gcc $(file2_edfglobal) $(objects) -shared -o $(lib_edfglobal) $(BUILD_TCL_LIB)
+	cc $(file2_edfglobal) $(objects) -shared -o $(lib_edfglobal) $(BUILD_TCL_LIB)
 
 	@echo ==================================================================
 	@echo Finish.
@@ -121,11 +121,11 @@ edf_bf: $(objects)
 	@echo Compiling...
 	@echo ==================================================================
 	@echo Building lib...
-	gcc $(file1_edfbf) $(file2_edfbf) $(objects) -shared -o $(lib_edfbf) $(BUILD_TCL_LIB)
+	# cc -fPIC $(file1_edfbf) $(file2_edfbf) $(objects) -shared -o $(lib_edfbf) $(BUILD_TCL_LIB)
 	
 	@echo ------------------------------------------------------------------
 	@echo Building executable...
-	gcc $(file1_edfbf) $(file2_edfbf) $(objects) -o ./$(exe_edfbf) $(BUILD_EXECUTABLE)
+	cc $(file1_edfbf) $(file2_edfbf) $(objects) -o $(exe_edfbf) $(BUILD_EXECUTABLE)
 	@echo ==================================================================
 	@echo Finish.
 	@echo ==================================================================
@@ -136,11 +136,11 @@ edf_ff: $(objects)
 	@echo Compiling...
 	@echo ==================================================================
 	@echo Building lib...
-	gcc $(file1_edfff) $(file2_edfff) $(objects) -shared -o $(lib_edfff) $(BUILD_TCL_LIB)
+	#gcc $(file1_edfff) $(file2_edfff) $(objects) -shared -o $(lib_edfff) $(BUILD_TCL_LIB)
 
 	@echo ------------------------------------------------------------------
 	@echo Building executable...
-	gcc $(file1_edfff) $(file2_edfff) $(objects) -o ./$(exe_edfff) $(BUILD_EXECUTABLE)
+	gcc $(file1_edfff) $(file2_edfff) $(objects) -o $(exe_edfff) $(BUILD_EXECUTABLE)
 	@echo ==================================================================
 	@echo Finish.
 	@echo ==================================================================
