@@ -21,7 +21,7 @@ extern int start_rm(int mode, int no_proc, double max_time, task_set_t *t, char*
 extern int start_rm_main(ALGORITHM_PARAMS parameters);
 extern void print_rm_usage();
 
-/* lista antes usada para determinar la fucion parcial 
+/* list used before to determined the partial function
 typedef enum
 {
 	RM_PARTIAL_NF_LL=0,
