@@ -1,38 +1,44 @@
 #include "rm_global_sched.h"
 
-// ################################################################3
-// 0. agregar el include donde se encuentra la funcion parcial
-// ################################################################3
+// ################################################################
+// 1. Add the include.h of where the new partial function or method is located
+// ################################################################
+// #include "rm_nf_ll.h"
+
 #include "rbound_mp.h"
-// ################################################################3
-// 1. nombre del comando que se usaran dentro de TCL para llamar al codigo nativo
-// ################################################################3
+
+// ################################################################
+// 2. Add the name of the command that was used in TCL to call native code
+// ################################################################
 //name used for command call from TCL
-//nombre del comando que se usaran dentro de TCL para llamar al codigo nativo
+//#define COMMAND_NAME "rmbfduuo"
+
+//name command that will used within TCL to call the native code
 #define COMMAND_NAME "rmrboundmp"
-//ejemplo de llamada desde TCL
+
+//example of calling from TCL 
 //set r [catch {eval COMMAND_NAME $algorithmSelected $numberProcessors $simulationTime $pathSavedTasks } errmsg]
 
-
-
-// ################################################################3
-// 2. Cambiar por la fucncion de la nueva funcion parcial
-// ################################################################3
-//llamar a la funcion parcial
+// ################################################################
+// 3. Rename "partial_function" by the name of the new partial function or method to be added
+// ################################################################
+//call to the partial function
 processor_t* partial_function(processor_t* list, int nproc, char *file)
 {
-	//funcion parcial que se llamara en esta libreria
+	//partial function or method that is will call in this library 
+	// ## Change to function by the new partial function  
+	//list = start_rm_nf_ll(nproc, file);
 	list = start_rbound_mp(nproc, file);
 	return list;
 }
 
-// Nombre del metodo comun usado para entrar a ejecutar el planificador
+// name the common method used to access running the scheduler 
 static int SimulatorCmd(ClientData clientData, Tcl_CmdDeleteProc* proc, int objc, Tcl_Obj* const objv[]);
 
-// ################################################################3
-// 4. Renombrar la fucion usando el nombre de la libreria + _Init
-// ################################################################3
-// ejemplo Rmnfll_init para librmnfll
+// ################################################################
+// 4. Rename the function using the name of the library + _Init
+// ################################################################
+// example Rmnfll_init for rmnfll
 int Rmrboundmp_Init(Tcl_Interp *interp)
 {
 	DBG("\nrmffll_Init TCL v[%s]", TCL_VERSION);
@@ -44,7 +50,7 @@ int Rmrboundmp_Init(Tcl_Interp *interp)
 	
 	DBG("\nCreating command [%s]\n",COMMAND_NAME);
 	
-	//al recibir de TCL el commando COMMAND_NAME llamar a la funcion SimulatorCmd
+	//once it receives the command from TCL COMMAND_NAME,is sent the function call SimulatorCmd
     Tcl_CreateObjCommand(interp, COMMAND_NAME, (void*)SimulatorCmd, NULL, NULL);
     Tcl_PkgProvide(interp, COMMAND_NAME, "1.1");
 
@@ -56,5 +62,5 @@ int Rmrboundmp_Init(Tcl_Interp *interp)
 #define USE_TRACE_FILE
 //#define END_ON_MISS_DEADLINE
 
-//incluir codigo comun
+//include code common for all methods
 #include "../common_rm_global_sched.cxx"

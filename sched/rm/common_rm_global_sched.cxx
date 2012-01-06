@@ -1,9 +1,9 @@
-//archivo con el codigo base comun para todas las funciones parciales
-//este archivo se incluira en cada version de rm con cada funcion parcial
+//File with the base code common for all the partials functions or methods that be added
+//This file will be included in each version from rm with each function partial
 
 #include <stdlib.h>
 
-//funcion de entrada para ejecutar el planificador
+//function input to run the scheduler
 static int SimulatorCmd(ClientData clientData, Tcl_CmdDeleteProc* proc, int objc, Tcl_Obj* const objv[]) 
 {
 	int res = TCL_OK;
@@ -14,7 +14,7 @@ static int SimulatorCmd(ClientData clientData, Tcl_CmdDeleteProc* proc, int objc
 	DBG("\n cleaning log...");
 	init_logger();
 	
-//convertir la lista de parametros a cadenas de C
+//convert the list of arguments to C strings
 	//DBG("\n called with %d arguments", objc);
 	for(t=0;t<objc;t++)
 	{
@@ -23,10 +23,10 @@ static int SimulatorCmd(ClientData clientData, Tcl_CmdDeleteProc* proc, int objc
 	}
 	//DBG("\n");
 		
-	//USAR SIEMPRE MODO PARCIAL
+	//USE ALWAYS PARTIAL MODE 
 	parameters.algorithm	= RM;
 	parameters.mode			= MODE_PARTIAL;
-	// SOLO SE USARA UNA FUNCION PARCIAL, NO ESPECIFICAR EN LOS PARAMETROS
+	//SHOULD BE USED ONLY ONE PARTIAL FUNCTION, NOT SPECIFY IN THE PARAMETERS
 	// parameters.partial_func = RM_PARTIAL_RBOUND_MP_NFR;
 	
 	parameters.processor	= atoi(strings[2]);
