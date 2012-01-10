@@ -161,7 +161,7 @@ double bound;                      /* schedulability bound */
    new_processor.task = NULL;
    p = add_processor_list(p, new_processor);
 
-   task = t;                   planificable       /* assign tasks to processors */
+   task = t;                          /* assign tasks to processors */
    while (task) {
       util =  task -> c / task -> t;
       // DBG("\nutilization of task %d: %.4f\n", task -> id, util);
