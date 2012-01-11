@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<AlgorithmSet xmlns="http://tempuri.org/SchemaAlgorithm.xsd">
+  <Uniprocessor>
+    <Algorithm>
+      <Command>rm</Command>
+      <nameAlgorithm>Rate Monotonic</nameAlgorithm>
+      <FilePath>JJJJJJJ</FilePath>
+      <Resources>false</Resources>
+    </Algorithm>
+    <Algorithm>
+      <Command>edf</Command>
+      <nameAlgorithm>Early Dead First</nameAlgorithm>
+      <FilePath>ruta2</FilePath>
+      <Resources>false</Resources>
+    </Algorithm>
+  </Uniprocessor>
+  <Multiprocessor>
+    <Global>
+      <Algorithm>
+        <Command>rm</Command>
+        <nameAlgorithm>Rate Monotonic</nameAlgorithm>
+        <FilePath>JJJJJJJ</FilePath>
+        <Resources>false</Resources>
+      </Algorithm>
+    </Global>
+    <Partitioned>
+      <Algorithm>
+        <Command>rmll</Command>
+        <nameAlgorithm>Rm con LL</nameAlgorithm>
+        <FilePath>iiiiiiiiiii</FilePath>
+        <Resources>false</Resources>
+      </Algorithm>
+    </Partitioned>
+  </Multiprocessor>
+</AlgorithmSet>

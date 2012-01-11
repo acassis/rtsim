@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema id="SchemaAlgorithm" targetNamespace="http://tempuri.org/SchemaAlgorithm.xsd" elementFormDefault="qualified" xmlns="http://tempuri.org/SchemaAlgorithm.xsd" xmlns:mstns="http://tempuri.org/SchemaAlgorithm.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <!-- ?xml version="1.0" encoding="utf-8"? -->
+  <!--xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"-->
+ 
+  <!--Algorithms Set-->
+  <xsd:element name="AlgorithmSet" type="AlgorithmSetProcessorType" />
+  
+  <!--Algorithms Set for number of processors (e.g. Uniprocesor or Multiprocesor)-->
+  <xsd:complexType name="AlgorithmSetProcessorType">
+    <xsd:sequence>
+      <xsd:element name="Uniprocessor" type="AlgorithmSetType" minOccurs="0" maxOccurs="1" />
+      <xsd:element name="Multiprocessor" type="MultiprocessorType" minOccurs="0" maxOccurs="1" />
+    </xsd:sequence>
+  </xsd:complexType>
+ 
+  <!--Type of AlgoritmSet-->
+  <xsd:complexType name="AlgorithmSetType">
+    <xsd:sequence>
+      <xsd:element name="Algorithm" type="AlgorithmType" minOccurs="1" maxOccurs="unbounded" />
+    </xsd:sequence>
+  </xsd:complexType>
+  
+  <!-- Type only for Multiprocessor-->
+  <xsd:complexType name="MultiprocessorType">
+    <xsd:sequence>
+      <xsd:element name="Partitioned" type="AlgorithmSetType" minOccurs="0" maxOccurs="1" />
+      <xsd:element name="Global" type="AlgorithmSetType" minOccurs="0" maxOccurs="1" />
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <!--Type of Algorithms-->
+  <xsd:complexType name="AlgorithmType">
+    <xsd:sequence>
+      <xsd:element name="Command" minOccurs="1" maxOccurs="1" type="xsd:string" />
+      <xsd:element name="nameAlgorithm" minOccurs="1" maxOccurs="1" type="xsd:string" />
+      <xsd:element name="FilePath" minOccurs="1" maxOccurs="1" type="xsd:string" />
+      <xsd:element name="Resources" minOccurs="1" maxOccurs="1" type="xsd:boolean" />
+    </xsd:sequence>
+  </xsd:complexType>
+  
+  <!--Task Set-->
+  <xsd:element name="TaskSet" type="TaskSetType" />
+  
+  <!--Type Task Set-->
+  <xsd:complexType name="TaskSetType">
+    <xsd:sequence>
+      <xsd:element name="Name" type="xsd:string" minOccurs="1" maxOccurs="1" />
+      <xsd:element name="Task" type="TaskType" minOccurs="2" maxOccurs="unbounded" />
+    </xsd:sequence>
+  </xsd:complexType>
+  
+  <!--Type task-->
+  <xsd:complexType name="TaskType">
+    <xsd:sequence>
+      <xsd:element name="Id" minOccurs="1" maxOccurs="1" type="xsd:positiveInteger" />
+      <xsd:element name="Phase" minOccurs="1" maxOccurs="1" type="xsd:integer" />
+      <xsd:element name="Period" minOccurs="1" maxOccurs="1" type="xsd:positiveInteger" />
+      <xsd:element name="Deadline" minOccurs="0" maxOccurs="1" type="xsd:positiveInteger" />
+      <xsd:element name="Wcet" minOccurs="1" maxOccurs="1" type="xsd:positiveInteger" />
+      <xsd:element name="Mutex" type="MutexType" minOccurs="0" maxOccurs="unbounded" />
+    </xsd:sequence>
+  </xsd:complexType>
+  
+  <!--Mutex Type-->
+  <xsd:complexType name="MutexType">
+    <xsd:sequence>
+      <xsd:element name="Id" minOccurs="1" maxOccurs="1" type="xsd:string" />
+      <xsd:element name="Time" type="TimeType" minOccurs="1" maxOccurs="unbounded" />
+    </xsd:sequence>
+  </xsd:complexType>
+  
+  <!--Time Type: Start time and Duration of the mutex-->
+  <xsd:complexType name="TimeType">
+    <xsd:sequence>
+      <!--StartTime and Duration are units time-->
+      <xsd:element name="StartTime" minOccurs="1" maxOccurs="unbounded" type="xsd:positiveInteger" />
+      <xsd:element name="Duration" minOccurs="1" maxOccurs="unbounded" type="xsd:positiveInteger" />
+    </xsd:sequence>
+  </xsd:complexType>
+  <!--/xsd:schema-->
+</xsd:schema>
