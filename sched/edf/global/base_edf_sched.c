@@ -3,27 +3,24 @@
 // ################################################################
 // 0. Define mode of the library, MODE_GLOBAL or MODE_PARTIAL
 // ################################################################
-// #define LIB_MODE MODE_GLOBAL
-#define LIB_MODE MODE_PARTIAL
+#define LIB_MODE MODE_GLOBAL
+//#define LIB_MODE MODE_PARTIAL
 
 // ################################################################
 // 1. Add the include.h of where the new partial function or method is located,
 // only in case of MODE_PARTIAL 
 // ################################################################
-// #include "edf_nf_ll.h"
-
+//#include "edf_bf.h"
 
 // ################################################################
 // 2. Add the name of the command that was used in TCL to call native code 
 // ################################################################
 //name used for command call from TCL
-//#define COMMAND_NAME "edfbfduuo"
-
+//#define COMMAND_NAME "edfbf"
 //name command that will used within TCL to call the native code
-#define COMMAND_NAME "functionEdf"
+#define COMMAND_NAME "edfglobal"
 //example of calling from TCL 
 //set r [catch {eval COMMAND_NAME $algorithmSelected $numberProcessors $simulationTime $pathSavedTasks } errmsg]
-
 
 // ################################################################
 // 3. Rename "partial_function" by the name of the new partial function or method to be added
@@ -34,11 +31,9 @@ processor_t* partial_function(processor_t* list, int nproc, char *file)
 {
 	//partial function or method that is will call in this library 
 	// ## Change to function by the new partial function  
-	//list = start_edf_nf_ll(nproc, file);
-	list = start_functionparcial(nproc, file);
+	//list = start_edf_bf(nproc, file);
 	return list;
 }
-
 #ifdef SIMLUATOR_LIB_TCL
 // name the common method used to access running the scheduler 
 static int SimulatorCmd(ClientData clientData, Tcl_CmdDeleteProc* proc, int objc, Tcl_Obj* const objv[]);

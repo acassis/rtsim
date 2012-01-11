@@ -1,5 +1,5 @@
 ############################################################################################
-# configurar rutas a las carpetas necesarias
+# Configure paths to the folders necesary
 ############################################################################################
 SCHED_DIR	=.
 BASE_DIR	=../..
@@ -8,7 +8,7 @@ INCLUDE_DIR =$(BASE_DIR)/include
 LIB_DIR		=$(BASE_DIR)/RealTSS/AlgorithmsLibraries
 OBJ_DIR 	=$(SCHED_DIR)/obj
 ############################################################################################
-# opcion de compilador para el uso de threads
+# Option of compilator for use of threads
 CC_OPT 		= -lpthread
 
 #BUILD Lib or executable
@@ -16,7 +16,7 @@ BUILD_TCL_LIB	=-DUSE_TCL_STUBS -DSIMLUATOR_LIB_TCL -I$(INCLUDE_DIR) -I/usr/inclu
 BUILD_EXECUTABLE=-I$(INCLUDE_DIR) -lm $(CC_OPT)
 
 ############################################################################################
-# Lista de objectos comunes para todos los metodos
+# List of objects common for all methods
 ############################################################################################
 objects = $(UTILS_DIR)/task_lists.o\
 	$(UTILS_DIR)/sched_events.o\
@@ -25,76 +25,82 @@ objects = $(UTILS_DIR)/task_lists.o\
 	$(UTILS_DIR)/logger.o
 
 	
+# For add to compilation, files of new methods follows the next steps:
 ############################################################################################
-# 1. Copiar y configurar las rutas para un nuevo metodo
+# 1. Copy and configure paths for a new method 
 ############################################################################################
-### Configuracion para metodo 
-# #carpeta donde estan los archivos
+###Configuration for method
+#Folder where are the files
 # dir_edfbf	=$(SCHED_DIR)/edf_bf
-# #archivos C que se compilaran
+# # C files that was compiled
 # file1_edfbf	=$(dir_edfbf)/edf_bf.c
-# file2_edfbf	=$(dir_edfbf)/config_edf_sched.c
-# #nombre de la libreria que se generara
+# file2_edfbf	=$(dir_edfbf)/base_edf_sched.c
+# #Name of the library to be generated 
 # lib_edfbf	=$(LIB_DIR)/libedfbf.so
-# #nombre del ejecutable que se generara
+# #name of the executable to be generated
 # exe_edfbf	=edfbf
 
-### Configuracion para metodo edf bf
-#carpeta donde estan los archivos
+### Configuration to method edf bf
+#Folder where are the files
 dir_edfbf	=$(SCHED_DIR)/edf_bf
-#archivos C que se compilaran
+# # C files that was compiled
 file1_edfbf	=$(dir_edfbf)/edf_bf.c
-file2_edfbf	=$(dir_edfbf)/config_edf_sched.c
-#nombre de la libreria que se generara
+file2_edfbf	=$(dir_edfbf)/base_edf_sched.c
+# #Name of the library to be generated 
 lib_edfbf	=$(LIB_DIR)/libedfbf.so
+# #name of the executable to be generated
 exe_edfbf	=$(LIB_DIR)/libedfbf
 
-### Configuracion para metodo edf ff
-#carpeta donde estan los archivos
+### Configuration to method edf ff
+#Folder where are the files
 dir_edfff	=$(SCHED_DIR)/edf_ff
-#archivos C que se compilaran
+# # C files that was compiled
 file1_edfff	=$(dir_edfff)/edf_ff.c
-file2_edfff	=$(dir_edfff)/config_edf_sched.c
-#nombre de la libreria que se generara
+file2_edfff	=$(dir_edfff)/base_edf_sched.c
+# #Name of the library to be generated 
 lib_edfff	=$(LIB_DIR)/libedfff.so
+# #name of the executable to be generated
 exe_edfff	=libedfff
 
-### Configuracion para metodo edf nf
-#carpeta donde estan los archivos
+### Configuration to method edf nf
+#Folder where are the files
 dir_edfnf	=$(SCHED_DIR)/edf_nf
-#archivos C que se compilaran
+# # C files that was compiled
 file1_edfnf	=$(dir_edfnf)/edf_nf.c
-file2_edfnf	=$(dir_edfnf)/config_edf_sched.c
-#nombre de la libreria que se generara
+file2_edfnf	=$(dir_edfnf)/base_edf_sched.c
+# #Name of the library to be generated 
 lib_edfnf	=$(LIB_DIR)/libedfnf.so
+# #name of the executable to be generated
 exe_edfnf	=edfnf
 
-### Configuracion para metodo edf wf
-#carpeta donde estan los archivos
+### Configuration to method edf wf
+#Folder where are the files
 dir_edfwf	=$(SCHED_DIR)/edf_wf
-#archivos C que se compilaran
+# # C files that was compiled
 file1_edfwf	=$(dir_edfwf)/edf_wf.c
-file2_edfwf	=$(dir_edfwf)/config_edf_sched.c
-#nombre de la libreria que se generara
+file2_edfwf	=$(dir_edfwf)/base_edf_sched.c
+# #Name of the library to be generated 
 lib_edfwf	=$(LIB_DIR)/libedfwf.so
+# #name of the executable to be generated
 exe_edfwf	=edfwf
 
-### Configuracion para metodo edf global
-#carpeta donde estan los archivos
+### Configuration to method edf global
+#Folder where are the files
 dir_edfglobal	=$(SCHED_DIR)/global
-#archivos C que se compilaran
-file2_edfglobal	=$(dir_edfglobal)/config_edf_sched.c
-#nombre de la libreria que se generara
+# # C files that was compiled
+file2_edfglobal	=$(dir_edfglobal)/base_edf_sched.c
+# #Name of the library to be generated 
 lib_edfglobal	=$(LIB_DIR)/libedfglobal.so
+# #name of the executable to be generated
 exe_edfglobal	=edfglobal
+
 ############################################################################################
 #all: $(objects) $(rm_rbound_mp) $(rm_bf_du_uo)
 
-
 ############################################################################################
-# 2. Copiar esta funcion y remplazar por los archivos de la nueva funcion
+# 2. Copy this function and replace by the files of the new function 
 ############################################################################################
-### Crear libreria para rm rbound
+### Create library for edf bf
 # edf_bf: $(objects)
 	# @echo ==================================================================
 	# @echo Compiling...
@@ -104,7 +110,7 @@ exe_edfglobal	=edfglobal
 	# @echo Finish.
 	# @echo ==================================================================
 ############################################################################################
-### Crear libreria para edf global
+### Create library for edf global
 edf_global: $(objects)
 	@echo ==================================================================
 	@echo Compiling...
@@ -115,7 +121,7 @@ edf_global: $(objects)
 	@echo Finish.
 	@echo ==================================================================
 	
-### Crear libreria para edf bf
+### Create library for edf bf
 edf_bf: $(objects)
 	@echo ==================================================================
 	@echo Compiling...
@@ -130,7 +136,7 @@ edf_bf: $(objects)
 	@echo Finish.
 	@echo ==================================================================
 
-### Crear libreria para edf ff
+### Create library for edf ff
 edf_ff: $(objects)
 	@echo ==================================================================
 	@echo Compiling...
@@ -145,7 +151,7 @@ edf_ff: $(objects)
 	@echo Finish.
 	@echo ==================================================================
 
-### Crear libreria para edf ff
+### Create library for edf ff
 edf_nf: $(objects)
 	@echo ==================================================================
 	@echo Compiling...
@@ -160,7 +166,7 @@ edf_nf: $(objects)
 	@echo Finish.
 	@echo ==================================================================
 	
-### Crear libreria para edf ff
+### Create library for edf wf
 edf_wf: $(objects)
 	@echo ==================================================================
 	@echo Compiling...
@@ -175,7 +181,7 @@ edf_wf: $(objects)
 	@echo Finish.
 	@echo ==================================================================
 	
-### Limpiar
+### Cleaned
 clean:
 	-rm $(objects)
 
