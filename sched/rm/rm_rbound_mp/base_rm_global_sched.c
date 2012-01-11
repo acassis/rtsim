@@ -57,10 +57,5 @@ int Rmrboundmp_Init(Tcl_Interp *interp)
 	return TCL_OK;
 }
 
-
-//#define USE_RESOURCES
-#define USE_TRACE_FILE
-//#define END_ON_MISS_DEADLINE
-
 //include code common for all methods
 #include "../common_rm_global_sched.cxx"

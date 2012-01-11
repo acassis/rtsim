@@ -3,6 +3,10 @@
 
 #include <stdlib.h>
 
+//#define USE_RESOURCES
+#define USE_TRACE_FILE
+//#define END_ON_MISS_DEADLINE
+
 //function input to run the scheduler
 static int SimulatorCmd(ClientData clientData, Tcl_CmdDeleteProc* proc, int objc, Tcl_Obj* const objv[]) 
 {
@@ -753,7 +757,7 @@ int start_rm(int mode, int no_proc, double max_time, task_set_t *t, char* outfil
 					//print_trace_list(current_processor->tracer);
 					sprintf(file_trace, "%s_p%d.ktr", &basename_trace[0], file_id);
 					create_trace_list(file_trace, current_processor->tracer, no_task, current_time, (char *) "RM");
-			common_rm_global_sched		current_processor = current_processor->next;
+					current_processor = current_processor->next;
 
 				}
 				current_processor = event_list -> processor;

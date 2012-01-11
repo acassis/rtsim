@@ -1,61 +1,8 @@
-/*   FILE:
-
-	 edf_global_sched.c
-
-    DESCRIPTION:
-
-	 Implements Global Multiprocessor real-time scheduler
-
-	 To execute the program:
-
-	    $ ./edf_global_sched m st file
-
-	    where
-
-	    "m" indicates the number of identical processors; if m=0, the number of
-	     processors is infinite,
-
-	     "st" simulation time; if st=0, then lcm of period values is set as simulation time, and
-
-	    "file" contains the task's parameters, ordered in this fashion
-	    (a line per task):
-
-		  period   execution-time
-
-	  Output:
-
-	     0  indicates that the task set can not be scheduled on m processors
-
-	     n  indicates the number of processor on which the task set can be feasible scheduled
-
-
-	    See README file for details.
-
-	To compile the program:
-
-	    $ gcc -o edf_global_sched edf_global_sched.c -lm
-
-    Copyright (C) 2009
-
-	 Arnoldo Diaz Ramirez, Pedro Mejia Alvarez
-
-   This is free software;  you can  redistribute it  and/or modify it under
-   terms of the  GNU General Public License as published  by the Free Soft-
-   ware  Foundation;  either version 2,  or (at your option) any later ver-
-   sion.  It is distributed in the hope that it will be useful, but WITH-
-   OUT ANY WARRANTY;  without even the  implied warranty of MERCHANTABILITY
-   or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
-   for  more details.  You should have  received  a copy of the GNU General
-   Public License;  see file COPYING.  If not, write to  the Free Software
-   Foundation,  59 Temple Place - Suite 330,  Boston, MA 02111-1307, USA.
-
-   LAST REVISION:    June 2009                                                         */
+//File with the base code common for all the partials functions or methods that be added
+//This file will be included in each version from edf with each function partial
 
 #include <stdlib.h>
 #include "common_edf_sched.h"
-
-//archivo con el codigo base comun para todas las funciones parciales
-//este archivo se incluira en cada version de edf con cada funcion parcial
 
 //#define USE_RESOURCES
 #define USE_TRACE_FILE
@@ -63,7 +10,7 @@
 
 
 #ifdef SIMLUATOR_LIB_TCL
-//funcion de entrada para ejecutar el planificador
+//function input to run the scheduler
 static int SimulatorCmd(ClientData clientData, Tcl_CmdDeleteProc* proc, int objc, Tcl_Obj* const objv[]) 
 {
 	int res = TCL_OK;
@@ -74,7 +21,7 @@ static int SimulatorCmd(ClientData clientData, Tcl_CmdDeleteProc* proc, int objc
 	DBG("\n cleaning log...");
 	init_logger();
 	
-//convertir la lista de parametros a cadenas de C
+//convert the list of arguments to C strings
 	//DBG("\n called with %d arguments", objc);
 	for(t=0;t<objc;t++)
 	{
@@ -83,10 +30,10 @@ static int SimulatorCmd(ClientData clientData, Tcl_CmdDeleteProc* proc, int objc
 	}
 	//DBG("\n");
 
-	//USAR SIEMPRE MODO PARCIAL
+	//USE ALWAYS PARTIAL MODE 
 	parameters.algorithm	= EDF;
 	parameters.mode			= LIB_MODE;
-	// SOLO SE USARA UNA FUNCION PARCIAL, NO ESPECIFICAR EN LOS PARAMETROS
+	//SHOULD BE USED ONLY ONE PARTIAL FUNCTION, NOT SPECIFY IN THE PARAMETERS
 	// parameters.partial_func = EDF_PARTIAL_RBOUND_MP_NFR;
 	
 	parameters.processor	= atoi(strings[2]);
@@ -104,7 +51,7 @@ static int SimulatorCmd(ClientData clientData, Tcl_CmdDeleteProc* proc, int objc
 }
 #else
 
-//funcion de entrada para ejecutar la funcion como aplicacion
+//function input to execute the function how aplication 
 int main(int argc, char* argv[])
 {
 	int res = 01;
@@ -133,10 +80,10 @@ int main(int argc, char* argv[])
 	}
 
 
-	//USAR SIEMPRE MODO PARCIAL
+	//USE ALWAYS PARTIAL MODE 
 	parameters.algorithm	= EDF;
 	parameters.mode			= LIB_MODE;
-	// SOLO SE USARA UNA FUNCION PARCIAL, NO ESPECIFICAR EN LOS PARAMETROS
+	// ONLY WILL USED ONE PARTIAL FUNCTION, NOT SPECIFY IN THE PARAMETERS
 	// parameters.partial_func = EDF_PARTIAL_RBOUND_MP_NFR;
 	
 	strcpy(parameters.data, strings[1]);
@@ -826,7 +773,7 @@ int start_edf_main(ALGORITHM_PARAMS parameters)
 			fprintf(kiwi_files, "%s.ktr\n", partialname);
 			
 #ifdef USE_THREAD
-			//crear el hilo para el conjunto de tareas
+			//create the thread for set task
 			args 			= (edf_thread_args*) (malloc(sizeof(edf_thread_args)));
 			args->mode		= mode;
 			args->no_proc	= 1;
@@ -848,7 +795,7 @@ int start_edf_main(ALGORITHM_PARAMS parameters)
 				pthread_mutex_unlock(&edf_mutex); 
 			}
 #else
-			//ejecutar sin hilo.
+			//Run without thread.
 			res += start_edf(mode, 1, max_time, t, partialname);
 #endif
 			current_processor = (processor_t*) (current_processor->next);
