@@ -10,7 +10,7 @@ OBJ_DIR 	=$(SCHED_DIR)/obj
 ############################################################################################
 # Option of compilator for use of threads
 CC_OPT 		=-lpthread
-CC		=gcc
+CC		=cc
 # CFLAGS		=-Wl,-fPIC
 
 ############################################################################################
@@ -23,7 +23,7 @@ OBJECTS		=$(UTILS_DIR)/task_lists.o $(UTILS_DIR)/sched_events.o $(UTILS_DIR)/pro
 ############################################################################################
 # 1. Copy and configure paths for a new method 
 ############################################################################################
-### Configuraci$(objects) -Wl, -fPICon para metodo 
+### Configuraci$(OBJECTS) -Wl, -fPICon para metodo 
 
 #Folder where are the files
 # dir_rmrboundmp	=$(SCHED_DIR)/rm_rbound_mp
@@ -138,190 +138,187 @@ lib_rmexactLehoczky	=$(LIB_DIR)/librmexactLehoczky.so
 
 
 ############################################################################################
-all: $(objects) $(rm_rbound_mp) $(rm_bf_du_uo)
+all: $(OBJECTS) $(rm_rbound_mp) $(rm_bf_du_uo)
 
 
 ############################################################################################
 # 2. Copy this function and replace by the files of the new function 
 ############################################################################################
 ### Create library for rm rbound
-# rm_rbound_mp: $(objects)
+# rm_rbound_mp: $(OBJECTS)
 	# @echo ==================================================================
 	# @echo Compiling...
 	# @echo ==================================================================
-	# gcc $(file1_rmrboundmp) $(file2_rmrboundmp) $(objects) -shared -o $(lib_rmrboundmp) -DUSE_TCL_STUBS -DSIMLUATOR_LIB_TCL -I$(INCLUDE_DIR) -I/usr/include/tcl8.5 -L/usr/lib -ltclstub8.5 -lm $(CC_OPT)
+	# cc $(file1_rmrboundmp) $(file2_rmrboundmp) $(OBJECTS) -shared -o $(lib_rmrboundmp) -DUSE_TCL_STUBS -DSIMLUATOR_LIB_TCL -I$(INCLUDE_DIR) -I/usr/include/tcl8.5 -L/usr/lib -ltclstub8.5 -lm $(CC_OPT)
 	# @echo ==================================================================
 	# @echo Finish.
 	# @echo ==================================================================
 ############################################################################################
 
 # objectos: @echo ----- 
-# 	gcc $(UTILS_DIR)/task_lists.c -o $(UTILS_DIR)/task_lists.o 
-# 	gcc $(UTILS_DIR)/sched_events.c -o $(UTILS_DIR)/sched_events.o -Wl, -fPIC
-# 	gcc $(UTILS_DIR)/processor_lists.c -o $(UTILS_DIR)/processor_lists.o -Wl, -fPIC
-# 	gcc $(UTILS_DIR)/trace_event.c -o $(UTILS_DIR)/trace_event.o -Wl, -fPIC
-# 	gcc $(UTILS_DIR)/logger.c -o $(UTILS_DIR)/logger.o -Wl, -fPIC
+# 	cc $(UTILS_DIR)/task_lists.c -o $(UTILS_DIR)/task_lists.o 
+# 	cc $(UTILS_DIR)/sched_events.c -o $(UTILS_DIR)/sched_events.o -Wl, -fPIC
+# 	cc $(UTILS_DIR)/processor_lists.c -o $(UTILS_DIR)/processor_lists.o -Wl, -fPIC
+# 	cc $(UTILS_DIR)/trace_event.c -o $(UTILS_DIR)/trace_event.o -Wl, -fPIC
+# 	cc $(UTILS_DIR)/logger.c -o $(UTILS_DIR)/logger.o -Wl, -fPIC
 
 ### Create library for rm rbound
 rm_rbound_mp:  $(OBJECTS)
 	@echo ==================================================================
 	@echo Compiling...
 	@echo ==================================================================
-	gcc $(file1_rmrboundmp) $(file2_rmrboundmp) -shared -o $(lib_rmrboundmp) -DUSE_TCL_STUBS -DSIMLUATOR_LIB_TCL -I$(INCLUDE_DIR) -I/usr/include/tcl8.5 -L/usr/lib -ltclstub8.5 -lm $(CC_OPT) $(CFLAGS)
+	cc $(file1_rmrboundmp) $(file2_rmrboundmp) -shared -o $(lib_rmrboundmp) -DUSE_TCL_STUBS -DSIMLUATOR_LIB_TCL -I$(INCLUDE_DIR) -I/usr/include/tcl8.5 -L/usr/lib -ltclstub8.5 -lm $(CC_OPT) $(CFLAGS)
 	@echo ==================================================================
 	@echo Finish.
 	@echo ==================================================================
 
 ### Create library for rm bf du uo
-rm_bf_du_uo: $(objects)
+rm_bf_du_uo: $(OBJECTS)
 	@echo ==================================================================
 	@echo Compiling...
-	@eOBJECTScho ==================================================================
-
-	gcc $(file1_rmbfduuo) $(file2_rmbfduuo) $(objects) -shared -o $(lib_rmbfduuo) -DUSE_TCL_STUBS -DSIMLUATOR_LIB_TCL -I$(INCLUDE_DIR) -I/usr/include/tcl8.5 -L/usr/lib -ltclstub8.5 -lm $(CC_OPT)
-	
+	@echo ==================================================================
+	cc $(file1_rmbfduuo) $(file2_rmbfduuo) $(OBJECTS) -shared -o $(lib_rmbfduuo) -DUSE_TCL_STUBS -DSIMLUATOR_LIB_TCL -I$(INCLUDE_DIR) -I/usr/include/tcl8.5 -L/usr/lib -ltclstub8.5 -lm $(CC_OPT)
 	@echo ==================================================================
 	@echo Finish.
 	@echo ==================================================================
 
 ### Create library for rm rbound mp bf
-rm_rbound_mp_bf: $(objects)
+rm_rbound_mp_bf: $(OBJECTS)
 	@echo ==================================================================
 	@echo Compiling...
 	@echo ==================================================================
-	gcc $(file1_rmrboundmpbf) $(file2_rmrboundmpbf) $(objects) -shared -o $(lib_rmrboundmpbf) -DUSE_TCL_STUBS -DSIMLUATOR_LIB_TCL -I$(INCLUDE_DIR) -I/usr/include/tcl8.5 -L/usr/lib -ltclstub8.5 -lm $(CC_OPT)
+	cc $(file1_rmrboundmpbf) $(file2_rmrboundmpbf) $(OBJECTS) -shared -o $(lib_rmrboundmpbf) -DUSE_TCL_STUBS -DSIMLUATOR_LIB_TCL -I$(INCLUDE_DIR) -I/usr/include/tcl8.5 -L/usr/lib -ltclstub8.5 -lm $(CC_OPT)
 	@echo ==================================================================
 	@echo Finish.
 	@echo ==================================================================
 
 ### Create library for rm rbound mp nfr
-rm_rbound_mp_nfr: $(objects)
+rm_rbound_mp_nfr: $(OBJECTS)
 	@echo ==================================================================
 	@echo Compiling...
 	@echo ==================================================================
-	gcc $(file1_rmrboundmpnfr) $(file2_rmrboundmpnfr) $(objects) -shared -o $(lib_rmrboundmpnfr) -DUSE_TCL_STUBS -DSIMLUATOR_LIB_TCL -I$(INCLUDE_DIR) -I/usr/include/tcl8.5 -L/usr/lib -ltclstub8.5 -lm $(CC_OPT)
+	cc $(file1_rmrboundmpnfr) $(file2_rmrboundmpnfr) $(OBJECTS) -shared -o $(lib_rmrboundmpnfr) -DUSE_TCL_STUBS -DSIMLUATOR_LIB_TCL -I$(INCLUDE_DIR) -I/usr/include/tcl8.5 -L/usr/lib -ltclstub8.5 -lm $(CC_OPT)
 	@echo ==================================================================
 	@echo Finish.
 	@echo ==================================================================
 
 ## Create library for rm bf ip
-rm_bf_ip: $(objects)
+rm_bf_ip: $(OBJECTS)
 	@echo ==================================================================
 	@echo Compiling...
 	@echo ==================================================================
-	gcc $(file1_rmbfip) $(file2_rmbfip) $(objects) -shared -o $(lib_rmbfip) -DUSE_TCL_STUBS -DSIMLUATOR_LIB_TCL -I$(INCLUDE_DIR) -I/usr/include/tcl8.5 -L/usr/lib -ltclstub8.5 -lm $(CC_OPT)
+	cc $(file1_rmbfip) $(file2_rmbfip) $(OBJECTS) -shared -o $(lib_rmbfip) -DUSE_TCL_STUBS -DSIMLUATOR_LIB_TCL -I$(INCLUDE_DIR) -I/usr/include/tcl8.5 -L/usr/lib -ltclstub8.5 -lm $(CC_OPT)
 	@echo ==================================================================
 	@echo Finish.
 	@echo ==================================================================
 
 ## Create library for rm bf ll
-rm_bf_ll: $(objects)
+rm_bf_ll: $(OBJECTS)
 	@echo ==================================================================
 	@echo Compiling...
 	@echo ==================================================================
-	gcc $(file1_rmbfll) $(file2_rmbfll) $(objects) -shared -o $(lib_rmbfll) -DUSE_TCL_STUBS -DSIMLUATOR_LIB_TCL -I$(INCLUDE_DIR) -I/usr/include/tcl8.5 -L/usr/lib -ltclstub8.5 -lm $(CC_OPT)
+	cc $(file1_rmbfll) $(file2_rmbfll) $(OBJECTS) -shared -o $(lib_rmbfll) -DUSE_TCL_STUBS -DSIMLUATOR_LIB_TCL -I$(INCLUDE_DIR) -I/usr/include/tcl8.5 -L/usr/lib -ltclstub8.5 -lm $(CC_OPT)
 	@echo ==================================================================
 	@echo Finish.
-	.cpp.o:
-	$(CC) $(CFLAGS) $< -o $@@echo ==================================================================
+	@echo ==================================================================
 
 
 ## Create library for rm ff du uo
-rm_ff_du_uo: $(objects)
+rm_ff_du_uo: $(OBJECTS)
 	@echo ==================================================================
 	@echo Compiling...
 	@echo ==================================================================
-	gcc $(file1_rmffduuo) $(file2_rmffduuo) $(objects) -shared -o $(lib_rmffduuo) -DUSE_TCL_STUBS -DSIMLUATOR_LIB_TCL -I$(INCLUDE_DIR) -I/usr/include/tcl8.5 -L/usr/lib -ltclstub8.5 -lm $(CC_OPT)
+	cc $(file1_rmffduuo) $(file2_rmffduuo) $(OBJECTS) -shared -o $(lib_rmffduuo) -DUSE_TCL_STUBS -DSIMLUATOR_LIB_TCL -I$(INCLUDE_DIR) -I/usr/include/tcl8.5 -L/usr/lib -ltclstub8.5 -lm $(CC_OPT)
 	@echo ==================================================================
 	@echo Finish.
 	@echo ==================================================================
 
 ## Create library for rm ff ip
-rm_ff_ip: $(objects)
+rm_ff_ip: $(OBJECTS)
 	@echo ==================================================================
 	@echo Compiling...
 	@echo ==================================================================
-	gcc $(file1_rmffip) $(file2_rmffip) $(objects) -shared -o $(lib_rmffip) -DUSE_TCL_STUBS -DSIMLUATOR_LIB_TCL -I$(INCLUDE_DIR) -I/usr/include/tcl8.5 -L/usr/lib -ltclstub8.5 -lm $(CC_OPT)
+	cc $(file1_rmffip) $(file2_rmffip) $(OBJECTS) -shared -o $(lib_rmffip) -DUSE_TCL_STUBS -DSIMLUATOR_LIB_TCL -I$(INCLUDE_DIR) -I/usr/include/tcl8.5 -L/usr/lib -ltclstub8.5 -lm $(CC_OPT)
 	@echo ==================================================================
 	@echo Finish.
 	@echo ==================================================================
 
 ## Create library for rm ff llrm_global
-rm_ff_ll: $(objects)
+rm_ff_ll: $(OBJECTS)
 	@echo ==================================================================
 	@echo Compiling...
 	@echo ==================================================================
-	gcc $(file1_rmffll) $(file2_rmffll) $(objects) -shared -o $(lib_rmffll) -DUSE_TCL_STUBS -DSIMLUATOR_LIB_TCL -I$(INCLUDE_DIR) -I/usr/include/tcl8.5 -L/usr/lib -ltclstub8.5 -lm $(CC_OPT)
+	cc $(file1_rmffll) $(file2_rmffll) $(OBJECTS) -shared -o $(lib_rmffll) -DUSE_TCL_STUBS -DSIMLUATOR_LIB_TCL -I$(INCLUDE_DIR) -I/usr/include/tcl8.5 -L/usr/lib -ltclstub8.5 -lm $(CC_OPT)
 	@echo ==================================================================
 	@echo Finish.
 	@echo ==================================================================
 
 ## Create library for rm wf ll
-rm_wf_ll: $(objects)
+rm_wf_ll: $(OBJECTS)
 	@echo ==================================================================
 	@echo Compiling...
 	@echo ==================================================================
-	gcc $(file1_rmwfll) $(file2_rmwfll) $(objects) -shared -o $(lib_rmwfll) -DUSE_TCL_STUBS -DSIMLUATOR_LIB_TCL -I$(INCLUDE_DIR) -I/usr/include/tcl8.5 -L/usr/lib -ltclstub8.5 -lm $(CC_OPT)
+	cc $(file1_rmwfll) $(file2_rmwfll) $(OBJECTS) -shared -o $(lib_rmwfll) -DUSE_TCL_STUBS -DSIMLUATOR_LIB_TCL -I$(INCLUDE_DIR) -I/usr/include/tcl8.5 -L/usr/lib -ltclstub8.5 -lm $(CC_OPT)
 	@echo ==================================================================
 	@echo Finish.
 	@echo ==================================================================
 
 ## Create library for rm strm_global
-rm_st: $(objects)
+rm_st: $(OBJECTS)
 	@echo ==================================================================
 	@echo Compiling...
 	@echo ==================================================================
-	gcOBJECTSc $(file1_rmst) $(file2_rmst) $(objects) -shared -o $(lib_rmst) -DUSE_TCL_STUBS -DSIMLUATOR_LIB_TCL -I$(INCLUDE_DIR) -I/usr/include/tcl8.5 -L/usr/lib -ltclstub8.5 -lm $(CC_OPT)
+	gcOBJECTSc $(file1_rmst) $(file2_rmst) $(OBJECTS) -shared -o $(lib_rmst) -DUSE_TCL_STUBS -DSIMLUATOR_LIB_TCL -I$(INCLUDE_DIR) -I/usr/include/tcl8.5 -L/usr/lib -ltclstub8.5 -lm $(CC_OPT)
 	@echo ==================================================================
 	@echo Finish.
 	@echo ==================================================================
 
 ## Create library for rm nf ip
-rm_nf_ip: $(objects)
+rm_nf_ip: $(OBJECTS)
 	@echo ==================================================================
 	@echo Compiling...
 	@echo ==================================================================
-	gcc $(file1_rmnfip) $(file2_rmnfip) $(objects) -shared -o $(lib_rmnfip) -DUSE_TCL_STUBS -DSIMLUATOR_LIB_TCL -I$(INCLUDE_DIR) -I/usr/include/tcl8.5 -L/usr/lib -ltclstub8.5 -lm $(CC_OPT)
+	cc $(file1_rmnfip) $(file2_rmnfip) $(OBJECTS) -shared -o $(lib_rmnfip) -DUSE_TCL_STUBS -DSIMLUATOR_LIB_TCL -I$(INCLUDE_DIR) -I/usr/include/tcl8.5 -L/usr/lib -ltclstub8.5 -lm $(CC_OPT)
 	@echo ==================================================================
 	@echo Finish.
 	@echo ==================================================================
 
 ## Create library for rm gt
-rm_gt: $(objects)
+rm_gt: $(OBJECTS)
 	@echo ==================================================================
 	@echo Compiling...
 	@echo ==================================================================
-	gcc $(file1_rmgt) $(file2_rmgt) $(objects) -shared -o $(lib_rmgt) -DUSE_TCL_STUBS -DSIMLUATOR_LIB_TCL -I$(INCLUDE_DIR) -I/usr/include/tcl8.5 -L/usr/lib -ltclstub8.5 -lm $(CC_OPT)
+	cc $(file1_rmgt) $(file2_rmgt) $(OBJECTS) -shared -o $(lib_rmgt) -DUSE_TCL_STUBS -DSIMLUATOR_LIB_TCL -I$(INCLUDE_DIR) -I/usr/include/tcl8.5 -L/usr/lib -ltclstub8.5 -lm $(CC_OPT)
 	@echo ==================================================================
 	@echo Finish.
 	@echo ==================================================================
 
 ## Create library for rm nf ll
-rm_nf_ll: $(objects)
+rm_nf_ll: $(OBJECTS)
 	@echo ==================================================================
 	@echo Compiling...
 	@echo ==================================================================
-	gcc $(file1_rmnfll) $(file2_rmnfll) $(objects) -shared -o $(lib_rmnfll) -DUSE_TCL_STUBS -DSIMLUATOR_LIB_TCL -I$(INCLUDE_DIR) -I/usr/include/tcl8.5 -L/usr/lib -ltclstub8.5 -lm $(CC_OPT)
+	cc $(file1_rmnfll) $(file2_rmnfll) $(OBJECTS) -shared -o $(lib_rmnfll) -DUSE_TCL_STUBS -DSIMLUATOR_LIB_TCL -I$(INCLUDE_DIR) -I/usr/include/tcl8.5 -L/usr/lib -ltclstub8.5 -lm $(CC_OPT)
 	@echo ==================================================================
 	@echo Finish.
 	@echo ==================================================================
 
 ## Create library for rm exact audsley
-rm_exactAudsley: $(objects)
+rm_exactAudsley: $(OBJECTS)
 	@echo ==================================================================
 	@echo Compiling...
 	@echo ==================================================================
-	gcc $(file1_rmexactAudsley) $(file2_rmexactAudsley) $(objects) -shared -o $(lib_rmexactAudsley) -DUSE_TCL_STUBS -DSIMLUATOR_LIB_TCL -I$(INCLUDE_DIR) -I/usr/include/tcl8.5 -L/usr/lib -ltclstub8.5 -lm $(CC_OPT)
+	cc $(file1_rmexactAudsley) $(file2_rmexactAudsley) $(OBJECTS) -shared -o $(lib_rmexactAudsley) -DUSE_TCL_STUBS -DSIMLUATOR_LIB_TCL -I$(INCLUDE_DIR) -I/usr/include/tcl8.5 -L/usr/lib -ltclstub8.5 -lm $(CC_OPT)
 	@echo ==================================================================
 	@echo Finish.
 	@echo ==================================================================
 
 ## Create library for rm exact lehoczky
-rm_exactLehoczky: $(objects)
+rm_exactLehoczky: $(OBJECTS)
 	@echo ==================================================================
 	@echo Compiling...
 	@echo ==================================================================
-	gcc $(file1_rmexactLehoczky) $(file2_rmexactLehoczky) $(objects) -shared -o $(lib_rmexactLehoczky) -DUSE_TCL_STUBS -DSIMLUATOR_LIB_TCL -I$(INCLUDE_DIR) -I/usr/include/tcl8.5 -L/usr/lib -ltclstub8.5 -lm $(CC_OPT)
+	cc $(file1_rmexactLehoczky) $(file2_rmexactLehoczky) $(OBJECTS) -shared -o $(lib_rmexactLehoczky) -DUSE_TCL_STUBS -DSIMLUATOR_LIB_TCL -I$(INCLUDE_DIR) -I/usr/include/tcl8.5 -L/usr/lib -ltclstub8.5 -lm $(CC_OPT)
 	@echo ==================================================================
 	@echo Finish.
 	@echo ==================================================================

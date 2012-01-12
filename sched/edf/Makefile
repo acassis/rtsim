@@ -60,7 +60,7 @@ file2_edfff	=$(dir_edfff)/base_edf_sched.c
 # #Name of the library to be generated 
 lib_edfff	=$(LIB_DIR)/libedfff.so
 # #name of the executable to be generated
-exe_edfff	=libedfff
+exe_edfff	=$(LIB_DIR)/libedfff
 
 ### Configuration to method edf nf
 #Folder where are the files
@@ -71,7 +71,7 @@ file2_edfnf	=$(dir_edfnf)/base_edf_sched.c
 # #Name of the library to be generated 
 lib_edfnf	=$(LIB_DIR)/libedfnf.so
 # #name of the executable to be generated
-exe_edfnf	=edfnf
+exe_edfnf	=$(LIB_DIR)/libedfnf
 
 ### Configuration to method edf wf
 #Folder where are the files
@@ -82,7 +82,7 @@ file2_edfwf	=$(dir_edfwf)/base_edf_sched.c
 # #Name of the library to be generated 
 lib_edfwf	=$(LIB_DIR)/libedfwf.so
 # #name of the executable to be generated
-exe_edfwf	=edfwf
+exe_edfwf	=$(LIB_DIR)/libedfwf
 
 ### Configuration to method edf global
 #Folder where are the files
@@ -92,7 +92,7 @@ file2_edfglobal	=$(dir_edfglobal)/base_edf_sched.c
 # #Name of the library to be generated 
 lib_edfglobal	=$(LIB_DIR)/libedfglobal.so
 # #name of the executable to be generated
-exe_edfglobal	=edfglobal
+exe_edfglobal	=$(LIB_DIR)/libedfglobal
 
 ############################################################################################
 #all: $(objects) $(rm_rbound_mp) $(rm_bf_du_uo)
@@ -127,7 +127,7 @@ edf_bf: $(objects)
 	@echo Compiling...
 	@echo ==================================================================
 	@echo Building lib...
-	# cc -fPIC $(file1_edfbf) $(file2_edfbf) $(objects) -shared -o $(lib_edfbf) $(BUILD_TCL_LIB)
+	cc $(file1_edfbf) $(file2_edfbf) $(objects) -shared -o $(lib_edfbf) $(BUILD_TCL_LIB)
 	
 	@echo ------------------------------------------------------------------
 	@echo Building executable...
@@ -142,11 +142,11 @@ edf_ff: $(objects)
 	@echo Compiling...
 	@echo ==================================================================
 	@echo Building lib...
-	#gcc $(file1_edfff) $(file2_edfff) $(objects) -shared -o $(lib_edfff) $(BUILD_TCL_LIB)
+	cc $(file1_edfff) $(file2_edfff) $(objects) -shared -o $(lib_edfff) $(BUILD_TCL_LIB)
 
 	@echo ------------------------------------------------------------------
 	@echo Building executable...
-	gcc $(file1_edfff) $(file2_edfff) $(objects) -o $(exe_edfff) $(BUILD_EXECUTABLE)
+	cc $(file1_edfff) $(file2_edfff) $(objects) -o $(exe_edfff) $(BUILD_EXECUTABLE)
 	@echo ==================================================================
 	@echo Finish.
 	@echo ==================================================================
@@ -157,11 +157,11 @@ edf_nf: $(objects)
 	@echo Compiling...
 	@echo ==================================================================
 	@echo Building lib...
-	gcc $(file1_edfnf) $(file2_edfnf) $(objects) -shared -o $(lib_edfnf) $(BUILD_TCL_LIB)
+	cc $(file1_edfnf) $(file2_edfnf) $(objects) -shared -o $(lib_edfnf) $(BUILD_TCL_LIB)
 
 	@echo ------------------------------------------------------------------
 	@echo Building executable...
-	gcc $(file1_edfnf) $(file2_edfnf) $(objects) -o ./$(exe_edfnf) $(BUILD_EXECUTABLE)
+	cc $(file1_edfnf) $(file2_edfnf) $(objects) -o $(exe_edfnf) $(BUILD_EXECUTABLE)
 	@echo ==================================================================
 	@echo Finish.
 	@echo ==================================================================
@@ -172,11 +172,11 @@ edf_wf: $(objects)
 	@echo Compiling...
 	@echo ==================================================================
 	@echo Building lib...
-	gcc $(file1_edfwf) $(file2_edfwf) $(objects) -shared -o $(lib_edfwf) $(BUILD_TCL_LIB)
+	cc $(file1_edfwf) $(file2_edfwf) $(objects) -shared -o $(lib_edfwf) $(BUILD_TCL_LIB)
 
 	@echo ------------------------------------------------------------------
 	@echo Building executable...
-	gcc $(file1_edfwf) $(file2_edfwf) $(objects) -o ./$(exe_edfwf) $(BUILD_EXECUTABLE)
+	cc $(file1_edfwf) $(file2_edfwf) $(objects) -o $(exe_edfwf) $(BUILD_EXECUTABLE)
 	@echo ==================================================================
 	@echo Finish.
 	@echo ==================================================================
