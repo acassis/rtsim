@@ -1,0 +1,62 @@
+ * Add new method partial
+
+1. Copy the base_new_function folder and rename the folder with the name of the new method that will be added, for example rm_bf_du_uo. The base_rm_global_sched.c file contains the functions necessary to switch between each method,  plus it makes an include of the code  common (base_rm_global_sched.cxx) to complete the library.
+
+2. Add c and h files of the new partial method in the folder. For example. inside the folder files would:
+	rm_bf_du_uo.c
+	rm_bf_du_uo.h
+	base_rm_global_sched.c
+
+3. Modify the file base_rm_global_sched.c to configure the new method.
+	
+	3.1.- First, you must include the file .h of the new method is adding. This will allow us to call the partial function of the method.
+	Example: #include "rm_bf_du_uo.h"
+	
+	3.2.- Define the command name TCL, this command is used when TCL attempts to call the C code, so it is necessary that each method has a different command name. 
+	Example: #define COMMAND_NAME "rmbfduuo"
+	TCL call this method in this way :
+	  set r [catch {eval rmbfduuo parametro1 parametro2 parametro3 etc } errmsg]
+	
+	3.3.- In the section 3 of the file, call the partial function of the new method. Example: list = start_rm_bf_du_uo(nproc, file);
+	
+	3.4.- Rename function according to the method name we use, this name also will be used later to define the name of the library, therefore both names must match. When you load the code from TCL, is looking base_rm_global_schedfor a function named as the library + _Init. Example: 
+	    If we add a method named rmbfduuo, so the method must be Rmbfduuo + _Init, i.e., Rmbfduuo_Init. Note that the first letter is capitalized (intbase_rm_global_sched Rmrboundmp_Init(Tcl_Interp *interp)).
+
+	Notes:
+	* This method used of the definition of the step 3.2 for create the command name TCL.
+	*The end of the file is include the file of common code base_rm_global_sched.cxx, to complete the code of library.
+
+4.- Add the list of files and the method the file makefile. This file will allow compile the files news and build the library that charged TCL.
+	
+	4.1.- IN the section 1 of the makefile, copy and set the names and paths to the files that will be added and the name of the library which you wish build.
+	     Like in the case of the name of the function (3.4) remenber that the name of the library must match with the name of the method, so for example if we add the method rmbfduuo, the library should be called lib + rmbfduuo + .so, i.e., librmbfduuo.so
+
+		Example:
+		### Configuration for method rm bf du uo
+		#Folder where the files are
+		dir_rmbfduuo	=$(SCHED_DIR)/rm_bf_du_uo
+		#C files to compile
+		file1_rmbfduuo	=$(dir_rmbfduuo)/rm_bf_du_uo.c
+		file2_rmbfduuo	=$(dir_rmbfduuo)/base_rm_global_sched.c
+		#Name of the library that will generate
+		lib_rmbfduuo	=$(LIB_DIR)/librmbfduuo.so	
+	
+      4.2.- Create the name of command to compile the new method and specify the files that were added. Example:
+		### Create the library from rm bf du uo 
+		rm_bf_du_uo: $(objects)
+		gcc $(file1_rmbfduuo) $(file2_rmbfduuo) $(objects) -shared -o $(lib_rmbfduuo) -DUSE_TCL_STUBS -DSIMLUATOR_LIB_TCL -I$(INCLUDE_DIR) -I/usr/include/tcl8.5 -L/usr/lib -ltclstub8.5 -lm $(CC_OPT)
+		
+		By adding the method we can compile from the command line using: make command.
+		Example: make rm_bf_du_uo 
+	
+	Notes:
+	*To compile use: "make command".
+	*To clean up the code and force to recompile use: "make clean" and then "make command". Where command is the name of the method desired, for example rmbfduuo.
+
+5.- Finally add the information of the new method to interface TCL.
+      
+      5.1.- Inside of the folder the interface "gui", in the folder "Algorithms", edit the file "Algorithms.conf", this file is the list of  methods availables, and the name that receive both the library as the method that is called from TCL. Add new line with the name of the method + = + name of the function.
+      Example: To add the method rmbfduuo
+	       RM Partial BF DU UO = rmbfduuo
+
+	Where RM Partial BF DU UO is the name of method that appear in the menu of interface TCL, and rmbfduuo is the name of method, this name be used within the interface TCL to load the library (step 4.1, adding lib+rmbfduuo+.so) and to call the command that starts this code (step 3.4, rmbfduuo).	

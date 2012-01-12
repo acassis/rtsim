@@ -1,0 +1,60 @@
+ * Agregar un nuevo metodo parcial
+ 
+ 1. Copiar la carpeta base_nueva_funcion y renombrarla al nombre del metodo nuevo. ejemplo rm_bf_du_uo. El archivo base_rm_global_sched.c contiene las funciones que son necesarias cambiar entre cada metodo, ademas este hace un include del codigo comun (base_rm_global_sched.cxx) para completar la libreria.
+ 
+ 2. Agegar los archivos c y h del nuevo metodo parcial dentro. ej. dentro de la carpeta quedarian los archivos
+	rm_bf_du_uo.c
+	rm_bf_du_uo.h
+	base_rm_global_sched.c
+	
+3. Modificar el archivo base_rm_global_sched.c para configurar el nuevo metodo. 
+	3.1 Primero es necesario incluir el .h del nuevo metodo que se esta agregando. Esto nos permitira poder llamar a la funcion parcial de ese metodo. 
+		Ej. #include "rm_bf_du_uo.h"
+	3.2 Definir el nombre del comando para TCL, este nombre es usado cuando TCL intenta llamar al codigo de C, por lo que es necesario que cada metodo tenga un nombre diferente. Ej.
+		#define COMMAND_NAME "rmbfduuo"
+		
+	TCL llamaria a este metodo de esta manera 
+		set r [catch {eval rmbfduuo parametro1 parametro2 parametro3 etc } errmsg]
+		
+	3.3 En la seccion 3 del archivo, llamar a la funcion parcial del metodo nuevo. Ej. 
+		list = start_rm_bf_du_uo(nproc, file);
+	
+	3.4 Renombrar la funcion segun el nombre del metodo que usamos, este nombre tambien sera usando mas adelante para definir el nombre de la libreria, ya que ambos nombres deben coincidir. Al cargar el codigo desde TCL, este buscara una funcion que se llame como la libreria mas _Init, Ej.
+		Si estamos agregando un metodo llamdo rmbfduuo, entonces el metodo debera ser Rmbfduuo + _Init osea Rmbfduuo_Init, Notese que la primera letra es Mayuscula
+			int Rmrboundmp_Init(Tcl_Interp *interp)
+			
+	Notas: 
+	* En este metodo se hace uso de la definicion del paso 3.2 para crear el comando de TCL. 
+	* Al final del archivo se incluye el archivo de codigo comun base_rm_global_sched.cxx, para completar el codigo de la libreria.
+	
+4. Agregar la lista de archivos y el metodo al archivo makefile. El archivo makefile nos permitira compilar los archivos nuevos y generar la libreria que cargara TCL.
+	4.1 En la seccion 1 del makefile, copiar y configurar los nombres y rutas para los archivos que se han agregado y el nombre de la libreria que se desea generar. 
+		Como en el caso del nombre de la funcion (3.4) recordar que el nombre de la libreria debe coincidir con el nombre del metodo, asi por ejemplo si estamos agregando el metodo rmbfduuo, la libreria debera llamarse lib + rmbfduuo + .so osea librmbfduuo.so
+		Ej.
+		### Configuracion para metodo rm bf du uo
+		#carpeta donde estan los archivos
+		dir_rmbfduuo	=$(SCHED_DIR)/rm_bf_du_uo
+		#archivos c que se compilaran
+		file1_rmbfduuo	=$(dir_rmbfduuo)/rm_bf_du_uo.c
+		file2_rmbfduuo	=$(dir_rmbfduuo)/base_rm_global_sched.c
+		#nombre de la libreria que se va a generar
+		lib_rmbfduuo	=$(LIB_DIR)/librmbfduuo.so	
+	
+	4.2 Crear el nombre del comando para compilar el nuevo metodo, y especificar los archivos que se agregaron. Ej.
+		### Crear libreria para rm bf du uo
+		rm_bf_du_uo: $(objects)
+		gcc $(file1_rmbfduuo) $(file2_rmbfduuo) $(objects) -shared -o $(lib_rmbfduuo) -DUSE_TCL_STUBS -DSIMLUATOR_LIB_TCL -I$(INCLUDE_DIR) -I/usr/include/tcl8.5 -L/usr/lib -ltclstub8.5 -lm $(CC_OPT)
+		
+		Al agregar el metodo podemos compilar desde linea de comando usando, make commando, ej. 
+			make rm_bf_du_uo
+	
+	Notas:
+		* Para compilar usar make commando, para limpiar el codigo y forzar a que recompile usar make clean, y despues make commando. Donde commando es el nombre del metodo deseado (ej. rmbfduuo).
+		
+5. Por ultimo agregar la informacion del nuevo metodo a la interface TCL, 
+	5.1 Dentro de la carpeta de la interface RealTSS, en la carpeta Algorithms, editar el archivo Algorithms.conf, en este se encuentra la lista de metodos disponibles, y que nombre reciben tanto la libreria como el metodo que se llamara desde TCL. Agregar una nueva linea con el nombre del metodo + = + nombre de la funcion.
+
+	Ej.	Para agregar el metodo rmbfduuo
+		RM Partial BF DU UO=rmbfduuo
+	
+	Donde RM Partial BF DU UO es el nombre del metodo que aparecera en el menu del interface TCL, y rmbfduuo es el nombre del metodo, este nombre se usara dentro de la interface TCL para cargar la libreria (paso 4.1, agregando lib+rmbfduuo+.so) y para llamar al comando que inicia ese codigo (paso 3.4, rmbfduuo).
