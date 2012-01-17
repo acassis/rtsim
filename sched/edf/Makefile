@@ -110,18 +110,21 @@ exe_edfglobal	=$(LIB_DIR)/libedfglobal
 	# @echo Finish.
 	# @echo ==================================================================
 ############################################################################################
-### Create library for edf global
+### Create library and executable for edf global
 edf_global: $(objects)
 	@echo ==================================================================
 	@echo Compiling...
 	@echo ==================================================================
 	cc $(file2_edfglobal) $(objects) -shared -o $(lib_edfglobal) $(BUILD_TCL_LIB)
-
+		
+	@echo ------------------------------------------------------------------
+	@echo Building executable...
+	cc $(file1_edfbf) $(file2_edfbf) $(objects) -o $(exe_edfbf) $(BUILD_EXECUTABLE)
 	@echo ==================================================================
 	@echo Finish.
 	@echo ==================================================================
 	
-### Create library for edf bf
+### Create library and executable for edf bf
 edf_bf: $(objects)
 	@echo ==================================================================
 	@echo Compiling...
@@ -136,7 +139,7 @@ edf_bf: $(objects)
 	@echo Finish.
 	@echo ==================================================================
 
-### Create library for edf ff
+### Create library and executable for edf ff
 edf_ff: $(objects)
 	@echo ==================================================================
 	@echo Compiling...
@@ -151,7 +154,7 @@ edf_ff: $(objects)
 	@echo Finish.
 	@echo ==================================================================
 
-### Create library for edf ff
+### Create library and executable for edf ff
 edf_nf: $(objects)
 	@echo ==================================================================
 	@echo Compiling...
@@ -166,7 +169,7 @@ edf_nf: $(objects)
 	@echo Finish.
 	@echo ==================================================================
 	
-### Create library for edf wf
+### Create library and executable for edf wf
 edf_wf: $(objects)
 	@echo ==================================================================
 	@echo Compiling...
