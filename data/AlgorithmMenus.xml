@@ -1,0 +1,155 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<AlgorithmSet xmlns="http://tempuri.org/SchemaAlgorithm.xsd">
+  <Uniprocessor>
+    <Algorithm>
+      <Command>rmglobal</Command>
+      <nameAlgorithm>Rate Monotonic</nameAlgorithm>
+      <FilePath>ruta</FilePath>
+      <Resources>false</Resources>
+    </Algorithm>
+    <Algorithm>
+      <Command>edfglobal</Command>
+      <nameAlgorithm>Early Dead First</nameAlgorithm>
+      <FilePath>ruta</FilePath>
+      <Resources>false</Resources>
+    </Algorithm>
+  </Uniprocessor>
+  <Multiprocessor>
+    <Global>
+      <Algorithm>
+        <Command>rmglobal</Command>
+        <nameAlgorithm>Rate Monotonic</nameAlgorithm>
+        <FilePath>ruta</FilePath>
+        <Resources>false</Resources>
+      </Algorithm>
+      <Algorithm>
+        <Command>edfglobal</Command>
+        <nameAlgorithm>Early Dead First Global</nameAlgorithm>
+        <FilePath>ruta</FilePath>
+        <Resources>false</Resources>
+      </Algorithm>
+    </Global>
+    <Partitioned>
+      <Algorithm>
+        <Command>rmbfduuo</Command>
+        <nameAlgorithm>RM Partitioned BF DU UO</nameAlgorithm>
+        <FilePath>ruta</FilePath>
+        <Resources>false</Resources>
+      </Algorithm>
+      <Algorithm>
+        <Command>rmrboundmp</Command>
+        <nameAlgorithm>RM Partitioned Rbound MP</nameAlgorithm>
+        <FilePath>ruta</FilePath>
+        <Resources>false</Resources>
+      </Algorithm>
+      <Algorithm>
+        <Command>rmrboundmpbf</Command>
+        <nameAlgorithm>RM Partitioned Rbound MP BF</nameAlgorithm>
+        <FilePath>ruta</FilePath>
+        <Resources>false</Resources>
+      </Algorithm>
+      <Algorithm>
+        <Command>rmrboundmpnfr</Command>
+        <nameAlgorithm>RM Partitioned Rbound MP NFR</nameAlgorithm>
+        <FilePath>ruta</FilePath>
+        <Resources>false</Resources>
+      </Algorithm>
+      <Algorithm>
+        <Command>rmbfip</Command>
+        <nameAlgorithm>RM Partitioned BF IP</nameAlgorithm>
+        <FilePath>ruta</FilePath>
+        <Resources>false</Resources>
+      </Algorithm>
+      <Algorithm>
+        <Command>rmbfll</Command>
+        <nameAlgorithm>RM Partitioned BF LL</nameAlgorithm>
+        <FilePath>ruta</FilePath>
+        <Resources>false</Resources>
+      </Algorithm>
+      <Algorithm>
+        <Command>rmffduuo</Command>
+        <nameAlgorithm>RM Partitioned FF DU UO</nameAlgorithm>
+        <FilePath>ruta</FilePath>
+        <Resources>false</Resources>
+      </Algorithm>
+      <Algorithm>
+        <Command>rmffip</Command>
+        <nameAlgorithm>RM Partitioned FF IP</nameAlgorithm>
+        <FilePath>ruta</FilePath>
+        <Resources>false</Resources>
+      </Algorithm>
+      <Algorithm>
+        <Command>rmffll</Command>
+        <nameAlgorithm>RM Partitioned FF LL</nameAlgorithm>
+        <FilePath>ruta</FilePath>
+        <Resources>false</Resources>
+      </Algorithm>
+      <Algorithm>
+        <Command>rmwfll</Command>
+        <nameAlgorithm>RM Partitioned WF LL</nameAlgorithm>
+        <FilePath>ruta</FilePath>
+        <Resources>false</Resources>
+      </Algorithm>
+      <Algorithm>
+        <Command>rmnfip</Command>
+        <nameAlgorithm>RM Partitioned NF IP</nameAlgorithm>
+        <FilePath>ruta</FilePath>
+        <Resources>false</Resources>
+      </Algorithm>
+      <Algorithm>
+        <Command>rmnfll</Command>
+        <nameAlgorithm>RM Partitioned NF LL</nameAlgorithm>
+        <FilePath>ruta</FilePath>
+        <Resources>false</Resources>
+      </Algorithm>
+      <Algorithm>
+        <Command>rmst</Command>
+        <nameAlgorithm>RM Partitioned ST</nameAlgorithm>
+        <FilePath>ruta</FilePath>
+        <Resources>false</Resources>
+      </Algorithm>
+      <Algorithm>
+        <Command>rmgt</Command>
+        <nameAlgorithm>RM Partitioned GT</nameAlgorithm>
+        <FilePath>ruta</FilePath>
+        <Resources>false</Resources>
+      </Algorithm>
+      <Algorithm>
+        <Command>rmeaudsley</Command>
+        <nameAlgorithm>RM Partitioned EXACT AUDSLEY</nameAlgorithm>
+        <FilePath>ruta</FilePath>
+        <Resources>false</Resources>
+      </Algorithm>
+      <Algorithm>
+        <Command>rmexactLehoczky</Command>
+        <nameAlgorithm>RM Partitioned EXACT LEHOCZKY</nameAlgorithm>
+        <FilePath>ruta</FilePath>
+        <Resources>false</Resources>
+      </Algorithm>
+      <Algorithm>
+        <Command>edfbf</Command>
+        <nameAlgorithm>EDF Partitioned BF</nameAlgorithm>
+        <FilePath>ruta</FilePath>
+        <Resources>false</Resources>
+      </Algorithm>
+      <Algorithm>
+        <Command>edfff</Command>
+        <nameAlgorithm>EDF Partitioned FF</nameAlgorithm>
+        <FilePath>ruta</FilePath>
+        <Resources>false</Resources>
+      </Algorithm>
+      <Algorithm>
+        <Command>edfnf</Command>
+        <nameAlgorithm>EDF Partitioned NF</nameAlgorithm>
+        <FilePath>ruta</FilePath>
+        <Resources>false</Resources>
+      </Algorithm>
+      <Algorithm>
+        <Command>edfwf</Command>
+        <nameAlgorithm>EDF Partitioned WF</nameAlgorithm>
+        <FilePath>ruta</FilePath>
+        <Resources>false</Resources>
+      </Algorithm>
+    </Partitioned>
+  </Multiprocessor>
+</AlgorithmSet>
